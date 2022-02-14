@@ -11,7 +11,8 @@ var session = require("express-session");
 var app = express();
 
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('body-parser').json());
+app.use(require('body-parser').urlencoded({ extended: false }));
 
 
 

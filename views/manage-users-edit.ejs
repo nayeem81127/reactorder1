@@ -177,42 +177,44 @@
               <div class="card-body">
                 <h5 class="card-title">Edit User</h5>
 
+                <% if (success_msg.length > 0) { %>
+                  <div class="alert alert-success">
+                  <%= locals.success_msg %>
+                </div>
+                  <% } %>
+
                 <form method="POST" action="/updateAqxolt">
                   <div class="mb-3">
                     <label for="aqxolt_client" class="form-label">Aqxolt Client</label>
                     <input type="text" class="form-control" id="aqxolt_client" name="aqxolt_client" 
-                      placeholder="ywbh623217bh321327321312b3b213271321321321" value="<%= locals.aqxolt_client %>">
+                      placeholder="ywbh623217bh321327321312b3b213271321321321" value="<%= locals.salesDetails[0].aqxolt_client %>">
                       <!-- aria-describedby="emailHelp" -->
                   </div>
                   <div class="mb-3">
                     <label for="client_secret" class="form-label">Client Secret</label>
                     <input type="text" class="form-control" id="client_secret" name="client_secret"
-                      placeholder="xdsd32dsdzwgdfghgkiuytrrtre" value="<%= locals.client_secret %> ">
+                      placeholder="xdsd32dsdzwgdfghgkiuytrrtre" value="<%= locals.salesDetails[0].client_secret %> ">
                   </div>
                   <div class="mb-3">
                     <label for="aqxolt_channel" class="form-label">Aqxolt Channel</label>
                     <input type="text" class="form-control" id="aqxolt_channel" name="aqxolt_channel"
-                      placeholder="a0ksmdspnsd8js83nj3" value="<%= locals.aqxolt_channel %> ">
+                      placeholder="a0ksmdspnsd8js83nj3" value="<%= locals.salesDetails[0].aqxolt_channel %> ">
                       <!-- aria-describedby="emailHelp" -->
                   </div>
 
                   <div class="mb-3">
                     <label for="aqxolt_order_profile" class="form-label">Aqxolt Order Profile</label>
                     <input type="text" class="form-control" id="aqxolt_order_profile" name="aqxolt_order_profile"
-                      placeholder="aat73jnsdos0osdisodsds" value="<%= locals.aqxolt_order_profile %> ">
+                      placeholder="aat73jnsdos0osdisodsds" value="<%= locals.salesDetails[0].aqxolt_order_profile %> ">
                       <!-- aria-describedby="emailHelp" -->
                   </div>
                   <div class="mb-3">
                     <label for="aqxolt_customer" class="form-label">Customer Profile ID</label>
                     <input type="text" class="form-control" id="aqxolt_customer" name="aqxolt_customer" 
-                      placeholder="az82nsdsmyapmaqsrood" value="<%= locals.aqxolt_customer %> ">
+                      placeholder="az82nsdsmyapmaqsrood" value="<%= locals.salesDetails[0].aqxolt_customer %> ">
                       <!-- aria-describedby="emailHelp" -->
                   </div>
                   <button type="submit" class="btn btn-primary">Save</button>
-
-                  <ul style="list-style-type:none;">
-                    <% if (success_msg) { %><li> <%= locals.success_msg %> </li><% } %>
-                  </ul>
                 </form>
               </div>
             </div>

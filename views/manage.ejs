@@ -21,7 +21,7 @@
   <link href="public/plugins/apexcharts/apexcharts.css" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  
+
   <!-- Theme Styles -->
   <link href="public/css/main.min.css" rel="stylesheet">
   <link href="public/css/custom.css" rel="stylesheet">
@@ -126,7 +126,9 @@
           </ul>
         </div>
         <div class="logo1">
-          <h3 class="card-title mb-0"> <i class="fas fa-user-cog" style="font-size: 30px"></i> <%= locals.username %>, Manage Users</h3>
+          <h3 class="card-title mb-0"> <i class="fas fa-user-cog" style="font-size: 30px"></i>
+            <%= locals.username %>, Manage Users
+          </h3>
         </div>
         <div class="" id="headerNav">
 
@@ -226,8 +228,14 @@
               <div class="card-body">
                 <h5 class="card-title">Manage Users</h5>
 
-                <form id="user-form" method="POST" action="/manage">
-                  <input type="hidden" id="delEmail" name="delEmail" placeholder="delEmail">
+                <% if (success_msg.length > 0) { %>                
+                  <div class="alert alert-success">
+                    <%= locals.success_msg %>                    
+                  </div>
+                </div>
+                  <% } %>
+
+                <form id="user-form" method="POST" action="/manage">                  
                   <input type="hidden" id="userRole" name="userRole" placeholder="userRole">
                   <input type="hidden" id="adminRole" name="adminRole" placeholder="adminRole">
                   <input type="hidden" id="selAccess" name="selAccess" placeholder="selAccess">
@@ -340,9 +348,15 @@
                               -
                               <% } %>
                                 <% if (locals.userList.rows[i].id !=locals.userId ) { %>
-                                  <i id="editBtn" class="fas fa-pen color-green"
-                                    name="<% locals.userList.rows[i].id %> " data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalScrollable"></i>
+                                  <i class="fas fa-pen color-green editModule" name="<% locals.userList.rows[i].id %>"
+                                    data-bs-toggle="modal" data-bs-target="#editSalesDetails"
+                                    data-id="<%= locals.userList.rows[i].email %>"
+                                    data-aqxoltClient="<%= locals.userList.rows[i].aqxolt_client %>"
+                                    data-clientSecret="<%= locals.userList.rows[i].client_secret %>"
+                                    data-aqxoltChannel="<%= locals.userList.rows[i].aqxolt_channel %>"
+                                    data-aqxoltOrderProfile="<%= locals.userList.rows[i].aqxolt_order_profile %>"
+                                    data-aqxoltCustomer="<%= locals.userList.rows[i].aqxolt_customer %>">
+                                  </i>
                                   <% } %>
                           </td>
                           <td>
@@ -350,8 +364,7 @@
                               -
                               <% } %>
                                 <% if (locals.userList.rows[i].id !=locals.userId ) { %>
-                                  <i class="fas fa-trash color-red" id="<%= locals.userList.rows[i].email %>"
-                                    onclick="onDelete(this.id)"></i>
+                                  <i class="fas fa-trash color-red delete-user" data-id="<%= locals.userList.rows[i].email %>"></i>
                                   <% } %>
                           </td>
                         </tr>
@@ -366,11 +379,11 @@
           </div>
         </div>
       </div>
-
     </div>
+  </div>
+  </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalLabel"
+  <div class="modal fade" id="editSalesDetails" tabindex="-1" aria-labelledby="editSalesDetailsLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -378,42 +391,43 @@
             <h5 class="modal-title" id="exampleModalScrollableTitle">Edit User</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <form>
+          <form method="post" action="/edit">
+            <div class="modal-body">
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Aqxolt Client</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <input type="hidden" id="edit-form-id" name="emailId" />
+                <label for="edit-form-aqxoltClient" class="form-label">Aqxolt Client</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltClient" name="aqxoltClient" aria-describedby="emailHelp"
                   placeholder="ywbh623217bh321327321312b3b213271321321321">
 
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Client Secret</label>
-                <input type="password" class="form-control" id="exampleInputPassword1"
+                <label for="edit-form-clientSecret" class="form-label">Client Secret</label>
+                <input type="text" class="form-control" id="edit-form-clientSecret" name="clientSecret"
                   placeholder="xdsd32dsdzwgdfghgkiuytrrtre">
               </div>
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Aqxolt Channel</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <label for="edit-form-aqxoltChannel" class="form-label">Aqxolt Channel</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltChannel" name="aqxoltChannel" aria-describedby="emailHelp"
                   placeholder="a0ksmdspnsd8js83nj3">
 
               </div>
 
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Aqxolt Order Profile</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <label for="edit-form-aqxoltOrderProfile" class="form-label">Aqxolt Order Profile</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltOrderProfile" name="aqxoltOrderProfile" aria-describedby="emailHelp"
                   placeholder="aat73jnsdos0osdisodsds">
 
               </div>
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Customer Profile ID</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <label for="edit-form-aqxoltCustomer" class="form-label">Customer Profile ID</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltCustomer" name="aqxoltCustomer" aria-describedby="emailHelp"
                   placeholder="az82nsdsmyapmaqsrood">
 
               </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </form>
-          </div>
+              <input type="submit" class="btn btn-primary" value="Save changes">
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
         </div>
@@ -421,8 +435,6 @@
         </div>
       </div>
     </div>
-  </div>
-  </div>
 
   <script>
 
@@ -461,22 +473,7 @@
       console.log(table);
       var row = table.rows[index];
       console.log(row.id);
-    }
-
-    function onDelete(name) {
-      let text = `Are You Sure. You Want to Delete`;
-      if (confirm(text) == true) {
-        document.getElementById("delEmail").value = name;
-        document.getElementById("adminRole").value = '';
-        document.getElementById("userRole").value = '';
-        document.getElementById("user-form").submit();
-        console.log(deleteId);
-      } else {
-        document.getElementById("userRole").value = '';
-        document.getElementById("adminRole").value = '';
-        document.getElementById("delEmail").value = '';
-      }
-    }
+    }    
 
     $(document).ready(function () {
 
@@ -502,30 +499,30 @@
         });
         var valOpt1 = JSON.stringify(valOpt);
 
-       if(valOpt1.includes('amazon')) {
+        if (valOpt1.includes('amazon')) {
           $(this).parents('tr').find(".selIntegrate option[value='amazon']").prop("selected", true);
-        } 
-        if(valOpt1.includes('shopify')) {
+        }
+        if (valOpt1.includes('shopify')) {
           $(this).parents('tr').find(".selIntegrate option[value='shopify']").prop("selected", true);
-        } 
-        if(valOpt1.includes('etsy')) {
+        }
+        if (valOpt1.includes('etsy')) {
           $(this).parents('tr').find(".selIntegrate option[value='etsy']").prop("selected", true);
-        } 
-        if(valOpt1.includes('majento')) {
+        }
+        if (valOpt1.includes('majento')) {
           $(this).parents('tr').find(".selIntegrate option[value='majento']").prop("selected", true);
-        } 
-        if(valOpt1.includes('wooCommerce')) {
+        }
+        if (valOpt1.includes('wooCommerce')) {
           $(this).parents('tr').find(".selIntegrate option[value='wooCommerce']").prop("selected", true);
-        } 
-        if(valOpt1.includes('bigCommerce')) {
+        }
+        if (valOpt1.includes('bigCommerce')) {
           $(this).parents('tr').find(".selIntegrate option[value='bigCommerce']").prop("selected", true);
-        } 
-        if(valOpt1.includes('quickBooks')) {
+        }
+        if (valOpt1.includes('quickBooks')) {
           $(this).parents('tr').find(".selIntegrate option[value='quickBooks']").prop("selected", true);
-        } 
-        if(valOpt1.includes('ebay')) {
+        }
+        if (valOpt1.includes('ebay')) {
           $(this).parents('tr').find(".selIntegrate option[value='ebay']").prop("selected", true);
-        } 
+        }
 
         $(this).parents(".row-row").children('.row-two').find('.show-row').removeClass().addClass('hide1-row')
         $(this).parents(".row-row").children('.row-two').find('.hide-row').removeClass().addClass('show-row')
@@ -535,6 +532,34 @@
         $(this).parents(".row-row").children('.row-two').find('.show-row').removeClass().addClass('hide-row')
         $(this).parents(".row-row").children('.row-two').find('.hide1-row').removeClass().addClass('show-row')
       });
+    });
+
+    $('.delete-user').on('click', function(){
+      var id = $(this).data('id');
+      var url = '/delete/'+id;
+      var text = 'Are You Sure. You Want to Delete';
+      if(confirm(text)){
+        $.ajax({
+          url: url,
+          type: 'DELETE',
+          success: function(result){
+            console.log('Deleting users...');
+            window.location.href='/manage';
+          },
+          error: function(err){
+            console.log(err);
+          }
+        });
+      }
+    });
+
+    $('.editModule').click(function () {
+      $('#edit-form-id').val($(this).attr('data-id'));
+      $('#edit-form-aqxoltClient').val($(this).attr('data-aqxoltClient'));
+      $('#edit-form-clientSecret').val($(this).attr('data-clientSecret'));
+      $('#edit-form-aqxoltChannel').val($(this).attr('data-aqxoltChannel'));
+      $('#edit-form-aqxoltOrderProfile').val($(this).attr('data-aqxoltOrderProfile'));
+      $('#edit-form-aqxoltCustomer').val($(this).attr('data-aqxoltCustomer'));
     });
 
   </script>
