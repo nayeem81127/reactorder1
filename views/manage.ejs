@@ -211,7 +211,7 @@
                                           <a href="#"><i data-feather="user"></i>Profile<i
                                               class="fas fa-chevron-right dropdown-icon"></i></a>
                                           <ul class="">
-                                            <li class="active-page"><a href="#"><i class="far fa-circle"></i>Manage</a>
+                                            <li class="active-page"><a href="/manage-edit"><i class="far fa-circle"></i>Manage</a>
                                             </li>
                                             <li><a href="/logout"><i class="far fa-circle"></i>logout</a></li>
 
@@ -228,16 +228,14 @@
               <div class="card-body">
                 <h5 class="card-title">Manage Users</h5>
 
-                <% if (success_msg.length > 0) { %>                
+                <% if (success_msg.length> 0) { %>
                   <div class="alert alert-success">
-                    <%= locals.success_msg %>                    
+                    <%= locals.success_msg %>
                   </div>
-                </div>
-                  <% } %>
+              </div>
+              <% } %>
 
-                <form id="user-form" method="POST" action="/manage">                  
-                  <input type="hidden" id="userRole" name="userRole" placeholder="userRole">
-                  <input type="hidden" id="adminRole" name="adminRole" placeholder="adminRole">
+                <form id="user-form" method="POST" action="/manage">
                   <input type="hidden" id="selAccess" name="selAccess" placeholder="selAccess">
                   <input type="hidden" id="selEmail" name="selEmail" placeholder="selEmail">
                   <table class="table table-condensed display tableId" style="width:100%">
@@ -333,13 +331,15 @@
                                 <% } %>
                                   <% if (locals.userList.rows[i].id !=locals.userId ) { %>
                                     <button type="button" name="<%= locals.userList.rows[i].email %>"
-                                      onclick="onRemoveAdmin(this.name)" class="link-btn link-danger">Remove
+                                      data-id="<%= locals.userList.rows[i].email %>"
+                                      class="link-btn link-danger removeAdmin">Remove
                                       Admin</button>
                                     <% } %>
                                       <% } %>
                                         <% if(locals.userList.rows[i].role=="user" ) { %>
                                           <button type="button" name="<%= locals.userList.rows[i].email %>"
-                                            onclick="onMakeAdmin(this.name)" class="link-btn link-info">Make
+                                            data-id="<%= locals.userList.rows[i].email %>"
+                                            class="link-btn link-info makeAdmin">Make
                                             Admin</button>
                                           <% } %>
                           </td>
@@ -364,7 +364,8 @@
                               -
                               <% } %>
                                 <% if (locals.userList.rows[i].id !=locals.userId ) { %>
-                                  <i class="fas fa-trash color-red delete-user" data-id="<%= locals.userList.rows[i].email %>"></i>
+                                  <i class="fas fa-trash color-red delete-user"
+                                    data-id="<%= locals.userList.rows[i].email %>"></i>
                                   <% } %>
                           </td>
                         </tr>
@@ -374,111 +375,74 @@
                   </table>
                   <button id="submitBtn" type="submit" value="submit" />
                 </form>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
   </div>
 
   <div class="modal fade" id="editSalesDetails" tabindex="-1" aria-labelledby="editSalesDetailsLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Edit User</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form method="post" action="/edit">
-            <div class="modal-body">
-              <div class="mb-3">
-                <input type="hidden" id="edit-form-id" name="emailId" />
-                <label for="edit-form-aqxoltClient" class="form-label">Aqxolt Client</label>
-                <input type="text" class="form-control" id="edit-form-aqxoltClient" name="aqxoltClient" aria-describedby="emailHelp"
-                  placeholder="ywbh623217bh321327321312b3b213271321321321">
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalScrollableTitle">Edit User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post" action="/edit">
+          <div class="modal-body">
+            <div class="mb-3">
+              <input type="hidden" id="edit-form-id" name="emailId" />
+              <label for="edit-form-aqxoltClient" class="form-label">Aqxolt Client</label>
+              <input type="text" class="form-control" id="edit-form-aqxoltClient" name="aqxoltClient"
+                aria-describedby="emailHelp" placeholder="ywbh623217bh321327321312b3b213271321321321">
 
-              </div>
-              <div class="mb-3">
-                <label for="edit-form-clientSecret" class="form-label">Client Secret</label>
-                <input type="text" class="form-control" id="edit-form-clientSecret" name="clientSecret"
-                  placeholder="xdsd32dsdzwgdfghgkiuytrrtre">
-              </div>
-              <div class="mb-3">
-                <label for="edit-form-aqxoltChannel" class="form-label">Aqxolt Channel</label>
-                <input type="text" class="form-control" id="edit-form-aqxoltChannel" name="aqxoltChannel" aria-describedby="emailHelp"
-                  placeholder="a0ksmdspnsd8js83nj3">
-
-              </div>
-
-              <div class="mb-3">
-                <label for="edit-form-aqxoltOrderProfile" class="form-label">Aqxolt Order Profile</label>
-                <input type="text" class="form-control" id="edit-form-aqxoltOrderProfile" name="aqxoltOrderProfile" aria-describedby="emailHelp"
-                  placeholder="aat73jnsdos0osdisodsds">
-
-              </div>
-              <div class="mb-3">
-                <label for="edit-form-aqxoltCustomer" class="form-label">Customer Profile ID</label>
-                <input type="text" class="form-control" id="edit-form-aqxoltCustomer" name="aqxoltCustomer" aria-describedby="emailHelp"
-                  placeholder="az82nsdsmyapmaqsrood">
-
-              </div>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <input type="submit" class="btn btn-primary" value="Save changes">
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-        </div>
-        <div>
-        </div>
+            <div class="mb-3">
+              <label for="edit-form-clientSecret" class="form-label">Client Secret</label>
+              <input type="text" class="form-control" id="edit-form-clientSecret" name="clientSecret"
+                placeholder="xdsd32dsdzwgdfghgkiuytrrtre">
+            </div>
+            <div class="mb-3">
+              <label for="edit-form-aqxoltChannel" class="form-label">Aqxolt Channel</label>
+              <input type="text" class="form-control" id="edit-form-aqxoltChannel" name="aqxoltChannel"
+                aria-describedby="emailHelp" placeholder="a0ksmdspnsd8js83nj3">
+
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-form-aqxoltOrderProfile" class="form-label">Aqxolt Order Profile</label>
+              <input type="text" class="form-control" id="edit-form-aqxoltOrderProfile" name="aqxoltOrderProfile"
+                aria-describedby="emailHelp" placeholder="aat73jnsdos0osdisodsds">
+
+            </div>
+            <div class="mb-3">
+              <label for="edit-form-aqxoltCustomer" class="form-label">Customer Profile ID</label>
+              <input type="text" class="form-control" id="edit-form-aqxoltCustomer" name="aqxoltCustomer"
+                aria-describedby="emailHelp" placeholder="az82nsdsmyapmaqsrood">
+
+            </div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Save changes">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+      <div>
       </div>
     </div>
+  </div>
 
   <script>
-
-    function onMakeAdmin(name) {
-      let text = `Are You Sure. You Want to Make Admin`;
-      if (confirm(text) == true) {
-        document.getElementById("adminRole").value = name;
-        document.getElementById("userRole").value = '';
-        document.getElementById("delEmail").value = '';
-        document.getElementById("user-form").submit();
-        console.log(name);
-      } else {
-        document.getElementById("userRole").value = '';
-        document.getElementById("adminRole").value = '';
-        document.getElementById("delEmail").value = '';
-      }
-    }
-
-    function onRemoveAdmin(name) {
-      let text = `Are You Sure. You Want to Remove Admin`;
-      if (confirm(text) == true) {
-        document.getElementById("userRole").value = name;
-        document.getElementById("adminRole").value = '';
-        document.getElementById("delEmail").value = '';
-        document.getElementById("user-form").submit();
-        console.log(name);
-      } else {
-        document.getElementById("userRole").value = '';
-        document.getElementById("adminRole").value = '';
-        document.getElementById("delEmail").value = '';
-      }
-    }
-
-    function onAdd(name) {
-      var table = document.getElementById("tableId");
-      console.log(table);
-      var row = table.rows[index];
-      console.log(row.id);
-    }    
 
     $(document).ready(function () {
 
       $('.checkButton').click(function () {
-        var name = $(this).parents('tr').find('.checkButton').attr('name')
+        var name = $(this).parents('tr').find('.checkButton').attr('name');
         var values = [];
         $(this).parents('tr').find('.selIntegrate').each(function (i, sel) {
           var selectedVal = $(sel).val();
@@ -486,11 +450,9 @@
         });
         document.getElementById("selAccess").value = JSON.stringify(values);
         document.getElementById("selEmail").value = name;
-        document.getElementById("delEmail").value = '';
-        document.getElementById("adminRole").value = '';
-        document.getElementById("userRole").value = '';
         document.getElementById("user-form").submit();
       });
+
       $('.editButton').click(function () {
         var valOpt = [];
         $(this).parents('tr').find(".Option option").each(function () {
@@ -527,6 +489,7 @@
         $(this).parents(".row-row").children('.row-two').find('.show-row').removeClass().addClass('hide1-row')
         $(this).parents(".row-row").children('.row-two').find('.hide-row').removeClass().addClass('show-row')
       });
+      
       $('.cancelButton').click(function () {
         $(this).parents('tr').find(".selIntegrate option").prop("selected", false);
         $(this).parents(".row-row").children('.row-two').find('.show-row').removeClass().addClass('hide-row')
@@ -534,19 +497,57 @@
       });
     });
 
-    $('.delete-user').on('click', function(){
+    $('.delete-user').on('click', function () {
       var id = $(this).data('id');
-      var url = '/delete/'+id;
+      var url = '/delete/' + id;
       var text = 'Are You Sure. You Want to Delete';
-      if(confirm(text)){
+      if (confirm(text)) {
         $.ajax({
           url: url,
           type: 'DELETE',
-          success: function(result){
+          success: function (result) {
             console.log('Deleting users...');
-            window.location.href='/manage';
+            window.location.href = '/manage';
           },
-          error: function(err){
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+
+    $('.makeAdmin').on('click', function () {
+      var id = $(this).data('id');
+      var url = '/makeAdmin/' + id;
+      var text = 'Are You Sure. You Want to Make Admin';
+      if (confirm(text)) {
+        $.ajax({
+          url: url,
+          type: 'POST',
+          success: function (result) {
+            console.log('making...');
+            window.location.href = '/manage';
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+
+    $('.removeAdmin').on('click', function () {
+      var id = $(this).data('id');
+      var url = '/removeAdmin/' + id;
+      var text = 'Are You Sure. You Want to Remove Admin';
+      if (confirm(text)) {
+        $.ajax({
+          url: url,
+          type: 'POST',
+          success: function (result) {
+            console.log('removing...');
+            window.location.href = '/manage';
+          },
+          error: function (err) {
             console.log(err);
           }
         });
