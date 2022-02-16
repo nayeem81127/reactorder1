@@ -26,6 +26,7 @@ app.use('/public', express.static(__dirname + '/public'));
     // cookie: {maxAge: 60000},
 app.use(flash());
 app.use(session({
+    cookie: {maxAge: 43200000},
     secret: 'keyboard cat',
     resave: false,    
     saveUninitialized: false

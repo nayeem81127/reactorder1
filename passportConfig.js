@@ -30,12 +30,12 @@ function initialize(passport) {
               pool.query(`UPDATE "users" set "login_count"=$1, "last_login"=$2 WHERE email=$3`, [count, createdDate, email])
               return done(null, user);
             } else {
-              return done(null, false, { message: "• Password Incorrect", email, password});
+              return done(null, false, { message: "Password Incorrect"});
             }
           });
         } else {
-          // No user            
-          return done(null, false, { message: "• No user with that email address", email, password});
+          // No user       
+          return done(null, false, { message: "No user with that email address"});
           //
         }
       }
@@ -49,10 +49,10 @@ function initialize(passport) {
     )
   );
 
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user, done) => done(null, user.email));
 
-  passport.deserializeUser((id, done) => {
-    pool.query(`SELECT * FROM users WHERE id = $1`, [id], (err, results) => {
+  passport.deserializeUser((email, done) => {
+    pool.query(`SELECT * FROM users INNER JOIN amazon_credentials ON users.email = amazon_credentials.email where users.email= $1`, [email], (err, results) => {
       if (err) {
         return done(err);
       }

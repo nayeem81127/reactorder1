@@ -158,7 +158,7 @@
               <% } %>
                 <% if (locals.amaz==true) { %>
                   <li>
-                    <a href="#"><i data-feather="chevron-right"></i>Amazon</a>
+                    <a href="/amazon"><i data-feather="chevron-right"></i>Amazon</a>
                   </li>
                   <% } %>
                     <% if (locals.majento==true) { %>
@@ -211,7 +211,8 @@
                                           <a href="#"><i data-feather="user"></i>Profile<i
                                               class="fas fa-chevron-right dropdown-icon"></i></a>
                                           <ul class="">
-                                            <li class="active-page"><a href="/manage-edit"><i class="far fa-circle"></i>Manage</a>
+                                            <li class="active-page"><a href="/manage-edit"><i
+                                                  class="far fa-circle"></i>Manage</a>
                                             </li>
                                             <li><a href="/logout"><i class="far fa-circle"></i>logout</a></li>
 
@@ -229,158 +230,160 @@
                 <h5 class="card-title">Manage Users</h5>
 
                 <% if (success_msg.length> 0) { %>
-                  <div class="alert alert-success">
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <%= locals.success_msg %>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
-              </div>
-              <% } %>
 
-                <form id="user-form" method="POST" action="/manage">
-                  <input type="hidden" id="selAccess" name="selAccess" placeholder="selAccess">
-                  <input type="hidden" id="selEmail" name="selEmail" placeholder="selEmail">
-                  <table class="table table-condensed display tableId" style="width:100%">
-                    <thead>
-                      <tr>
-                        <th>Email </th>
-                        <th>E-Commerce Site </th>
-                        <th>Shops </th>
-                        <th>Admin?</th>
-                        <th>Last Login</th>
-                        <th>Login Count</th>
-                        <th>Make Admin</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <% } %>
 
-                      <% for(var i=0; i < locals.userList.rows.length; i++) { %>
-                        <tr class="row-row">
-                          <td>
-                            <%= locals.userList.rows[i].email %>
-                          </td>
-                          <td class="row-two">
-                            <div class="show-row">
-                              <% if (locals.userList.rows[i].has_access_of.length> 0) { %>
-                                <!-- <select data-placeholder="" name="accessList" multiple class="chosen-select"> -->
-                                <ul style="list-style-type:none;">
-                                  <% for(var j=0; j < locals.userList.rows[i].has_access_of.length; j++) { %>
-                                    <!-- <option value="<%= locals.userList.rows[i].has_access_of[j] %> "> -->
-                                    <li>
-                                      <%= locals.userList.rows[i].has_access_of[j] %>
-                                    </li>
-                                    <!-- </option> -->
-                                    <% } %>
-                                </ul>
-                                <div class="hideOption">
-                                  <select name="Option" class="Option" multiple>
-                                    <% for(var j=0; j < locals.userList.rows[i].has_access_of.length; j++) { %>
-                                      <option value="<%= locals.userList.rows[i].has_access_of[j] %> ">
-                                        <%= locals.userList.rows[i].has_access_of[j] %>
-                                      </option>
-                                      <% } %>
-                                  </select>
-                                </div>
-                                <% } %>
-                                  <% if (locals.userList.rows[i].has_access_of.length <=0) { %>
-                                    Doesn't have any Integration Access
-                                    <% } %>
-                                      <% if (locals.userList.rows[i].id!=locals.userId ) { %>
-                                        <i class="fas fa-pen color-green editButton"
-                                          name="<% locals.userList.rows[i].email %> "></i>
+                    <form id="user-form" method="POST" action="/manage">
+                      <input type="hidden" id="selAccess" name="selAccess" placeholder="selAccess">
+                      <input type="hidden" id="selEmail" name="selEmail" placeholder="selEmail">
+                      <table class="table table-condensed display tableId" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>Email </th>
+                            <th>E-Commerce Site </th>
+                            <th>Shops </th>
+                            <th>Admin?</th>
+                            <th>Last Login</th>
+                            <th>Login Count</th>
+                            <th>Make Admin</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                          <% for(var i=0; i < locals.userList.rows.length; i++) { %>
+                            <tr class="row-row">
+                              <td>
+                                <%= locals.userList.rows[i].email %>
+                              </td>
+                              <td class="row-two">
+                                <div class="show-row">
+                                  <% if (locals.userList.rows[i].has_access_of.length> 0) { %>
+                                    <!-- <select data-placeholder="" name="accessList" multiple class="chosen-select"> -->
+                                    <ul style="list-style-type:none;">
+                                      <% for(var j=0; j < locals.userList.rows[i].has_access_of.length; j++) { %>
+                                        <!-- <option value="<%= locals.userList.rows[i].has_access_of[j] %> "> -->
+                                        <li>
+                                          <%= locals.userList.rows[i].has_access_of[j] %>
+                                        </li>
+                                        <!-- </option> -->
                                         <% } %>
-                            </div>
-                            <div class="hide-row">
-                              <select name="selIntegrate" class="selIntegrate" multiple multiselect-search="true"
-                                multiselect-select-all="true" multiselect-max-items="3">
-                                <option value="amazon">Amazon</option>
-                                <option value="shopify">Shopify</option>
-                                <option value="etsy">Etsy</option>
-                                <option value="majento">Majento</option>
-                                <option value="wooCommerce">Woo Commerce</option>
-                                <option value="bigCommerce">Big Commerce</option>
-                                <option value="quickBooks">Quick Books</option>
-                                <option value="ebay">Ebay</option>
-                              </select>
-                              <i class="fas fa-check color-green checkButton"
-                                name="<%= locals.userList.rows[i].email %>"></i>
-                              <i class="fas fa-times color-red cancelButton"
-                                name="<%= locals.userList.rows[i].email %> "></i>
-                            </div>
-
-                          </td>
-                          <td>&nbsp;</td>
-                          <td>
-                            <% if (locals.userList.rows[i].role=="admin" ) { %>
-                              Yes
-                              <% } %>
-                                <% if(locals.userList.rows[i].role=="user" ) { %>
-                                  No
-                                  <% } %>
-                          </td>
-                          <td>
-                            <%= locals.userList.rows[i].last_login %>
-                          </td>
-                          <td>
-                            <%= locals.userList.rows[i].login_count %>
-                          </td>
-                          <td>
-                            <% if (locals.userList.rows[i].role=="admin" ) { %>
-                              <% if (locals.userList.rows[i].id==locals.userId ) { %>
-                                -
-                                <% } %>
-                                  <% if (locals.userList.rows[i].id !=locals.userId ) { %>
-                                    <button type="button" name="<%= locals.userList.rows[i].email %>"
-                                      data-id="<%= locals.userList.rows[i].email %>"
-                                      class="link-btn link-danger removeAdmin">Remove
-                                      Admin</button>
-                                    <% } %>
-                                      <% } %>
-                                        <% if(locals.userList.rows[i].role=="user" ) { %>
-                                          <button type="button" name="<%= locals.userList.rows[i].email %>"
-                                            data-id="<%= locals.userList.rows[i].email %>"
-                                            class="link-btn link-info makeAdmin">Make
-                                            Admin</button>
+                                    </ul>
+                                    <div class="hideOption">
+                                      <select name="Option" class="Option" multiple>
+                                        <% for(var j=0; j < locals.userList.rows[i].has_access_of.length; j++) { %>
+                                          <option value="<%= locals.userList.rows[i].has_access_of[j] %> ">
+                                            <%= locals.userList.rows[i].has_access_of[j] %>
+                                          </option>
                                           <% } %>
-                          </td>
-                          <td>
-                            <% if (locals.userList.rows[i].id==locals.userId ) { %>
-                              -
-                              <% } %>
-                                <% if (locals.userList.rows[i].id !=locals.userId ) { %>
-                                  <i class="fas fa-pen color-green editModule" name="<% locals.userList.rows[i].id %>"
-                                    data-bs-toggle="modal" data-bs-target="#editSalesDetails"
-                                    data-id="<%= locals.userList.rows[i].email %>"
-                                    data-aqxoltClient="<%= locals.userList.rows[i].aqxolt_client %>"
-                                    data-clientSecret="<%= locals.userList.rows[i].client_secret %>"
-                                    data-aqxoltChannel="<%= locals.userList.rows[i].aqxolt_channel %>"
-                                    data-aqxoltOrderProfile="<%= locals.userList.rows[i].aqxolt_order_profile %>"
-                                    data-aqxoltCustomer="<%= locals.userList.rows[i].aqxolt_customer %>">
-                                  </i>
-                                  <% } %>
-                          </td>
-                          <td>
-                            <% if (locals.userList.rows[i].id==locals.userId ) { %>
-                              -
-                              <% } %>
-                                <% if (locals.userList.rows[i].id !=locals.userId ) { %>
-                                  <i class="fas fa-trash color-red delete-user"
-                                    data-id="<%= locals.userList.rows[i].email %>"></i>
-                                  <% } %>
-                          </td>
-                        </tr>
-                        <% } %>
-                    </tbody>
+                                      </select>
+                                    </div>
+                                    <% } %>
+                                      <% if (locals.userList.rows[i].has_access_of.length <=0) { %>
+                                        Doesn't have any Integration Access
+                                        <% } %>
+                                          <% if (locals.userList.rows[i].email!=locals.userId ) { %>
+                                            <i class="fas fa-pen color-green editButton"
+                                              name="<% locals.userList.rows[i].email %> "></i>
+                                            <% } %>
+                                </div>
+                                <div class="hide-row">
+                                  <select name="selIntegrate" class="selIntegrate" multiple multiselect-search="true"
+                                    multiselect-select-all="true" multiselect-max-items="8">
+                                    <option value="amazon">Amazon</option>
+                                    <option value="shopify">Shopify</option>
+                                    <option value="etsy">Etsy</option>
+                                    <option value="majento">Majento</option>
+                                    <option value="wooCommerce">Woo Commerce</option>
+                                    <option value="bigCommerce">Big Commerce</option>
+                                    <option value="quickBooks">Quick Books</option>
+                                    <option value="ebay">Ebay</option>
+                                  </select>
+                                  <i class="fas fa-check color-green checkButton"
+                                    name="<%= locals.userList.rows[i].email %>"></i>
+                                  <i class="fas fa-times color-red cancelButton"
+                                    name="<%= locals.userList.rows[i].email %> "></i>
+                                </div>
 
-                  </table>
-                  <button id="submitBtn" type="submit" value="submit" />
-                </form>
+                              </td>
+                              <td>&nbsp;</td>
+                              <td>
+                                <% if (locals.userList.rows[i].role=="admin" ) { %>
+                                  Yes
+                                  <% } %>
+                                    <% if(locals.userList.rows[i].role=="user" ) { %>
+                                      No
+                                      <% } %>
+                              </td>
+                              <td>
+                                <%= locals.userList.rows[i].last_login %>
+                              </td>
+                              <td>
+                                <%= locals.userList.rows[i].login_count %>
+                              </td>
+                              <td>
+                                <% if (locals.userList.rows[i].role=="admin" ) { %>
+                                  <% if (locals.userList.rows[i].email==locals.userId ) { %>
+                                    -
+                                    <% } %>
+                                      <% if (locals.userList.rows[i].email !=locals.userId ) { %>
+                                        <button type="button" name="<%= locals.userList.rows[i].email %>"
+                                          data-id="<%= locals.userList.rows[i].email %>"
+                                          class="link-btn link-danger removeAdmin">Remove
+                                          Admin</button>
+                                        <% } %>
+                                          <% } %>
+                                            <% if(locals.userList.rows[i].role=="user" ) { %>
+                                              <button type="button" name="<%= locals.userList.rows[i].email %>"
+                                                data-id="<%= locals.userList.rows[i].email %>"
+                                                class="link-btn link-info makeAdmin">Make
+                                                Admin</button>
+                                              <% } %>
+                              </td>
+                              <td>
+                                <% if (locals.userList.rows[i].email==locals.userId ) { %>
+                                  -
+                                  <% } %>
+                                    <% if (locals.userList.rows[i].email !=locals.userId ) { %>
+                                      <i class="fas fa-pen color-green editModule"
+                                        name="<% locals.userList.rows[i].id %>" data-bs-toggle="modal"
+                                        data-bs-target="#editSalesDetails"
+                                        data-id="<%= locals.userList.rows[i].email %>"
+                                        data-aqxoltClient="<%= locals.userList.rows[i].aqxolt_client %>"
+                                        data-clientSecret="<%= locals.userList.rows[i].client_secret %>"
+                                        data-aqxoltChannel="<%= locals.userList.rows[i].aqxolt_channel %>"
+                                        data-aqxoltOrderProfile="<%= locals.userList.rows[i].aqxolt_order_profile %>"
+                                        data-aqxoltCustomer="<%= locals.userList.rows[i].aqxolt_customer %>">
+                                      </i>
+                                      <% } %>
+                              </td>
+                              <td>
+                                <% if (locals.userList.rows[i].email==locals.userId ) { %>
+                                  -
+                                  <% } %>
+                                    <% if (locals.userList.rows[i].email !=locals.userId ) { %>
+                                      <i class="fas fa-trash color-red delete-user"
+                                        data-id="<%= locals.userList.rows[i].email %>"></i>
+                                      <% } %>
+                              </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+
+                      </table>
+                      <button id="submitBtn" type="submit" value="submit" />
+                    </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
   </div>
 
@@ -489,7 +492,7 @@
         $(this).parents(".row-row").children('.row-two').find('.show-row').removeClass().addClass('hide1-row')
         $(this).parents(".row-row").children('.row-two').find('.hide-row').removeClass().addClass('show-row')
       });
-      
+
       $('.cancelButton').click(function () {
         $(this).parents('tr').find(".selIntegrate option").prop("selected", false);
         $(this).parents(".row-row").children('.row-two').find('.show-row').removeClass().addClass('hide-row')

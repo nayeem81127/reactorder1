@@ -77,9 +77,11 @@
             </li>
 
           </ul>
-        </div> 
+        </div>
         <div class="logo1">
-          <h3 class="card-title mb-0"><i class="fas fa-user" style="font-size: 30px"></i> <%= locals.username %>, Edit User</h3>
+          <h3 class="card-title mb-0"><i class="fas fa-user" style="font-size: 30px"></i>
+            <%= locals.username %>, Edit User
+          </h3>
         </div>
         <div class="" id="headerNav">
 
@@ -91,83 +93,84 @@
         <li class="sidebar-title">
           Main
         </li>
-        <li >
+        <li>
           <a href="/index"><i data-feather="home"></i>Dashboard</a>
         </li>
         <li class="sidebar-title">
           Apps
         </li>
-        <% if (locals.shopify == true) { %> 
-        <li>
-          <a href="/shopify"><i data-feather="chevron-right"></i>Shopify</a>
-        </li>
-        <% } %> 
-        <% if (locals.ebay == true) { %>  
-        <li>
-          <a href="/ebay"><i data-feather="chevron-right"></i>Ebay</a>
-        </li>
-        <% } %> 
-        <% if (locals.amaz == true) { %> 
-        <li >
-          <a href="/amazon"><i data-feather="chevron-right"></i>Amazon</a>
-        </li>
-        <% } %> 
-        <% if (locals.majento == true) { %> 
-        <li >
-          <a href="/majento"><i data-feather="chevron-right"></i>Majento</a>
-        </li>
-        <% } %> 
-        <% if (locals.wooCommerce == true) { %>
-        <li>
-          <a href="/woocommerce"><i data-feather="chevron-right"></i>Woo Commerce</a>
-        </li>
-        <% } %> 
-        <% if (locals.bigCommerce == true) { %> 
-        <li>
-          <a href="/bigcommerce"><i data-feather="chevron-right"></i>Big Commerce</a>
-        </li>
-        <% } %> 
-        <% if (locals.etsy == true) { %> 
-        <li>
-          <a href="/etsy"><i data-feather="chevron-right"></i>ETSY</a>
-        </li>
-        <% } %> 
-        <% if (locals.quickBooks == true) { %>
-        <li>
-          <a href="/quickbooks"><i data-feather="chevron-right"></i>Quick Books</a>
-        </li>
-        <% } %> 
-        <li class="sidebar-title">
-          Other Services
-        </li>
-        <li>
-          <a href="#"><i data-feather="settings"></i>Services<i
-              class="fas fa-chevron-right dropdown-icon"></i></a>
-              <ul class="">
-                <li class="active-page"><a href="#"><i class="far fa-circle"></i>Update Aqxolt
-                    Info</a></li>
-                <% if (locals.manage==true) { %>
-                  <li><a href="/manage"><i class="far fa-circle"></i>Manage Users</a></li>
-                  <li><a href="typography.html"><i class="far fa-circle"></i>Background
-                      Jobs</a></li>
-                  <% } %>
-              </ul>
-            </li>
-
-            <li class="sidebar-title">
-              Manage Account
-            </li>
-            <li>
-              <a href="#"><i data-feather="user"></i>Profile<i
-                  class="fas fa-chevron-right dropdown-icon"></i></a>
-              <ul class="">
-                <li><a href="alerts.html"><i class="far fa-circle"></i>Manage</a></li>
-                <li><a href="/logout"><i class="far fa-circle"></i>logout</a></li>
-
-              </ul>
+        <% if (locals.shopify==true) { %>
+          <li>
+            <a href="/shopify"><i data-feather="chevron-right"></i>Shopify</a>
           </li>
-     
-        </ul>
+          <% } %>
+            <% if (locals.ebay==true) { %>
+              <li>
+                <a href="/ebay"><i data-feather="chevron-right"></i>Ebay</a>
+              </li>
+              <% } %>
+                <% if (locals.amaz==true) { %>
+                  <li>
+                    <a href="/amazon"><i data-feather="chevron-right"></i>Amazon</a>
+                  </li>
+                  <% } %>
+                    <% if (locals.majento==true) { %>
+                      <li>
+                        <a href="/majento"><i data-feather="chevron-right"></i>Majento</a>
+                      </li>
+                      <% } %>
+                        <% if (locals.wooCommerce==true) { %>
+                          <li>
+                            <a href="/woocommerce"><i data-feather="chevron-right"></i>Woo Commerce</a>
+                          </li>
+                          <% } %>
+                            <% if (locals.bigCommerce==true) { %>
+                              <li>
+                                <a href="/bigcommerce"><i data-feather="chevron-right"></i>Big Commerce</a>
+                              </li>
+                              <% } %>
+                                <% if (locals.etsy==true) { %>
+                                  <li>
+                                    <a href="/etsy"><i data-feather="chevron-right"></i>ETSY</a>
+                                  </li>
+                                  <% } %>
+                                    <% if (locals.quickBooks==true) { %>
+                                      <li>
+                                        <a href="/quickbooks"><i data-feather="chevron-right"></i>Quick Books</a>
+                                      </li>
+                                      <% } %>
+                                        <li class="sidebar-title">
+                                          Other Services
+                                        </li>
+                                        <li>
+                                          <a href="#"><i data-feather="settings"></i>Services<i
+                                              class="fas fa-chevron-right dropdown-icon"></i></a>
+                                          <ul class="">
+                                            <li class="active-page"><a href="#"><i class="far fa-circle"></i>Update
+                                                Aqxolt
+                                                Info</a></li>
+                                            <% if (locals.manage==true) { %>
+                                              <li><a href="/manage"><i class="far fa-circle"></i>Manage Users</a></li>
+                                              <li><a href="typography.html"><i class="far fa-circle"></i>Background
+                                                  Jobs</a></li>
+                                              <% } %>
+                                          </ul>
+                                        </li>
+
+                                        <li class="sidebar-title">
+                                          Manage Account
+                                        </li>
+                                        <li>
+                                          <a href="#"><i data-feather="user"></i>Profile<i
+                                              class="fas fa-chevron-right dropdown-icon"></i></a>
+                                          <ul class="">
+                                            <li><a href="/manage-edit"><i class="far fa-circle"></i>Manage</a></li>
+                                            <li><a href="/logout"><i class="far fa-circle"></i>logout</a></li>
+
+                                          </ul>
+                                        </li>
+
+      </ul>
     </div>
     <div class="page-content">
       <div class="main-wrapper">
@@ -177,45 +180,50 @@
               <div class="card-body">
                 <h5 class="card-title">Edit User</h5>
 
-                <% if (success_msg.length > 0) { %>
+                <% if (success_msg.length> 0) { %>
                   <div class="alert alert-success">
-                  <%= locals.success_msg %>
-                </div>
+                    <%= locals.success_msg %>
+                  </div>
                   <% } %>
 
-                <form method="POST" action="/updateAqxolt">
-                  <div class="mb-3">
-                    <label for="aqxolt_client" class="form-label">Aqxolt Client</label>
-                    <input type="text" class="form-control" id="aqxolt_client" name="aqxolt_client" 
-                      placeholder="ywbh623217bh321327321312b3b213271321321321" value="<%= locals.salesDetails[0].aqxolt_client %>">
-                      <!-- aria-describedby="emailHelp" -->
-                  </div>
-                  <div class="mb-3">
-                    <label for="client_secret" class="form-label">Client Secret</label>
-                    <input type="text" class="form-control" id="client_secret" name="client_secret"
-                      placeholder="xdsd32dsdzwgdfghgkiuytrrtre" value="<%= locals.salesDetails[0].client_secret %> ">
-                  </div>
-                  <div class="mb-3">
-                    <label for="aqxolt_channel" class="form-label">Aqxolt Channel</label>
-                    <input type="text" class="form-control" id="aqxolt_channel" name="aqxolt_channel"
-                      placeholder="a0ksmdspnsd8js83nj3" value="<%= locals.salesDetails[0].aqxolt_channel %> ">
-                      <!-- aria-describedby="emailHelp" -->
-                  </div>
+                    <form method="POST" action="/updateAqxolt">
+                      <div class="mb-3">
+                        <label for="aqxolt_client" class="form-label">Aqxolt Client</label>
+                        <input type="text" class="form-control" id="aqxolt_client" name="aqxolt_client"
+                          aria-describedby="emailHelp"
+                          value="<%= locals.salesDetails[0].aqxolt_client %>">
 
-                  <div class="mb-3">
-                    <label for="aqxolt_order_profile" class="form-label">Aqxolt Order Profile</label>
-                    <input type="text" class="form-control" id="aqxolt_order_profile" name="aqxolt_order_profile"
-                      placeholder="aat73jnsdos0osdisodsds" value="<%= locals.salesDetails[0].aqxolt_order_profile %> ">
-                      <!-- aria-describedby="emailHelp" -->
-                  </div>
-                  <div class="mb-3">
-                    <label for="aqxolt_customer" class="form-label">Customer Profile ID</label>
-                    <input type="text" class="form-control" id="aqxolt_customer" name="aqxolt_customer" 
-                      placeholder="az82nsdsmyapmaqsrood" value="<%= locals.salesDetails[0].aqxolt_customer %> ">
-                      <!-- aria-describedby="emailHelp" -->
-                  </div>
-                  <button type="submit" class="btn btn-primary">Save</button>
-                </form>
+                      </div>
+                      <div class="mb-3">
+                        <label for="client_secret" class="form-label">Client Secret</label>
+                        <input type="text" class="form-control" id="client_secret" name="client_secret"
+                          aria-describedby="emailHelp"
+                          value="<%= locals.salesDetails[0].client_secret %>">
+                      </div>
+                      <div class="mb-3">
+                        <label for="aqxolt_channel" class="form-label">Aqxolt Channel</label>
+                        <input type="text" class="form-control" id="aqxolt_channel" name="aqxolt_channel"
+                          aria-describedby="emailHelp"
+                          value="<%= locals.salesDetails[0].aqxolt_channel %>">
+
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="aqxolt_order_profile" class="form-label">Aqxolt Order Profile</label>
+                        <input type="text" class="form-control" id="aqxolt_order_profile" name="aqxolt_order_profile"
+                          aria-describedby="emailHelp"
+                          value="<%= locals.salesDetails[0].aqxolt_order_profile %>">
+
+                      </div>
+                      <div class="mb-3">
+                        <label for="aqxolt_customer" class="form-label">Customer Profile ID</label>
+                        <input type="text" class="form-control" id="aqxolt_customer" name="aqxolt_customer"
+                          aria-describedby="emailHelp" 
+                          value="<%= locals.salesDetails[0].aqxolt_customer %>">
+
+                      </div>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
               </div>
             </div>
           </div>
