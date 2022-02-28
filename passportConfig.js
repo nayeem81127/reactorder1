@@ -30,12 +30,12 @@ function initialize(passport) {
               pool.query(`UPDATE "users" set "login_count"=$1, "last_login"=$2 WHERE email=$3`, [count, createdDate, email])
               return done(null, user);
             } else {
-              return done(null, false, { message: "Password Incorrect"});
+              return done(null, false, { message: "Password Incorrect" });
             }
           });
         } else {
           // No user       
-          return done(null, false, { message: "No user with that email address"});
+          return done(null, false, { message: "No user with that email address" });
           //
         }
       }
@@ -56,8 +56,20 @@ function initialize(passport) {
       if (err) {
         return done(err);
       }
-      console.log(`ID is ${results.rows[0].id}`);
-      return done(null, results.rows[0]);
+      if (results.rows.length > 0) {
+        //  console.log(`ID is 1 ${JSON.stringify(results.rows[0].id)}`);
+        return done(null, results.rows[0]);
+      } else {
+        pool.query(`SELECT * FROM users where email= $1`, [email], (err, result) => {
+          if (err) {
+            return done(err);
+          }
+          if (result.rows.length > 0) {
+            // console.log(`ID is 2 ${JSON.stringify(result.rows[0].id)}`);
+            return done(null, result.rows[0]);
+          }
+        });
+      }
     });
   });
 }

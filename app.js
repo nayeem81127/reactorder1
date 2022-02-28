@@ -1,6 +1,6 @@
 var express = require('express');
 require('dotenv').config();
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 4000
 
 var flash = require('connect-flash');
 
@@ -21,7 +21,7 @@ var bodyParser = require('body-parser')
 
 var path = require('path');
 
-app.use('/public', express.static(__dirname + '/public'));
+
 
     // cookie: {maxAge: 60000},
 app.use(flash());
@@ -34,6 +34,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/public', express.static(__dirname + '/public'));
 
 app.use(bodyParser());
 app.use((req, res, next) => {
