@@ -181,10 +181,19 @@
                 <h5 class="card-title">Edit User</h5>
 
                 <% if (success_msg.length> 0) { %>
-                  <div class="alert alert-success">
+                  <div class="alert alert-success alert-dismissible fade show" style="position: absolute; width: 70%; top: 20px; left: 12%;" role="alert">
                     <%= locals.success_msg %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                   <% } %>
+
+                  <% if (error_msg.length> 0) { %>
+                    <div class="alert alert-warning alert-dismissible fade show" style="position: absolute; width: 70%; top: 20px; left: 12%;" role="alert">
+                      <%= locals.error_msg %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+  
+                    <% } %>
 
                     <form method="POST" action="/updateAqxolt">
                       <div class="mb-3">
