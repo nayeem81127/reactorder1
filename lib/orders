@@ -1,30 +1,752 @@
 Response Orders -> [
-{"NumberOfItemsUnshipped":0,"BuyerInfo":{},"IsReplacementOrder":"false","IsSoldByAB":false,"AmazonOrderId":"026-2174201-0413163","LatestShipDate":"2021-04-06T22:59:59Z","EarliestShipDate":"2021-03-31T23:00:00Z","ShipServiceLevel":"Std UK Dom_1","SalesChannel":"Amazon.co.uk","IsISPU":false,"OrderStatus":"Canceled","NumberOfItemsShipped":0,"MarketplaceId":"A1F83G8C2ARO7P","OrderType":"StandardOrder","IsPremiumOrder":false,"IsPrime":false,"PurchaseDate":"2021-03-31T16:36:33Z","IsBusinessOrder":false,"OrderTotal":{"CurrencyCode":"GBP","Amount":"1.00"},"PaymentMethodDetails":["Standard"],"IsGlobalExpressEnabled":false,"LastUpdateDate":"2021-04-16T00:35:20Z","FulfillmentChannel":"MFN","ShipmentServiceLevelCategory":"Standard"},
-{"NumberOfItemsUnshipped":0,"BuyerInfo":{},"IsReplacementOrder":"false","IsSoldByAB":false,"AmazonOrderId":"026-7703898-7559518","LatestShipDate":"2021-04-13T22:59:59Z","EarliestShipDate":"2021-04-11T23:00:00Z","ShipServiceLevel":"Std UK Dom_1","SalesChannel":"Amazon.co.uk","IsISPU":false,"OrderStatus":"Canceled","NumberOfItemsShipped":0,"MarketplaceId":"A1F83G8C2ARO7P","OrderType":"StandardOrder","IsPremiumOrder":false,"IsPrime":false,"PurchaseDate":"2021-04-09T10:59:01Z","IsBusinessOrder":false,"OrderTotal":{"CurrencyCode":"GBP","Amount":"1.00"},"PaymentMethodDetails":["Standard"],"IsGlobalExpressEnabled":false,"LastUpdateDate":"2021-04-23T02:32:57Z","FulfillmentChannel":"MFN","ShipmentServiceLevelCategory":"Standard"},
-{"NumberOfItemsUnshipped":0,"BuyerInfo":{},"IsReplacementOrder":"false","IsSoldByAB":false,"AmazonOrderId":"026-5796276-3493107","LatestShipDate":"2021-06-03T22:59:59Z","EarliestShipDate":"2021-06-01T23:00:00Z","ShipServiceLevel":"Std UK Dom_1","SalesChannel":"Amazon.co.uk","IsISPU":false,"OrderStatus":"Canceled","NumberOfItemsShipped":0,"MarketplaceId":"A1F83G8C2ARO7P","OrderType":"StandardOrder","IsPremiumOrder":false,"IsPrime":false,"PurchaseDate":"2021-06-01T09:40:35Z","IsBusinessOrder":false,"OrderTotal":{"CurrencyCode":"GBP","Amount":"1.00"},"PaymentMethodDetails":["Standard"],"IsGlobalExpressEnabled":false,"LastUpdateDate":"2021-06-06T09:47:19Z","FulfillmentChannel":"MFN","ShipmentServiceLevelCategory":"Standard"},
-{"NumberOfItemsUnshipped":0,"BuyerInfo":{},"IsReplacementOrder":"false","IsSoldByAB":false,"AmazonOrderId":"026-7368002-0410702","LatestShipDate":"2021-06-03T22:59:59Z","EarliestShipDate":"2021-06-01T23:00:00Z","ShipServiceLevel":"Std UK Dom_1","SalesChannel":"Amazon.co.uk","IsISPU":false,"OrderStatus":"Canceled","NumberOfItemsShipped":0,"MarketplaceId":"A1F83G8C2ARO7P","OrderType":"StandardOrder","IsPremiumOrder":false,"IsPrime":false,"PurchaseDate":"2021-06-01T09:56:46Z","IsBusinessOrder":false,"OrderTotal":{"CurrencyCode":"GBP","Amount":"1.00"},"PaymentMethodDetails":["Standard"],"IsGlobalExpressEnabled":false,"LastUpdateDate":"2021-06-06T09:59:12Z","FulfillmentChannel":"MFN","ShipmentServiceLevelCategory":"Standard"},
-{"NumberOfItemsUnshipped":0,"BuyerInfo":{},"IsReplacementOrder":"false","IsSoldByAB":false,"AmazonOrderId":"205-1458590-4647527","LatestShipDate":"2021-10-12T22:59:59Z","EarliestShipDate":"2021-10-10T23:00:00Z","ShipServiceLevel":"Std UK Domestic","SalesChannel":"Amazon.co.uk","IsISPU":false,"OrderStatus":"Canceled","NumberOfItemsShipped":0,"MarketplaceId":"A1F83G8C2ARO7P","OrderType":"StandardOrder","IsPremiumOrder":false,"IsPrime":false,"PurchaseDate":"2021-10-09T21:08:42Z","IsBusinessOrder":true,"OrderTotal":{"CurrencyCode":"GBP","Amount":"10.16"},"PaymentMethodDetails":["Standard"],"IsGlobalExpressEnabled":false,"LastUpdateDate":"2021-10-21T23:00:15Z","FulfillmentChannel":"MFN","ShipmentServiceLevelCategory":"Standard"}
-]     
+  {
+    "NumberOfItemsUnshipped": 0,
+    "BuyerInfo": {},
+    "IsReplacementOrder": "false",
+    "IsSoldByAB": false,
+    "AmazonOrderId": "026-2174201-0413163",
+    "LatestShipDate": "2021-04-06T22:59:59Z",
+    "EarliestShipDate": "2021-03-31T23:00:00Z",
+    "ShipServiceLevel": "Std UK Dom_1",
+    "SalesChannel": "Amazon.co.uk",
+    "IsISPU": false,
+    "OrderStatus": "Canceled",
+    "NumberOfItemsShipped": 0,
+    "MarketplaceId": "A1F83G8C2ARO7P",
+    "OrderType": "StandardOrder",
+    "IsPremiumOrder": false,
+    "IsPrime": false,
+    "PurchaseDate": "2021-03-31T16:36:33Z",
+    "IsBusinessOrder": false,
+    "OrderTotal": {
+      "CurrencyCode": "GBP",
+      "Amount": "1.00"
+    },
+    "PaymentMethodDetails": [
+      "Standard"
+    ],
+    "IsGlobalExpressEnabled": false,
+    "LastUpdateDate": "2021-04-16T00:35:20Z",
+    "FulfillmentChannel": "MFN",
+    "ShipmentServiceLevelCategory": "Standard"
+  },
+  {
+    "NumberOfItemsUnshipped": 0,
+    "BuyerInfo": {},
+    "IsReplacementOrder": "false",
+    "IsSoldByAB": false,
+    "AmazonOrderId": "026-7703898-7559518",
+    "LatestShipDate": "2021-04-13T22:59:59Z",
+    "EarliestShipDate": "2021-04-11T23:00:00Z",
+    "ShipServiceLevel": "Std UK Dom_1",
+    "SalesChannel": "Amazon.co.uk",
+    "IsISPU": false,
+    "OrderStatus": "Canceled",
+    "NumberOfItemsShipped": 0,
+    "MarketplaceId": "A1F83G8C2ARO7P",
+    "OrderType": "StandardOrder",
+    "IsPremiumOrder": false,
+    "IsPrime": false,
+    "PurchaseDate": "2021-04-09T10:59:01Z",
+    "IsBusinessOrder": false,
+    "OrderTotal": {
+      "CurrencyCode": "GBP",
+      "Amount": "1.00"
+    },
+    "PaymentMethodDetails": [
+      "Standard"
+    ],
+    "IsGlobalExpressEnabled": false,
+    "LastUpdateDate": "2021-04-23T02:32:57Z",
+    "FulfillmentChannel": "MFN",
+    "ShipmentServiceLevelCategory": "Standard"
+  },
+  {
+    "NumberOfItemsUnshipped": 0,
+    "BuyerInfo": {},
+    "IsReplacementOrder": "false",
+    "IsSoldByAB": false,
+    "AmazonOrderId": "026-5796276-3493107",
+    "LatestShipDate": "2021-06-03T22:59:59Z",
+    "EarliestShipDate": "2021-06-01T23:00:00Z",
+    "ShipServiceLevel": "Std UK Dom_1",
+    "SalesChannel": "Amazon.co.uk",
+    "IsISPU": false,
+    "OrderStatus": "Canceled",
+    "NumberOfItemsShipped": 0,
+    "MarketplaceId": "A1F83G8C2ARO7P",
+    "OrderType": "StandardOrder",
+    "IsPremiumOrder": false,
+    "IsPrime": false,
+    "PurchaseDate": "2021-06-01T09:40:35Z",
+    "IsBusinessOrder": false,
+    "OrderTotal": {
+      "CurrencyCode": "GBP",
+      "Amount": "1.00"
+    },
+    "PaymentMethodDetails": [
+      "Standard"
+    ],
+    "IsGlobalExpressEnabled": false,
+    "LastUpdateDate": "2021-06-06T09:47:19Z",
+    "FulfillmentChannel": "MFN",
+    "ShipmentServiceLevelCategory": "Standard"
+  },
+  {
+    "NumberOfItemsUnshipped": 0,
+    "BuyerInfo": {},
+    "IsReplacementOrder": "false",
+    "IsSoldByAB": false,
+    "AmazonOrderId": "026-7368002-0410702",
+    "LatestShipDate": "2021-06-03T22:59:59Z",
+    "EarliestShipDate": "2021-06-01T23:00:00Z",
+    "ShipServiceLevel": "Std UK Dom_1",
+    "SalesChannel": "Amazon.co.uk",
+    "IsISPU": false,
+    "OrderStatus": "Canceled",
+    "NumberOfItemsShipped": 0,
+    "MarketplaceId": "A1F83G8C2ARO7P",
+    "OrderType": "StandardOrder",
+    "IsPremiumOrder": false,
+    "IsPrime": false,
+    "PurchaseDate": "2021-06-01T09:56:46Z",
+    "IsBusinessOrder": false,
+    "OrderTotal": {
+      "CurrencyCode": "GBP",
+      "Amount": "1.00"
+    },
+    "PaymentMethodDetails": [
+      "Standard"
+    ],
+    "IsGlobalExpressEnabled": false,
+    "LastUpdateDate": "2021-06-06T09:59:12Z",
+    "FulfillmentChannel": "MFN",
+    "ShipmentServiceLevelCategory": "Standard"
+  },
+  {
+    "NumberOfItemsUnshipped": 0,
+    "BuyerInfo": {},
+    "IsReplacementOrder": "false",
+    "IsSoldByAB": false,
+    "AmazonOrderId": "205-1458590-4647527",
+    "LatestShipDate": "2021-10-12T22:59:59Z",
+    "EarliestShipDate": "2021-10-10T23:00:00Z",
+    "ShipServiceLevel": "Std UK Domestic",
+    "SalesChannel": "Amazon.co.uk",
+    "IsISPU": false,
+    "OrderStatus": "Canceled",
+    "NumberOfItemsShipped": 0,
+    "MarketplaceId": "A1F83G8C2ARO7P",
+    "OrderType": "StandardOrder",
+    "IsPremiumOrder": false,
+    "IsPrime": false,
+    "PurchaseDate": "2021-10-09T21:08:42Z",
+    "IsBusinessOrder": true,
+    "OrderTotal": {
+      "CurrencyCode": "GBP",
+      "Amount": "10.16"
+    },
+    "PaymentMethodDetails": [
+      "Standard"
+    ],
+    "IsGlobalExpressEnabled": false,
+    "LastUpdateDate": "2021-10-21T23:00:15Z",
+    "FulfillmentChannel": "MFN",
+    "ShipmentServiceLevelCategory": "Standard"
+  }
+]
 Response AmazonOrderId -> [
-"026-2174201-0413163",
-"026-7703898-7559518",
-"026-5796276-3493107",
-"026-7368002-0410702",
-"205-1458590-4647527"
+  "026-2174201-0413163",
+  "026-7703898-7559518",
+  "026-5796276-3493107",
+  "026-7368002-0410702",
+  "205-1458590-4647527"
 ]
-
-WARNING! Calling an operation without an endpoint is deprecated and discouraged. You should specify an "endpoint" parameter or 
-use shorthand dot notation (i.e. "catalogItems.getCatalogItem") as operation parameter value.
-
-Response OrderItems -> {"OrderItems":[{"ProductInfo":{"NumberOfItems":"1"},"BuyerInfo":{},"ItemTax":{"CurrencyCode":"GBP","Amount":"0.00"},"QuantityShipped":0,"ItemPrice":{"CurrencyCode":"GBP","Amount":"1.00"},"ASIN":"B091GB9XYQ","SellerSKU":"123","Title":"Test USB HUB","IsGift":"false","ConditionSubtypeId":"New","IsTransparency":false,"QuantityOrdered":0,"PromotionDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"ConditionId":"New","PromotionDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"OrderItemId":"25775896123683"}],"AmazonOrderId":"026-2174201-0413163"}
-Response OrderItems -> {"OrderItems":[{"ProductInfo":{"NumberOfItems":"1"},"BuyerInfo":{},"ItemTax":{"CurrencyCode":"GBP","Amount":"0.00"},"QuantityShipped":0,"ItemPrice":{"CurrencyCode":"GBP","Amount":"1.00"},"ASIN":"B091GB9XYQ","SellerSKU":"123","Title":"Test USB HUB","IsGift":"false","ConditionSubtypeId":"New","IsTransparency":false,"QuantityOrdered":0,"PromotionDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"ConditionId":"New","PromotionDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"OrderItemId":"65732689619275"}],"AmazonOrderId":"026-7703898-7559518"}
-Response OrderItems -> {"OrderItems":[{"ProductInfo":{"NumberOfItems":"1"},"BuyerInfo":{},"ItemTax":{"CurrencyCode":"GBP","Amount":"0.00"},"QuantityShipped":0,"ItemPrice":{"CurrencyCode":"GBP","Amount":"1.00"},"ASIN":"B091GB9XYQ","SellerSKU":"123","Title":"Test USB HUB","IsGift":"false","ConditionSubtypeId":"New","IsTransparency":false,"QuantityOrdered":0,"PromotionDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"ConditionId":"New","PromotionDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"OrderItemId":"52883622953035"}],"AmazonOrderId":"026-5796276-3493107"}
-Response OrderItems -> {"OrderItems":[{"ProductInfo":{"NumberOfItems":"1"},"BuyerInfo":{},"ItemTax":{"CurrencyCode":"GBP","Amount":"0.00"},"QuantityShipped":0,"ItemPrice":{"CurrencyCode":"GBP","Amount":"1.00"},"ASIN":"B091FN7PRL","SellerSKU":"1234","Title":"Test USB hub","IsGift":"false","ConditionSubtypeId":"New","IsTransparency":false,"QuantityOrdered":0,"PromotionDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"ConditionId":"New","PromotionDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"OrderItemId":"29087275621899"}],"AmazonOrderId":"026-7368002-0410702"}
-Response OrderItems -> {"OrderItems":[{"ProductInfo":{"NumberOfItems":"1"},"BuyerInfo":{},"ItemTax":{"CurrencyCode":"GBP","Amount":"0.00"},"QuantityShipped":0,"ItemPrice":{"CurrencyCode":"GBP","Amount":"1.00"},"ASIN":"B091FN7PRL","SellerSKU":"1234","Title":"Test USB hub","ShippingTax":{"CurrencyCode":"GBP","Amount":"0.00"},"IsGift":"false","ShippingPrice":{"CurrencyCode":"GBP","Amount":"4.08"},"ConditionSubtypeId":"New","ShippingDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"ShippingDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"IsTransparency":false,"QuantityOrdered":0,"PromotionDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"ConditionId":"New","PromotionDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"OrderItemId":"09219276398539"},{"ProductInfo":{"NumberOfItems":"1"},"BuyerInfo":{},"ItemTax":{"CurrencyCode":"GBP","Amount":"0.00"},"QuantityShipped":0,"ItemPrice":{"CurrencyCode":"GBP","Amount":"1.00"},"ASIN":"B091GB9XYQ","SellerSKU":"123","Title":"Test USB HUB","ShippingTax":{"CurrencyCode":"GBP","Amount":"0.00"},"IsGift":"false","ShippingPrice":{"CurrencyCode":"GBP","Amount":"4.08"},"ConditionSubtypeId":"New","ShippingDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"ShippingDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"IsTransparency":false,"QuantityOrdered":0,"PromotionDiscountTax":{"CurrencyCode":"GBP","Amount":"0.00"},"ConditionId":"New","PromotionDiscount":{"CurrencyCode":"GBP","Amount":"0.00"},"OrderItemId":"48214000213347"}],"AmazonOrderId":"205-1458590-4647527"}      
+Response -> {
+  "OrderItems": [
+    {
+      "ProductInfo": {
+        "NumberOfItems": "1"
+      },
+      "BuyerInfo": {},
+      "ItemTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "QuantityShipped": 0,
+      "ItemPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "1.00"
+      },
+      "ASIN": "B091GB9XYQ",
+      "SellerSKU": "123",
+      "Title": "Test USB HUB",
+      "IsGift": "false",
+      "ConditionSubtypeId": "New",
+      "IsTransparency": false,
+      "QuantityOrdered": 0,
+      "PromotionDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ConditionId": "New",
+      "PromotionDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "OrderItemId": "25775896123683"
+    }
+  ],
+  "AmazonOrderId": "026-2174201-0413163"
+}
+Response -> {
+  "OrderItems": [
+    {
+      "ProductInfo": {
+        "NumberOfItems": "1"
+      },
+      "BuyerInfo": {},
+      "ItemTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "QuantityShipped": 0,
+      "ItemPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "1.00"
+      },
+      "ASIN": "B091GB9XYQ",
+      "SellerSKU": "123",
+      "Title": "Test USB HUB",
+      "IsGift": "false",
+      "ConditionSubtypeId": "New",
+      "IsTransparency": false,
+      "QuantityOrdered": 0,
+      "PromotionDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ConditionId": "New",
+      "PromotionDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "OrderItemId": "65732689619275"
+    }
+  ],
+  "AmazonOrderId": "026-7703898-7559518"
+}
+Response -> {
+  "OrderItems": [
+    {
+      "ProductInfo": {
+        "NumberOfItems": "1"
+      },
+      "BuyerInfo": {},
+      "ItemTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "QuantityShipped": 0,
+      "ItemPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "1.00"
+      },
+      "ASIN": "B091GB9XYQ",
+      "SellerSKU": "123",
+      "Title": "Test USB HUB",
+      "IsGift": "false",
+      "ConditionSubtypeId": "New",
+      "IsTransparency": false,
+      "QuantityOrdered": 0,
+      "PromotionDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ConditionId": "New",
+      "PromotionDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "OrderItemId": "52883622953035"
+    }
+  ],
+  "AmazonOrderId": "026-5796276-3493107"
+}
+Response -> {
+  "OrderItems": [
+    {
+      "ProductInfo": {
+        "NumberOfItems": "1"
+      },
+      "BuyerInfo": {},
+      "ItemTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "QuantityShipped": 0,
+      "ItemPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "1.00"
+      },
+      "ASIN": "B091FN7PRL",
+      "SellerSKU": "1234",
+      "Title": "Test USB hub",
+      "IsGift": "false",
+      "ConditionSubtypeId": "New",
+      "IsTransparency": false,
+      "QuantityOrdered": 0,
+      "PromotionDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ConditionId": "New",
+      "PromotionDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "OrderItemId": "29087275621899"
+    }
+  ],
+  "AmazonOrderId": "026-7368002-0410702"
+}
+Response -> {
+  "OrderItems": [
+    {
+      "ProductInfo": {
+        "NumberOfItems": "1"
+      },
+      "BuyerInfo": {},
+      "ItemTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "QuantityShipped": 0,
+      "ItemPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "1.00"
+      },
+      "ASIN": "B091FN7PRL",
+      "SellerSKU": "1234",
+      "Title": "Test USB hub",
+      "ShippingTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "IsGift": "false",
+      "ShippingPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "4.08"
+      },
+      "ConditionSubtypeId": "New",
+      "ShippingDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ShippingDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "IsTransparency": false,
+      "QuantityOrdered": 0,
+      "PromotionDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ConditionId": "New",
+      "PromotionDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "OrderItemId": "09219276398539"
+    },
+    {
+      "ProductInfo": {
+        "NumberOfItems": "1"
+      },
+      "BuyerInfo": {},
+      "ItemTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "QuantityShipped": 0,
+      "ItemPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "1.00"
+      },
+      "ASIN": "B091GB9XYQ",
+      "SellerSKU": "123",
+      "Title": "Test USB HUB",
+      "ShippingTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "IsGift": "false",
+      "ShippingPrice": {
+        "CurrencyCode": "GBP",
+        "Amount": "4.08"
+      },
+      "ConditionSubtypeId": "New",
+      "ShippingDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ShippingDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "IsTransparency": false,
+      "QuantityOrdered": 0,
+      "PromotionDiscountTax": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "ConditionId": "New",
+      "PromotionDiscount": {
+        "CurrencyCode": "GBP",
+        "Amount": "0.00"
+      },
+      "OrderItemId": "48214000213347"
+    }
+  ],
+  "AmazonOrderId": "205-1458590-4647527"
+}
 Response All Items -> [
-  { OrderItems: [ [Object] ], AmazonOrderId: '026-2174201-0413163' },
-  { OrderItems: [ [Object] ], AmazonOrderId: '026-7703898-7559518' },
-  { OrderItems: [ [Object] ], AmazonOrderId: '026-5796276-3493107' },
-  { OrderItems: [ [Object] ], AmazonOrderId: '026-7368002-0410702' },
-  { OrderItems: [ [Object], [Object] ], AmazonOrderId: '205-1458590-4647527'}
+  { OrderItems: [
+      [Object
+      ]
+    ], AmazonOrderId: '026-2174201-0413163'
+  },
+  { OrderItems: [
+      [Object
+      ]
+    ], AmazonOrderId: '026-7703898-7559518'
+  },
+  { OrderItems: [
+      [Object
+      ]
+    ], AmazonOrderId: '026-5796276-3493107'
+  },
+  { OrderItems: [
+      [Object
+      ]
+    ], AmazonOrderId: '026-7368002-0410702'
+  },
+  {
+    OrderItems: [
+      [Object
+      ],
+      [Object
+      ]
+    ],
+    AmazonOrderId: '205-1458590-4647527'
+  }
 ]
+orderDetails Length  -> 5
+6
+accounts67
+Upserted Successfully
+Upserted Successfully
+Upserted Successfully
+Upserted Successfully
+Upserted Successfully
+Upserted Successfully
+mainProductList-> [
+  {
+    "attributes": {
+      "type": "Product2",
+      "url": "/services/data/v42.0/sobjects/Product2/01t2w00000B1E2RAAV"
+    },
+    "Id": "01t2w00000B1E2RAAV",
+    "ERP7__Submitted_to_Amazon__c": true,
+    "amazon_ext_id__c": "B091GB9XYQ",
+    "ERP7__Amazon__c": true,
+    "Name": "Test USB HUB",
+    "ERP7__SKU__c": "123",
+    "ERP7__ASIN_Code__c": "B091GB9XYQ",
+    "ERP7__Price_Entry_Amount__c": 1,
+    "IsActive": true,
+    "ERP7__Track_Inventory__c": true
+  },
+  {
+    "attributes": {
+      "type": "Product2",
+      "url": "/services/data/v42.0/sobjects/Product2/01t2w00000B1E2bAAF"
+    },
+    "Id": "01t2w00000B1E2bAAF",
+    "ERP7__Submitted_to_Amazon__c": true,
+    "amazon_ext_id__c": "B091FN7PRL",
+    "ERP7__Amazon__c": true,
+    "Name": "Test USB hub",
+    "ERP7__SKU__c": "1234",
+    "ERP7__ASIN_Code__c": "B091FN7PRL",
+    "ERP7__Price_Entry_Amount__c": 1,
+    "IsActive": true,
+    "ERP7__Track_Inventory__c": true
+  }
+]
+126
+priceBookEntryList2-> [
+  {
+    attributes: {
+      type: 'PricebookEntry',
+      url: '/services/data/v42.0/sobjects/PricebookEntry/01u2w000004AlKnAAK'
+    },
+    Id: '01u2w000004AlKnAAK',
+    Product2Id: '01t2w00000B1E2RAAV'
+  },
+  {
+    attributes: {
+      type: 'PricebookEntry',
+      url: '/services/data/v42.0/sobjects/PricebookEntry/01u2w000004AlKoAAK'
+    },
+    Id: '01u2w000004AlKoAAK',
+    Product2Id: '01t2w00000B1E2bAAF'
+  }
+]
+PBE74-> {
+  attributes: {
+    type: 'PricebookEntry',
+    url: '/services/data/v42.0/sobjects/PricebookEntry/01u2w000004AlKnAAK'
+  },
+  Id: '01u2w000004AlKnAAK',
+  Product2Id: '01t2w00000B1E2RAAV',
+  unitprice: 1
+}
+PBE74-> {
+  attributes: {
+    type: 'PricebookEntry',
+    url: '/services/data/v42.0/sobjects/PricebookEntry/01u2w000004AlKoAAK'
+  },
+  Id: '01u2w000004AlKoAAK',
+  Product2Id: '01t2w00000B1E2bAAF',
+  unitprice: 1
+}
+Updated Successfully : 01u2w000004AlKnAAK
+Updated Successfully : 01u2w000004AlKnAAK
+Updated Successfully : 01u2w000004AlKoAAK
+
+[
+  {
+    "status": "Success",
+    "ASIN": "B091FN7PRL",
+    "Product": {
+      "Identifiers": {
+        "MarketplaceASIN": {
+          "MarketplaceId": "A1F83G8C2ARO7P",
+          "ASIN": "B091FN7PRL"
+        }
+      },
+      "Offers": [
+        {
+          "BuyingPrice": {
+            "ListingPrice": {
+              "CurrencyCode": "GBP",
+              "Amount": 99
+            },
+            "LandedPrice": {
+              "CurrencyCode": "GBP",
+              "Amount": 99
+            },
+            "Shipping": {
+              "CurrencyCode": "GBP",
+              "Amount": 0
+            }
+          },
+          "RegularPrice": {
+            "CurrencyCode": "GBP",
+            "Amount": 99
+          },
+          "FulfillmentChannel": "MERCHANT",
+          "ItemCondition": "New",
+          "ItemSubCondition": "New",
+          "SellerSKU": "1234"
+        }
+      ]
+    }
+  }
+]
+
+
+[
+  {
+    "Identifiers": {
+      "MarketplaceASIN": {
+        "MarketplaceId": "A1F83G8C2ARO7P",
+        "ASIN": "B091GB9XYQ"
+      }
+    }
+  },
+  {
+    "Identifiers": {
+      "MarketplaceASIN": {
+        "MarketplaceId": "A1F83G8C2ARO7P",
+        "ASIN": "B091GB9XYQ"
+      }
+    }
+  },
+  {
+    "Identifiers": {
+      "MarketplaceASIN": {
+        "MarketplaceId": "A1F83G8C2ARO7P",
+        "ASIN": "B091GB9XYQ"
+      }
+    }
+  },
+  {
+    "Identifiers": {
+      "MarketplaceASIN": {
+        "MarketplaceId": "A1F83G8C2ARO7P",
+        "ASIN": "B091FN7PRL"
+      }
+    },
+    "Offers": [
+      {
+        "BuyingPrice": {
+          "ListingPrice": {
+            "CurrencyCode": "GBP",
+            "Amount": 99
+          },
+          "LandedPrice": {
+            "CurrencyCode": "GBP",
+            "Amount": 99
+          },
+          "Shipping": {
+            "CurrencyCode": "GBP",
+            "Amount": 0
+          }
+        },
+        "RegularPrice": {
+          "CurrencyCode": "GBP",
+          "Amount": 99
+        },
+        "FulfillmentChannel": "MERCHANT",
+        "ItemCondition": "New",
+        "ItemSubCondition": "New",
+        "SellerSKU": "1234"
+      }
+    ]
+  },
+  {
+    "Identifiers": {
+      "MarketplaceASIN": {
+        "MarketplaceId": "A1F83G8C2ARO7P",
+        "ASIN": "B091FN7PRL"
+      }
+    },
+    "Offers": [
+      {
+        "BuyingPrice": {
+          "ListingPrice": {
+            "CurrencyCode": "GBP",
+            "Amount": 99
+          },
+          "LandedPrice": {
+            "CurrencyCode": "GBP",
+            "Amount": 99
+          },
+          "Shipping": {
+            "CurrencyCode": "GBP",
+            "Amount": 0
+          }
+        },
+        "RegularPrice": {
+          "CurrencyCode": "GBP",
+          "Amount": 99
+        },
+        "FulfillmentChannel": "MERCHANT",
+        "ItemCondition": "New",
+        "ItemSubCondition": "New",
+        "SellerSKU": "1234"
+      }
+    ]
+  },
+  {
+    "Identifiers": {
+      "MarketplaceASIN": {
+        "MarketplaceId": "A1F83G8C2ARO7P",
+        "ASIN": "B091GB9XYQ"
+      }
+    }
+  }
+]
+
+{
+  "attributes": {
+    "type": "Product2",
+    "url": "/services/data/v42.0/sobjects/Product2/01t2w00000B1E2RAAV"
+  },
+  "Id": "01t2w00000B1E2RAAV",
+  "ERP7__Submitted_to_Amazon__c": true,
+  "amazon_ext_id__c": "B091GB9XYQ",
+  "ERP7__Amazon__c": true,
+  "Name": "Test USB HUB",
+  "ERP7__SKU__c": "123",
+  "ERP7__ASIN_Code__c": "B091GB9XYQ",
+  "ERP7__Price_Entry_Amount__c": 1,
+  "IsActive": true,
+  "ERP7__Track_Inventory__c": true
+},
+{
+  "attributes": {
+    "type": "Product2",
+    "url": "/services/data/v42.0/sobjects/Product2/01t2w00000B1E2bAAF"
+  },
+  "Id": "01t2w00000B1E2bAAF",
+  "ERP7__Submitted_to_Amazon__c": true,
+  "amazon_ext_id__c": "B091FN7PRL",
+  "ERP7__Amazon__c": true,
+  "Name": "Test USB hub",
+  "ERP7__SKU__c": "1234",
+  "ERP7__ASIN_Code__c": "B091FN7PRL",
+  "ERP7__Price_Entry_Amount__c": 1,
+  "IsActive": true,
+  "ERP7__Track_Inventory__c": true
+}
+
+{
+  BuyerInfo: { BuyerEmail: 'ldtcyyhfbqv9ldh@marketplace.amazon.co.uk' },
+  AmazonOrderId: '205-2996870-2501957',
+  EarliestDeliveryDate: '2022-03-11T00:00:00Z',
+  EarliestShipDate: '2022-03-10T00:00:00Z',
+  SalesChannel: 'Amazon.co.uk',
+  AutomatedShippingSettings: { HasAutomatedShippingSettings: false },
+  OrderStatus: 'Unshipped',
+  NumberOfItemsShipped: 0,
+  OrderType: 'StandardOrder',
+  IsPremiumOrder: false,
+  IsPrime: false,
+  FulfillmentChannel: 'MFN',
+  NumberOfItemsUnshipped: 1,
+  IsReplacementOrder: 'false',
+  IsSoldByAB: false,
+  LatestShipDate: '2022-03-10T23:59:59Z',
+  ShipServiceLevel: 'Std UK Dom_1',
+  DefaultShipFromLocationAddress: {
+    AddressLine2: '1210',
+    StateOrRegion: 'Reading',
+    AddressLine1: 'Aqxolt 1210 ARLINGTON BUSINESS PARK',
+    Phone: '07590679906',
+    PostalCode: 'RG7 4TY',
+    City: 'Theale',
+    CountryCode: 'GB',
+    Name: 'Aqxolt Ltd'
+  },
+  IsISPU: false,
+  MarketplaceId: 'A1F83G8C2ARO7P',
+  LatestDeliveryDate: '2022-03-12T23:59:59Z',
+  PurchaseDate: '2022-03-09T06:22:06Z',
+  ShippingAddress: {
+    StateOrRegion: 'Reading',
+    PostalCode: 'RG30 6NG',
+    City: 'Tilehurst',
+    CountryCode: 'GB'
+  },
+  PaymentMethod: 'Other',
+  IsBusinessOrder: true,
+  OrderTotal: { CurrencyCode: 'GBP', Amount: '1.00' },
+  PaymentMethodDetails: [ 'Standard' ],
+  IsGlobalExpressEnabled: false,
+  LastUpdateDate: '2022-03-09T06:53:15Z',
+  ShipmentServiceLevelCategory: 'Standard'
+}
