@@ -54,7 +54,7 @@
                 <p>Please Sign-in to your account.</p>
               </div>
 
-              <ul style="list-style-type: none">                
+              <ul style="list-style-type: none">
                 <% if (success_msg.length > 0) { %>
                 <div
                   class="alert alert-success alert-dismissible fade show"
@@ -68,8 +68,7 @@
                     aria-label="Close"
                   ></button>
                 </div>
-                <% } %>
-                 <% if (error != "") { %>
+                <% } %> <% if (error != "") { %>
                 <div
                   class="alert alert-warning alert-dismissible fade show"
                   role="alert"
@@ -81,7 +80,7 @@
                     data-bs-dismiss="alert"
                     aria-label="Close"
                   ></button>
-                </div>                
+                </div>
                 <% } %>
               </ul>
 
