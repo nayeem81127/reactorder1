@@ -24,11 +24,15 @@ function initialize(passport) {
               console.log(err);
             }
             if (isMatch) {
-              let cont = parseInt(results.rows[0].login_count);
-              let count = parseInt(cont + 1);
-              var createdDate = new Date().toISOString();
-              pool.query(`UPDATE "users" set "login_count"=$1, "last_login"=$2 WHERE email=$3`, [count, createdDate, email])
-              return done(null, user);
+              if (results.rows[0].status === 'Active') {
+                let cont = parseInt(results.rows[0].login_count);
+                let count = parseInt(cont + 1);
+                var createdDate = new Date().toISOString();
+                pool.query(`UPDATE "users" set "login_count"=$1, "last_login"=$2 WHERE email=$3`, [count, createdDate, email])
+                return done(null, user);
+              } else {
+                return done(null, false, { message: "Users is InActive" });
+              }
             } else {
               return done(null, false, { message: "Password Incorrect" });
             }
@@ -52,25 +56,15 @@ function initialize(passport) {
   passport.serializeUser((user, done) => done(null, user.email));
 
   passport.deserializeUser((email, done) => {
-    pool.query(`SELECT * FROM users INNER JOIN amazon_credentials ON users.email = amazon_credentials.email where users.email= $1`, [email], (err, results) => {
-      if (err) {
-        return done(err);
-      }
-      if (results.rows.length > 0) {
-        //  console.log(`ID is 1 ${JSON.stringify(results.rows[0].id)}`);
-        return done(null, results.rows[0]);
-      } else {
         pool.query(`SELECT * FROM users where email= $1`, [email], (err, result) => {
           if (err) {
             return done(err);
           }
           if (result.rows.length > 0) {
-            // console.log(`ID is 2 ${JSON.stringify(result.rows[0].id)}`);
+            // console.log(`ID is ${result.rows[0].id}`);
             return done(null, result.rows[0]);
           }
         });
-      }
-    });
   });
 }
 

@@ -249,6 +249,7 @@
                             <th>Admin?</th>
                             <th>Last Login</th>
                             <th>Login Count</th>
+                            <th>Status</th>
                             <th>Make Admin</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -325,6 +326,23 @@
                               </td>
                               <td>
                                 <%= locals.userList.rows[i].login_count %>
+                              </td>
+                              <td>
+                                <% if (locals.userList.rows[i].status=="Active" ) { %>
+                                  <% if (locals.userList.rows[i].email==locals.userId ) { %>
+                                    -
+                                    <% } %>
+                                      <% if (locals.userList.rows[i].email != locals.userId ) { %>
+                                        <button type="button" name="<%= locals.userList.rows[i].email %>"
+                                          data-id="<%= locals.userList.rows[i].email %>"
+                                          class="link-btn link-danger InActive">Make InActive</button>
+                                        <% } %>
+                                          <% } %>
+                                            <% if(locals.userList.rows[i].status=="InActive" ) { %>
+                                              <button type="button" name="<%= locals.userList.rows[i].email %>"
+                                                data-id="<%= locals.userList.rows[i].email %>"
+                                                class="link-btn link-info Active">Make Active</button>
+                                              <% } %>
                               </td>
                               <td>
                                 <% if (locals.userList.rows[i].role=="admin" ) { %>
@@ -547,6 +565,44 @@
       var id = $(this).data('id');
       var url = '/removeAdmin/' + id;
       var text = 'Are You Sure. You Want to Remove Admin';
+      if (confirm(text)) {
+        $.ajax({
+          url: url,
+          type: 'POST',
+          success: function (result) {
+            console.log('removing...');
+            window.location.href = '/manage';
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+
+    $('.Active').on('click', function () {
+      var id = $(this).data('id');
+      var url = '/Active/' + id;
+      var text = 'Are You Sure. You Want to Active this User';
+      if (confirm(text)) {
+        $.ajax({
+          url: url,
+          type: 'POST',
+          success: function (result) {
+            console.log('making...');
+            window.location.href = '/manage';
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+
+    $('.InActive').on('click', function () {
+      var id = $(this).data('id');
+      var url = '/InActive/' + id;
+      var text = 'Are You Sure. You Want to InActive This User';
       if (confirm(text)) {
         $.ajax({
           url: url,
