@@ -514,7 +514,8 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     if (err) { return console.error(err); }
                                                                     if (result.records.length == 0) {
                                                                         // console.log(addInsert)
-                                                                        if (addNotExist != []) {
+                                                                        if (addInsert != []) {
+                                                                            console.log('addInsert ' + JSON.stringify(addInsert))
                                                                             conn.sobject("ERP7__Address__c").create(addInsert,
                                                                                 function (err, rets) {
                                                                                     if (err) { return console.error(err); }
@@ -646,6 +647,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                             if (err) { return console.error(err); }
                                                                             // console.log(result.records.length)
                                                                             if (result.records.length == 0) {
+                                                                                console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
                                                                                 if (OrderAvailable != []) {
                                                                                     conn.sobject("Order").create(OrderAvailable,
                                                                                         function (err, rets) {
@@ -689,6 +691,8 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                     if (!orderIdExist.includes(OrderAvailable[i].ERP7__E_Order_Id__c)) orderNotExist.push(OrderAvailable[i])
                                                                                 }
                                                                                 // console.log('orderNotExist' + JSON.stringify(orderNotExist))
+
+                                                                                console.log('orderNotExist ' + JSON.stringify(orderNotExist))
 
                                                                                 if (orderNotExist != []) {
                                                                                     conn.sobject("Order").create(orderNotExist,
@@ -1026,6 +1030,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                             // console.log(result.records.length)
                                                                             if (result.records.length == 0) {
                                                                                 if (orderItemAvailable != []) {
+                                                                                    console.log('orderItemAvailable '+ JSON.stringify(orderItemAvailable))
                                                                                     conn.sobject("OrderItem").create(orderItemAvailable,
                                                                                         function (err, rets) {
                                                                                             if (err) { return console.error(err); }
@@ -1073,6 +1078,8 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                         }
                                                                                     }
                                                                                 }
+
+                                                                                console.log('orderItemNotExist ' + JSON.stringify(orderItemNotExist))
 
                                                                                 if (orderItemNotExist != []) {
                                                                                     conn.sobject("OrderItem").create(orderItemNotExist,
