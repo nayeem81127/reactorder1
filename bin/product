@@ -1192,7 +1192,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                         }
                                                     }
                                                 }
-                                            }, 3000 * y);
+                                            }, 4000 * y);
                                         }
                                     }, 1000 * z);
                                 }
