@@ -1082,7 +1082,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                     }
                                                                                 }
 
-                                                                                // orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
+                                                                                orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
 
                                                                                 orderItemAvailable = orderItemAvailable.filter(function ({ name, date, amt }) {
                                                                                     var key = `${name}${date}${amt}`;
