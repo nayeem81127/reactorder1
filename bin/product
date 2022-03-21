@@ -675,9 +675,9 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                 var orderNotExist = [];
                                                                                 var orderExist = [];
                                                                                 var orderIdExist = [];
-                                                                                conn.query("SELECT Id, Name, ERP7__E_Order_Id__c, ERP7__Amount__c, ERP7__Customer_Email__c, ERP7__Customer_Purchase_Order_Date__c, ERP7__Estimated_Shipping_Amount__c, Status, Type, ERP7__Order_Profile__c, ERP7__Channel__c, ERP7__Contact__c, AccountId, ERP7__Ship_To_Address__c, ERP7__Bill_To_Address__c, Pricebook2Id FROM Order WHERE Type='Amazon' AND ERP7__E_Order_Id__c != null AND ERP7__E_Order_Id__c IN ('" + orderId.join("','") + "')", (err, result) => {
+                                                                                conn.query("SELECT Id, Name, ERP7__E_Order_Id__c, ERP7__Amount__c, ERP7__Customer_Email__c, ERP7__Customer_Purchase_Order_Date__c, ERP7__Estimated_Shipping_Amount__c, Status, Type, ERP7__Order_Profile__c, ERP7__Channel__c, ERP7__Contact__c, AccountId, ERP7__Ship_To_Address__c, ERP7__Bill_To_Address__c, Pricebook2Id FROM Order WHERE Type='Amazon' AND ERP7__E_Order_Id__c IN ('" + orderId.join("','") + "')", (err, result) => {
                                                                                     if (err) { return console.error(err); }
-                                                                                    // console.log(result.records.length)
+                                                                                    console.log(result.records.length)
 
                                                                                     if (!err) {
                                                                                         if (result.records.length == 0) {
@@ -1084,10 +1084,10 @@ const SellingPartnerAPI = require('amazon-sp-api');
 
                                                                                 orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
 
-                                                                                orderItemAvailable = orderItemAvailable.filter(function ({ name, date, amt }) {
-                                                                                    var key = `${name}${date}${amt}`;
-                                                                                    return !this.has(key) && this.add(key);
-                                                                                }, new Set);
+                                                                                // orderItemAvailable = orderItemAvailable.filter(function ({ name, date, amt }) {
+                                                                                //     var key = `${name}${date}${amt}`;
+                                                                                //     return !this.has(key) && this.add(key);
+                                                                                // }, new Set);
                                                                                 // console.log('orderItemAvailable '+ JSON.stringify(orderItemAvailable))
 
                                                                                 conn.query("SELECT Id, ERP7__Inventory_Tracked__c, ERP7__Active__c, OrderId, ERP7__Order_Line_Status__c, Quantity, UnitPrice, Product2Id, ERP7__Is_Back_Order__c, ERP7__Allocate_Stock__c, PricebookEntryId, ERP7__VAT_Amount__c, ERP7__Total_Price__c FROM OrderItem WHERE OrderId IN ('" + OrderIdAvailable.join("','") + "') AND Product2Id IN ('" + prodMainId.join("','") + "') ", function (err, result) {
