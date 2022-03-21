@@ -23,14 +23,23 @@ var path = require('path');
 
 
 
-    // cookie: {maxAge: 60000},
+// cookie: {maxAge: 60000},
 app.use(flash());
 app.use(session({
-    cookie: {maxAge: 43200000},
+    cookie: {
+        maxAge: 43200000
+    },
     secret: 'keyboard cat',
-    resave: false,    
-    saveUninitialized: false
+    resave: false,
+    saveUninitialized: true
 }))
+
+app.use(function (req, res, next) {
+    if (!req.session) {
+        return next(new Error('Oh no')) //handle error
+    }
+    next() //otherwise continue
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,7 +51,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
-  });
+});
 app.set('view engine', 'ejs');
 app.set('view options', { layout: false });
 
