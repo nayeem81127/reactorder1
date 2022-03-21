@@ -18,7 +18,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                     Email.push(result.rows[i].email)
                     UsersDetails.push(result.rows[i])
                 }
-                // console.log(UsersDetails)
+                // console.log(UsersDetails)                
 
                 var amazonCredentials = [];
                 if (Email != []) {
@@ -35,7 +35,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
 
                                             if (UsersDetails[z].aqxolt_client && UsersDetails[z].client_secret && UsersDetails[z].instance_url && UsersDetails[z].oauth_token && UsersDetails[z].refreshtoken && UsersDetails[z].email && amazonCredentials[y].refresh_token && amazonCredentials[y].amazon_app_client_id && amazonCredentials[y].amazon_app_client_secret && amazonCredentials[y].aws_access_key && amazonCredentials[y].aws_secret_access_key && amazonCredentials[y].aws_selling_partner_role && amazonCredentials[y].marketplace_id) {
                                                 console.log(amazonCredentials[y].email)
-                                                
+
                                                 var Region = 'eu';
                                                 var sellingPartner = ' ';
                                                 sellingPartner = new SellingPartnerAPI({
@@ -63,14 +63,14 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                     })
                                                     .catch(error => {
                                                         this.error = error;
-                                                       console.log('error ' + UsersDetails[z].email + ' ' + error.message)
+                                                        console.log('error ' + UsersDetails[z].email + ' ' + error.message)
                                                     })
-                                                    
+
                                                 let resS = this.resS;
                                                 let error = ' ';
                                                 error = this.error;
                                                 if (!error) {
-                                                    
+
                                                     var conn = ' ';
                                                     conn = new jsforce.Connection({
                                                         oauth2: {
@@ -94,7 +94,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                         }));
                                                         client.release();
                                                     });
-    
+
                                                     conn.oauth2.refreshToken(UsersDetails[z].refreshtoken, async (err, results) => {
                                                         if (err) return (err);
                                                         //console.log(results)
@@ -299,6 +299,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                         buyerEmailInfo.push(allBuyerDetails[i].ERP7__Email__c)
                                                     }
 
+                                                    allBuyerDetails = allBuyerDetails.filter(function ({ name, date, amt }) {
+                                                        var key = `${name}${date}${amt}`;
+                                                        return !this.has(key) && this.add(key);
+                                                    }, new Set);
+
                                                     var accExist = [];
                                                     var accEmailExist = [];
                                                     var accNotExist = [];
@@ -385,6 +390,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     accIdExist.push(result.records[i].Id)
 
                                                                 }
+
+                                                                accUpExist = accUpExist.filter(function ({ name, date, amt }) {
+                                                                    var key = `${name}${date}${amt}`;
+                                                                    return !this.has(key) && this.add(key);
+                                                                }, new Set);
                                                                 // console.log('accUpExist' + JSON.stringify(accUpExist))
 
                                                                 conn.query("SELECT Id, AccountId, LastName, Email FROM Contact WHERE AccountId IN ('" + accIdExist.join("','") + "')", function (err, result) {
@@ -507,6 +517,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     }
                                                                 }
 
+                                                                addInsert = addInsert.filter(function ({ name, date, amt }) {
+                                                                    var key = `${name}${date}${amt}`;
+                                                                    return !this.has(key) && this.add(key);
+                                                                }, new Set);
+
                                                                 var addIdExist = [];
                                                                 var addNotExist = [];
                                                                 // console.log('addInsert ' + JSON.stringify(addInsert))
@@ -515,7 +530,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     if (result.records.length == 0) {
                                                                         // console.log(addInsert)
                                                                         if (addInsert != []) {
-                                                                            console.log('addInsert ' + JSON.stringify(addInsert))
+                                                                            // console.log('addInsert ' + JSON.stringify(addInsert))
                                                                             conn.sobject("ERP7__Address__c").create(addInsert,
                                                                                 function (err, rets) {
                                                                                     if (err) { return console.error(err); }
@@ -560,6 +575,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
 
                                                                         if (addExist != []) {
+                                                                            // console.log('addExist ' + JSON.stringify(addExist))
                                                                             conn.sobject("ERP7__Address__c").update(addExist,
                                                                                 function (err, rets) {
                                                                                     if (err) { return console.error(err); }
@@ -639,6 +655,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                         // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
 
+                                                                        OrderAvailable = OrderAvailable.filter(function ({ name, date, amt }) {
+                                                                            var key = `${name}${date}${amt}`;
+                                                                            return !this.has(key) && this.add(key);
+                                                                        }, new Set);
+
 
                                                                         var orderNotExist = [];
                                                                         var orderExist = [];
@@ -647,11 +668,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                             if (err) { return console.error(err); }
                                                                             // console.log(result.records.length)
                                                                             if (result.records.length == 0) {
-                                                                                console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
+                                                                                // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
                                                                                 if (OrderAvailable != []) {
                                                                                     conn.sobject("Order").create(OrderAvailable,
                                                                                         function (err, rets) {
-                                                                                            console.log(JSON.stringify(rets))
+                                                                                            // console.log(JSON.stringify(rets))
                                                                                             if (err) { return console.error(err); }
                                                                                             for (var i = 0; i < rets.length; i++) {
                                                                                                 if (rets[i].success) {
@@ -692,7 +713,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                 }
                                                                                 // console.log('orderNotExist' + JSON.stringify(orderNotExist))
 
-                                                                                console.log('orderNotExist ' + JSON.stringify(orderNotExist))
+                                                                                // console.log('orderNotExist ' + JSON.stringify(orderNotExist))
 
                                                                                 if (orderNotExist != []) {
                                                                                     conn.sobject("Order").create(orderNotExist,
@@ -766,6 +787,12 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     }
                                                                 }
                                                             }
+
+                                                            // console.log('prodAvailable '+ JSON.stringify(prodAvailable))
+
+                                                            prodAvailable = Array.from(new Set(prodAvailable.map(JSON.stringify))).map(JSON.parse);
+
+                                                            // console.log(prodAvailable)
 
                                                             var productExist = [];
                                                             var productIdExist = [];
@@ -874,6 +901,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                     }
                                                                 }
+
+                                                                // console.log(priceBookEntryAvail)
+
+                                                                priceBookEntryAvail = Array.from(new Set(priceBookEntryAvail.map(JSON.stringify))).map(JSON.parse);
+
                                                                 // console.log('priceBookEntryInsert ' + JSON.stringify(priceBookEntryAvail))
 
                                                                 conn.query("SELECT Id, Product2Id FROM pricebookentry WHERE isactive = true AND Product2Id IN ('" + prodMainId.join("','") + "') ORDER BY lastmodifieddate", function (err, result) {
@@ -1025,12 +1057,15 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                             // console.log(orderItemAvailable)
                                                                         }
 
+                                                                        orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
+
+
                                                                         conn.query("SELECT Id, ERP7__Inventory_Tracked__c, ERP7__Active__c, OrderId, ERP7__Order_Line_Status__c, Quantity, UnitPrice, Product2Id, ERP7__Is_Back_Order__c, ERP7__Allocate_Stock__c, PricebookEntryId, ERP7__VAT_Amount__c, ERP7__Total_Price__c FROM OrderItem WHERE OrderId IN ('" + OrderIdAvailable.join("','") + "') AND Product2Id IN ('" + prodMainId.join("','") + "') ", function (err, result) {
                                                                             if (err) { return console.error(err); }
                                                                             // console.log(result.records.length)
                                                                             if (result.records.length == 0) {
                                                                                 if (orderItemAvailable != []) {
-                                                                                    console.log('orderItemAvailable '+ JSON.stringify(orderItemAvailable))
+                                                                                    // console.log('orderItemAvailable '+ JSON.stringify(orderItemAvailable))
                                                                                     conn.sobject("OrderItem").create(orderItemAvailable,
                                                                                         function (err, rets) {
                                                                                             if (err) { return console.error(err); }
@@ -1079,7 +1114,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                     }
                                                                                 }
 
-                                                                                console.log('orderItemNotExist ' + JSON.stringify(orderItemNotExist))
+                                                                                // console.log('orderItemNotExist ' + JSON.stringify(orderItemNotExist))
 
                                                                                 if (orderItemNotExist != []) {
                                                                                     conn.sobject("OrderItem").create(orderItemNotExist,
@@ -1111,19 +1146,18 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                             }
                                                         })
                                                     }
-                                                    // break loop1;
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                            // console.log('end')
-                        }                        
+                        }
                     })
                 }
             }
         }))
+        client.release();
     } catch (e) {
         console.log('Error-> ', e);
     }
