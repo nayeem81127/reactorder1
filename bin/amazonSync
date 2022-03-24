@@ -313,6 +313,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                             var accNotExist = [];
 
                                                             if (buyerEmailInfo.length > 0) {
+                                                                setTimeout(async function () {
                                                                 conn.query("SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c,ERP7__Account_Type__c FROM Account WHERE ERP7__Email__c IN ('" + buyerEmailInfo.join("','") + "')", function (err, result) {
                                                                     if (err) { return console.error('err' + JSON.stringify(err)); }
                                                                     if (!err) {
@@ -378,12 +379,14 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                     }
                                                                 });
+                                                            }, 1000 * z);
                                                             }
 
                                                             function conInsertion() {
                                                                 var conExist = [];
                                                                 var conEmailExist = [];
                                                                 var conNotExist = [];
+                                                                setTimeout(async function () {
                                                                 conn.query("SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c, ERP7__Account_Type__c FROM Account WHERE ERP7__Email__c IN ('" + buyerEmailInfo.join("','") + "')", function (err, result) {
                                                                     if (err) { return console.error(err); }
 
@@ -474,6 +477,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                     }
                                                                 })
+                                                            }, 1000 * z);
                                                             }
 
                                                             var curContactExist = [];
@@ -495,7 +499,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     // console.log('AddressAvailable ' + JSON.stringify(AddressAvailable))
                                                                 }
 
-
+                                                                setTimeout(async function () {
                                                                 conn.query("SELECT Id, Name, Email, AccountId FROM Contact WHERE AccountId IN ('" + accIdExist.join("','") + "')", function (err, result) {
                                                                     if (err) { return console.error(err); }
 
@@ -615,12 +619,13 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                     }
                                                                 })
+                                                            }, 1000 * z);
                                                             }
 
                                                             var pricebook_id;
                                                             var orderId = [];
                                                             function orderInsertion() {
-
+                                                                setTimeout(async function () {
                                                                 conn.query("SELECT Id, Name, ERP7__Customer__c, ERP7__Contact__c, ERP7__City__c, ERP7__Country__c, ERP7__Postal_Code__c, ERP7__State__c FROM ERP7__Address__c WHERE ERP7__Customer__c IN ('" + accIdExist.join("','") + "')", function (err, result) {
                                                                     if (err) { return console.error(err); }
                                                                     // console.log('address ' + result.records.length)
@@ -772,13 +777,14 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     }
                                                                                                 }
                                                                                             })
-                                                                                        }, 1000 * y);
+                                                                                        }, 1000 * z);
                                                                                     }
                                                                                 }
                                                                             })
                                                                         }
                                                                     }
                                                                 })
+                                                            }, 1000 * z);
                                                             }
 
                                                             var SellerSKUId = [];
@@ -831,6 +837,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     var productExist = [];
                                                                     var productIdExist = [];
                                                                     var productNotExist = [];
+                                                                    setTimeout(async function () {
                                                                     conn.query("SELECT Id, Name, StockKeepingUnit, ERP7__SKU__c, ERP7__ASIN_Code__c, ERP7__Submitted_to_Amazon__c, ERP7__Price_Entry_Amount__c, ERP7__Brand__c, ERP7__Manufacturer__c, Family, IsActive, ERP7__Track_Inventory__c FROM Product2 WHERE StockKeepingUnit IN ('" + SellerSKUId.join("','") + "')", function (err, result) {
                                                                         if (err) { return console.error(err); }
                                                                         // console.log('product ' + result.records.length)
@@ -906,12 +913,14 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                             }
                                                                         }
                                                                     })
+                                                                }, 1000 * z);
                                                                 }
                                                             }
 
                                                             var productList = [];
                                                             var prodMainId = [];
                                                             function priceBookEntryInsert() {
+                                                                setTimeout(async function () {
                                                                 conn.query("SELECT Id, ERP7__ASIN_Code__c, StockKeepingUnit FROM Product2 WHERE StockKeepingUnit IN ('" + SellerSKUId.join("','") + "')", function (err, result) {
                                                                     if (err) { return console.error(err); }
                                                                     // console.log('product ' + result.records.length)
@@ -1023,12 +1032,14 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                     }
                                                                 })
+                                                            }, 1000 * z);
                                                             }
 
                                                             function orderItemsInsert() {
                                                                 var OrderIdAvailable = [];
                                                                 var OrderAmazId = [];
                                                                 var pricebookIdExist = [];
+                                                                setTimeout(async function () {
                                                                 conn.query("SELECT Id, Product2Id, Pricebook2Id FROM pricebookentry WHERE isactive = true AND Product2Id IN ('" + prodMainId.join("','") + "') ORDER BY lastmodifieddate", function (err, result) {
                                                                     if (err) { return console.error(err); }
 
@@ -1189,6 +1200,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                         }
                                                                     }
                                                                 })
+                                                            }, 1000 * z);
                                                             }
                                                         }
                                                     }
