@@ -20,6 +20,8 @@
   <link href="public/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
   <link href="public/plugins/apexcharts/apexcharts.css" rel="stylesheet">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 
   <!-- Theme Styles -->
   <link href="public/css/main.min.css" rel="stylesheet">
@@ -67,14 +69,16 @@
         <div class="" id="headerNav">
           <div class="row">
             <div class="col-md-6">
-              <select class="form-select" aria-label="Default select example">
-
-                <option value="1">All</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+              <select id="drop_joblogs" name="Option" class="Option">
+                <option value="All">All</option>
+                <% for(var i=0; i < locals.amazDetails.rows.length; i++) { %>
+                  <option value="<%= locals.amazDetails.rows[i].amazon_app_client_id %>">
+                    <%= locals.amazDetails.rows[i].amazon_app_client_id %>
+                  </option>
+                  <% } %>
               </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="position:relative;left:33%">
               <a href="/amazon-credentials" class="btn btn-warning m-b-xs">Add</a>
             </div>
           </div>
@@ -165,104 +169,140 @@
       </ul>
     </div>
     <% if (success_msg.length> 0) { %>
-      <div class="alert alert-success alert-dismissible fade show" style="width: 62%;position: absolute;top: 15%;z-index: 99;left: 20%;" role="alert">
+      <div class="alert alert-success alert-dismissible fade show"
+        style="width: 62%;position: absolute;top: 15%;z-index: 99;left: 20%;" role="alert">
         <%= locals.success_msg %>
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
       <% } %>
-    <% if (error_msg.length> 0) { %>
-      <div class="alert alert-warning alert-dismissible fade show" style="width: 62%;position: absolute;top: 15%;z-index: 99;left: 20%;" role="alert">
-        <%= locals.error_msg %>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+        <% if (error_msg.length> 0) { %>
+          <div class="alert alert-warning alert-dismissible fade show"
+            style="width: 62%;position: absolute;top: 15%;z-index: 99;left: 20%;" role="alert">
+            <%= locals.error_msg %>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
 
-      <% } %>
-    <div class="page-content">
-      <div class="main-wrapper">        
-        <div class="row">
-          <div class="col-lg">           
-            <div class="card" id="blockui-card-1">              
-              <div class="card-body">               
+          <% } %>
+            <div class="page-content">
+              <div class="main-wrapper">
                 <div class="row">
-                  <div class="col-md-3">
-                    <i class="fas fa-boxes fa-large"></i>
+                  <div class="col-lg">
+                    <div class="card" id="blockui-card-1">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <i class="fas fa-boxes fa-large"></i>
+                          </div>
+                          <div class="col-md-9">
+                            <h5 class="card-title mb-3">Products</h5>
+                            <form method="post" action="/amazonProductSync">
+                              <button type="submit" class="btn btn-primary">Pending Sync &nbsp;<i
+                                  class="fas fa-sync"></i></button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-md-9">
-                    <h5 class="card-title mb-3">Products</h5>
-                    <form method="post" action="/amazonProductSync">
-                      <button type="submit" class="btn btn-primary">Pending Sync &nbsp;<i
-                          class="fas fa-sync"></i></button>
-                    </form>
+                  <div class="col-lg">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <i class="fas fa-user fa-large"></i>
+                          </div>
+                          <div class="col-md-9">
+                            <h5 class="card-title mb-3">Customers</h5>
+
+                            <form method="post" action="/amazonCustomerSync">
+                              <button type="submit" class="btn btn-primary">Pending Sync &nbsp;<i
+                                  class="fas fa-sync"></i></button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <i class="fas fa-shopping-cart fa-large"></i>
+                          </div>
+                          <div class="col-md-9">
+                            <h5 class="card-title mb-3">Orders</h5>
+
+                            <form method="post" action="/amazonOrderSync">
+                              <button type="submit" class="btn btn-primary">Pending Sync &nbsp;<i
+                                  class="fas fa-sync"></i></button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Sync</h5>
+                        <div id="apex1"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Logs</h5>
+                        <table class="table table-condensed display tableId" style="width:100%">
+                          <tbody>
+                            <% for(var i=0; i < locals.generateLog.rows.length; i++) { %>
+                              <tr class="row-row">
+                                <td>
+                                  <%= locals.generateLog.rows[i].message %>
+                                </td>
+                                <td>
+                                  <%= locals.generateLog.rows[i].updated_at %>
+                                </td>
+                              </tr>
+                              <% } %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="col-lg">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-3">
-                    <i class="fas fa-user fa-large"></i>
-                  </div>
-                  <div class="col-md-9">
-                    <h5 class="card-title mb-3">Customers</h5>
 
-                    <form method="post" action="/amazonCustomerSync">
-                      <button type="submit" class="btn btn-primary">Pending Sync &nbsp;<i
-                          class="fas fa-sync"></i></button>
-                    </form>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="col-lg">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-3">
-                    <i class="fas fa-shopping-cart fa-large"></i>
-                  </div>
-                  <div class="col-md-9">
-                    <h5 class="card-title mb-3">Orders</h5>
-
-                    <form method="post" action="/amazonOrderSync">
-                      <button type="submit" class="btn btn-primary">Pending Sync &nbsp;<i
-                          class="fas fa-sync"></i></button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-12 col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Sync</h5>
-                <div id="apex1"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Logs</h5>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
   </div>
 
+  <script>
+    $(document).ready(function () {
+      $('#drop_joblogs').on('change', function () {
+        var state_id = this.value;
+        var url = '/amaz_joblog/' + state_id;
+        $.ajax({
+          url: url,
+          type: 'GET',
+          success: function (result) {
+            console.log('changing...');
+            window.location.href = '/amaz_joblog/' + state_id;
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      });
+    });
+  </script>
+
   <!-- Javascripts -->
+  <script src="public/js/multiselect-dropdown.js"></script>
   <script src="public/plugins/jquery/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="public/plugins/bootstrap/js/bootstrap.min.js"></script>

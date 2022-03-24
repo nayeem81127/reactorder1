@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var { pool } = require("../dbConfig");
+const uuid = require('uuid').v4;
 const jsforce = require('jsforce');
 const SellingPartnerAPI = require('amazon-sp-api');
 
@@ -646,10 +647,8 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                         if (curContactExist != [] && AddressIdCur != [] && resS.Orders != []) {
                                                                                             for (let i in resS.Orders) {
                                                                                                 if (resS.Orders[i].BuyerInfo.BuyerEmail != undefined && resS.Orders[i].BuyerInfo.BuyerEmail != '') {
-                                                                                                    // console.log('hello')
                                                                                                     for (let l in curContactExist) {
                                                                                                         if (resS.Orders[i].BuyerInfo.BuyerEmail === curContactExist[l].Email) {
-                                                                                                            // console.log('hello 1')
                                                                                                             for (let m in AddressIdCur) {
                                                                                                                 if (curContactExist[l].AccountId === AddressIdCur[m].AccountId) {
                                                                                                                     var List = {
@@ -791,11 +790,11 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                 if (OrderItemsList != [] && prodBrand != [] && Pricing != []) {
                                                                     for (let i in OrderItemsList) {
                                                                         for (let j in prodBrand) {
-                                                                            for (let k in Pricing) {
-                                                                                for (let l in prodBrand[j].AttributeSets) {
-                                                                                    for (let m in Pricing[k].Offers) {
-                                                                                        if (OrderItemsList[i].ASIN === prodBrand[j].Identifiers.MarketplaceASIN.ASIN) {
-                                                                                            if (OrderItemsList[i].ASIN === Pricing[k].Identifiers.MarketplaceASIN.ASIN) {
+                                                                            if (OrderItemsList[i].ASIN === prodBrand[j].Identifiers.MarketplaceASIN.ASIN) {
+                                                                                for (let k in Pricing) {
+                                                                                    if (OrderItemsList[i].ASIN === Pricing[k].Identifiers.MarketplaceASIN.ASIN) {
+                                                                                        for (let l in prodBrand[j].AttributeSets) {
+                                                                                            for (let m in Pricing[k].Offers) {
                                                                                                 if (OrderItemsList[i].SellerSKU === Pricing[k].Offers[m].SellerSKU) {
                                                                                                     if (Pricing[k].Offers[m].BuyingPrice.ListingPrice.Amount != undefined) {
                                                                                                         var list = {
@@ -1097,8 +1096,8 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                 }
                                                                                             }
                                                                                         }
-
                                                                                         orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
+
 
                                                                                         conn.query("SELECT Id, ERP7__Inventory_Tracked__c, ERP7__Active__c, OrderId, ERP7__Order_Line_Status__c, Quantity, UnitPrice, Product2Id, ERP7__Is_Back_Order__c, ERP7__Allocate_Stock__c, PricebookEntryId, ERP7__VAT_Amount__c, ERP7__Total_Price__c FROM OrderItem WHERE OrderId IN ('" + OrderIdAvailable.join("','") + "') AND Product2Id IN ('" + prodMainId.join("','") + "') ", function (err, result) {
                                                                                             if (err) { return console.error(err); }
@@ -1108,20 +1107,22 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                 if (result.records.length == 0) {
                                                                                                     if (orderItemAvailable != []) {
                                                                                                         conn.sobject("OrderItem").create(orderItemAvailable,
-                                                                                                            function (err, rets) {
+                                                                                                            async function (err, rets) {
                                                                                                                 if (err) { return console.error(err); }
                                                                                                                 for (var i = 0; i < rets.length; i++) {
                                                                                                                     if (rets[i].success) {
                                                                                                                         console.log("Created record id Order Item 1:" + rets[i].id);
                                                                                                                     }
                                                                                                                 }
+                                                                                                                var date = new Date();
+                                                                                                                var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+                                                                                                                pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
                                                                                                             });
                                                                                                     }
                                                                                                 }
                                                                                                 else if (result.records.length > 0) {
                                                                                                     var orderItemExist = [];
                                                                                                     var orderItemIdExist = [];
-                                                                                                    var orderItemNotExist = [];
                                                                                                     for (let i in result.records) {
                                                                                                         for (let j in orderItemAvailable) {
                                                                                                             if (result.records[i].OrderId == orderItemAvailable[j].OrderId && result.records[i].Product2Id == orderItemAvailable[j].Product2Id && result.records[i].PricebookEntryId == orderItemAvailable[j].PricebookEntryId) {
@@ -1140,6 +1141,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 var list2 = {
                                                                                                                     OrderId: result.records[i].OrderId,
                                                                                                                     Product2Id: result.records[i].Product2Id,
+                                                                                                                    PricebookEntryId: result.records[i].PricebookEntryId
                                                                                                                 }
                                                                                                                 orderItemExist.push(list)
                                                                                                                 orderItemIdExist.push(list2)
@@ -1147,26 +1149,10 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                         }
                                                                                                     }
 
-                                                                                                    for (let i in orderItemAvailable) {
-                                                                                                        orderItemNotExist.push(orderItemAvailable[i])
+                                                                                                    var orderItemNotExist = [];
+                                                                                                    if (orderItemIdExist != []) {
+                                                                                                        orderItemNotExist = orderItemAvailable.filter((o1) => !orderItemIdExist.some((o2) => o1.OrderId === o2.OrderId && o1.Product2Id === o2.Product2Id && o1.PricebookEntryId === o2.PricebookEntryId));
                                                                                                     }
-
-                                                                                                    for (let i in orderItemAvailable) {
-                                                                                                        for (let j in orderItemIdExist) {
-                                                                                                            if (orderItemIdExist[j].OrderId === orderItemAvailable[i].OrderId && orderItemIdExist[j].Product2Id === orderItemAvailable[i].Product2Id) {
-                                                                                                                orderItemNotExist.pop(orderItemAvailable[i])
-                                                                                                            }
-                                                                                                        }
-                                                                                                    }
-
-                                                                                                    // orderItemNotExist = orderItemNotExist.filter(function ({ name, date, amt }) {
-                                                                                                    //     var key = `${name}${date}${amt}`;
-                                                                                                    //     return !this.has(key) && this.add(key);
-                                                                                                    // }, new Set);
-
-                                                                                                    orderItemNotExist = Array.from(new Set(orderItemNotExist.map(JSON.stringify))).map(JSON.parse);
-
-                                                                                                    // console.log('orderItemNotExist ' + JSON.stringify(orderItemNotExist))
 
                                                                                                     if (orderItemNotExist != []) {
                                                                                                         conn.sobject("OrderItem").create(orderItemNotExist,
@@ -1182,13 +1168,16 @@ const SellingPartnerAPI = require('amazon-sp-api');
 
                                                                                                     if (orderItemExist != []) {
                                                                                                         conn.sobject("OrderItem").update(orderItemExist,
-                                                                                                            function (err, rets) {
+                                                                                                            async function (err, rets) {
                                                                                                                 if (err) { return console.error(err); }
                                                                                                                 for (var i = 0; i < rets.length; i++) {
                                                                                                                     if (rets[i].success) {
                                                                                                                         console.log("Updated record id Order Item: " + rets[i].id);
                                                                                                                     }
                                                                                                                 }
+                                                                                                                var date = new Date();
+                                                                                                                var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+                                                                                                                pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
                                                                                                             });
                                                                                                     }
                                                                                                 }

@@ -27,7 +27,7 @@ var path = require('path');
 app.use(flash());
 app.use(session({
     cookie: {
-        maxAge: 43200000
+        maxAge: 518400000
     },
     secret: 'keyboard cat',
     resave: false,
@@ -57,6 +57,13 @@ app.set('view options', { layout: false });
 
 
 require('./lib/routes.js')(app);
+
+// var reqTimer = setTimeout(function wakeUp() {
+//     request("https://reactorder.herokuapp.com", function() {
+//        console.log("WAKE UP DYNO");
+//     });
+//     return reqTimer = setTimeout(wakeUp, 1200000);
+//  }, 1200000);
 
 app.listen(PORT);
 console.log('Node listening on port %s', PORT);
