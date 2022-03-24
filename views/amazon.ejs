@@ -15,17 +15,17 @@
 
   <!-- Styles -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet">
-  <link href="public/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="public/plugins/font-awesome/css/all.min.css" rel="stylesheet">
-  <link href="public/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
-  <link href="public/plugins/apexcharts/apexcharts.css" rel="stylesheet">
+  <link href="/public/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/public/plugins/font-awesome/css/all.min.css" rel="stylesheet">
+  <link href="/public/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
+  <link href="/public/plugins/apexcharts/apexcharts.css" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 
   <!-- Theme Styles -->
-  <link href="public/css/main.min.css" rel="stylesheet">
-  <link href="public/css/custom.css" rel="stylesheet">
+  <link href="/public/css/main.min.css" rel="stylesheet">
+  <link href="/public/css/custom.css" rel="stylesheet">
   <style>
     .fa-large {
       font-size: 30px;
@@ -62,7 +62,7 @@
           </ul>
         </div>
         <div class="logo1">
-          <h3 class="card-title mb-0"> <img src="public/images/amazon.png" width="50"></img>
+          <h3 class="card-title mb-0"> <img src="/public/images/amazon.png" width="50"></img>
             <%= locals.username %>, Amazon
           </h3>
         </div>
@@ -246,14 +246,14 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-sm-12 col-md-6">
+                  <!-- <div class="col-sm-12 col-md-6">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Sync</h5>
                         <div id="apex1"></div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-sm-12 col-md-6">
                     <div class="card">
                       <div class="card-body">
@@ -283,15 +283,16 @@
 
   <script>
     $(document).ready(function () {
+      $(`#drop_joblogs option[value='<%= locals.idValue %>']`).prop('selected', true);
       $('#drop_joblogs').on('change', function () {
         var state_id = this.value;
-        var url = '/amaz_joblog/' + state_id;
+        var url = '/amazon/' + state_id;
         $.ajax({
           url: url,
           type: 'GET',
           success: function (result) {
             console.log('changing...');
-            window.location.href = '/amaz_joblog/' + state_id;
+            window.location.href = '/amazon/' + state_id;
           },
           error: function (err) {
             console.log(err);
@@ -302,15 +303,15 @@
   </script>
 
   <!-- Javascripts -->
-  <script src="public/js/multiselect-dropdown.js"></script>
-  <script src="public/plugins/jquery/jquery-3.4.1.min.js"></script>
+  <script src="/public/js/multiselect-dropdown.js"></script>
+  <script src="/public/plugins/jquery/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
-  <script src="public/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/public/plugins/bootstrap/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
-  <script src="public/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
-  <script src="public/plugins/apexcharts/apexcharts.min.js"></script>
-  <script src="public/js/main.min.js"></script>
-  <script src="public/js/pages/dashboard.js"></script>
+  <script src="/public/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
+  <script src="/public/plugins/apexcharts/apexcharts.min.js"></script>
+  <script src="/public/js/main.min.js"></script>
+  <script src="/public/js/pages/dashboard.js"></script>
 </body>
 
 </html>
