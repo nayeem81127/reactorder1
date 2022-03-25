@@ -323,7 +323,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                     if (err) { return console.error(err); }
                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                         if (rets[i].success) {
-                                                                                            console.log("Created record id Account 1: " + rets[i].id);
+                                                                                            console.log(amazonCredentials[y].email + " Created record id Account 1: " + rets[i].id);
                                                                                         }
                                                                                     }
                                                                                     conInsertion();
@@ -358,7 +358,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                         if (err) { return console.error(err); }
                                                                                         for (var i = 0; i < rets.length; i++) {
                                                                                             if (rets[i].success) {
-                                                                                                console.log("Created record id Account 2: " + rets[i].id);
+                                                                                                console.log(amazonCredentials[y].email + " Created record id Account 2: " + rets[i].id);
                                                                                             }
                                                                                         }
                                                                                     });
@@ -370,7 +370,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                         if (err) { return console.error(err); }
                                                                                         for (var i = 0; i < rets.length; i++) {
                                                                                             if (rets[i].success) {
-                                                                                                console.log("Updated Successfully Account : " + rets[i].id);
+                                                                                                console.log(amazonCredentials[y].email + " Updated Successfully Account : " + rets[i].id);
                                                                                             }
                                                                                         }
                                                                                         conInsertion();
@@ -419,7 +419,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                 if (err) { return console.error(err); }
                                                                                                 for (var i = 0; i < rets.length; i++) {
                                                                                                     if (rets[i].success) {
-                                                                                                        console.log("Created record id contact 1: " + rets[i].id);
+                                                                                                        console.log(amazonCredentials[y].email + " Created record id contact 1: " + rets[i].id);
                                                                                                     }
                                                                                                 }
                                                                                                 addressInsertion()
@@ -452,7 +452,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Created record id contact 2: " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Created record id contact 2: " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                 })
@@ -464,7 +464,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Updated Successfully Contact : " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Updated Successfully Contact : " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                     addressInsertion()
@@ -558,7 +558,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Created record id Address 1: " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Created record id Address 1: " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                     orderInsertion();
@@ -594,7 +594,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Created record id Address 1: " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Created record id Address 1: " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                 });
@@ -607,7 +607,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Updated Successfully Address : " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Updated Successfully Address : " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                     orderInsertion();
@@ -709,7 +709,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                     if (err) { return console.error(err); }
                                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                                         if (rets[i].success) {
-                                                                                                                            console.log("Created record id Order: " + rets[i].id);
+                                                                                                                            console.log(amazonCredentials[y].email + " Created record id Order: " + rets[i].id);
                                                                                                                         }
                                                                                                                     }
                                                                                                                     productInsert();
@@ -756,7 +756,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                     if (err) { return console.error(err); }
                                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                                         if (rets[i].success) {
-                                                                                                                            console.log("Created record id Order 1: " + rets[i].id);
+                                                                                                                            console.log(amazonCredentials[y].email + " Created record id Order 1: " + rets[i].id);
                                                                                                                         }
                                                                                                                     }
                                                                                                                 });
@@ -768,7 +768,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                     if (err) { return console.error(err); }
                                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                                         if (rets[i].success) {
-                                                                                                                            console.log("Updated record id Order: " + rets[i].id);
+                                                                                                                            console.log(amazonCredentials[y].email + " Updated record id Order: " + rets[i].id);
                                                                                                                         }
                                                                                                                     }
                                                                                                                     productInsert();
@@ -850,7 +850,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                             if (err) { return console.error(err); }
                                                                                             for (var i = 0; i < rets.length; i++) {
                                                                                                 if (rets[i].success) {
-                                                                                                    console.log("Created record id Product: " + rets[i].id);
+                                                                                                    console.log(amazonCredentials[y].email + " Created record id Product: " + rets[i].id);
                                                                                                 }
                                                                                             }
                                                                                             priceBookEntryInsert();
@@ -892,7 +892,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                             if (err) { return console.error(err); }
                                                                                             for (var i = 0; i < rets.length; i++) {
                                                                                                 if (rets[i].success) {
-                                                                                                    console.log("Created record id Product: " + rets[i].id);
+                                                                                                    console.log(amazonCredentials[y].email + " Created record id Product: " + rets[i].id);
                                                                                                 }
                                                                                             }
                                                                                         });
@@ -904,7 +904,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                             if (err) { return console.error(err); }
                                                                                             for (var i = 0; i < rets.length; i++) {
                                                                                                 if (rets[i].success) {
-                                                                                                    console.log("Updated record id Product: " + rets[i].id);
+                                                                                                    console.log(amazonCredentials[y].email + " Updated record id Product: " + rets[i].id);
                                                                                                 }
                                                                                             }
                                                                                             priceBookEntryInsert();
@@ -971,7 +971,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Created record id Price book Entry: " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Created record id Price book Entry: " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                     orderItemsInsert();
@@ -1006,7 +1006,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Created record id Price book Entry 1: " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Created record id Price book Entry 1: " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                 });
@@ -1020,7 +1020,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                     if (err) { return console.error(err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log("Updated record id Price book Entry 1: " + rets[i].id);
+                                                                                                            console.log(amazonCredentials[y].email + " Updated record id Price book Entry 1: " + rets[i].id);
                                                                                                         }
                                                                                                     }
                                                                                                     orderItemsInsert();
@@ -1122,7 +1122,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 if (err) { return console.error(err); }
                                                                                                                 for (var i = 0; i < rets.length; i++) {
                                                                                                                     if (rets[i].success) {
-                                                                                                                        console.log("Created record id Order Item 1:" + rets[i].id);
+                                                                                                                        console.log(amazonCredentials[y].email + " Created record id Order Item 1:" + rets[i].id);
                                                                                                                     }
                                                                                                                 }
                                                                                                                 var date = new Date();
@@ -1171,7 +1171,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 if (err) { return console.error(err); }
                                                                                                                 for (var i = 0; i < rets.length; i++) {
                                                                                                                     if (rets[i].success) {
-                                                                                                                        console.log("Created record id Order Item: " + rets[i].id);
+                                                                                                                        console.log(amazonCredentials[y].email + " Created record id Order Item: " + rets[i].id);
                                                                                                                     }
                                                                                                                 }
                                                                                                             });
@@ -1183,7 +1183,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 if (err) { return console.error(err); }
                                                                                                                 for (var i = 0; i < rets.length; i++) {
                                                                                                                     if (rets[i].success) {
-                                                                                                                        console.log("Updated record id Order Item: " + rets[i].id);
+                                                                                                                        console.log(amazonCredentials[y].email + " Updated record id Order Item: " + rets[i].id);
                                                                                                                     }
                                                                                                                 }
                                                                                                                 var date = new Date();
