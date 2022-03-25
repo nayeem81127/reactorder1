@@ -68,8 +68,8 @@
         </div>
         <div class="" id="headerNav">
           <div class="row">
-            <div class="col-md-6">
-              <select id="drop_joblogs" name="Option" class="Option">
+            <div class="offset-md-4 col-md-5">
+              <select id="drop_joblogs" class="form-select" aria-label="Default select example">  
                 <option value="All">All</option>
                 <% for(var i=0; i < locals.amazDetails.rows.length; i++) { %>
                   <option value="<%= locals.amazDetails.rows[i].amazon_app_client_id %>">
@@ -78,7 +78,7 @@
                   <% } %>
               </select>
             </div>
-            <div class="col-md-6" style="position:relative;left:33%">
+            <div class="col-md-3">
               <a href="/amazon-credentials" class="btn btn-warning m-b-xs">Add</a>
             </div>
           </div>
@@ -246,18 +246,19 @@
                 </div>
 
                 <div class="row">
-                  <!-- <div class="col-sm-12 col-md-6">
+                  <div class="col-sm-12 col-md-6">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Sync</h5>
                         <div id="apex1"></div>
                       </div>
                     </div>
-                  </div> -->
+                  </div>
                   <div class="col-sm-12 col-md-6">
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Logs</h5>
+                        <div style="height:30.1rem;overflow-y:scroll;margin:-26px;">
                         <table class="table table-condensed display tableId" style="width:100%">
                           <tbody>
                             <% for(var i=0; i < locals.generateLog.rows.length; i++) { %>
@@ -272,6 +273,7 @@
                               <% } %>
                           </tbody>
                         </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -303,7 +305,7 @@
   </script>
 
   <!-- Javascripts -->
-  <script src="/public/js/multiselect-dropdown.js"></script>
+  <!-- <script src="/public/js/multiselect-dropdown.js"></script> -->
   <script src="/public/plugins/jquery/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="/public/plugins/bootstrap/js/bootstrap.min.js"></script>
