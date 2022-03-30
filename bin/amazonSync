@@ -41,7 +41,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                 if (UsersDetails[z].email === amazonCredentials[y].email) {
                                                     console.log('lengh of user ' + UsersDetails.length + ' length of amazon ' + amazonCredentials.length)
 
-                                                    if (UsersDetails[z].aqxolt_client && UsersDetails[z].client_secret && UsersDetails[z].instance_url && UsersDetails[z].oauth_token && UsersDetails[z].refreshtoken && UsersDetails[z].email && amazonCredentials[y].refresh_token && amazonCredentials[y].amazon_app_client_id && amazonCredentials[y].amazon_app_client_secret && amazonCredentials[y].aws_access_key && amazonCredentials[y].aws_secret_access_key && amazonCredentials[y].aws_selling_partner_role && amazonCredentials[y].marketplace_id) {
+                                                    if (UsersDetails[z].aqxolt_client && UsersDetails[z].client_secret && UsersDetails[z].instance_url && UsersDetails[z].oauth_token && UsersDetails[z].refreshtoken && UsersDetails[z].email && amazonCredentials[y].refresh_token && amazonCredentials[y].amazon_app_client_id && amazonCredentials[y].amazon_app_client_secret && amazonCredentials[y].aws_access_key && amazonCredentials[y].aws_secret_access_key && amazonCredentials[y].aws_selling_partner_role && amazonCredentials[y].marketplace_id && UsersDetails[z].aqxolt_order_profile && UsersDetails[z].aqxolt_customer && UsersDetails[z].aqxolt_channel) {
                                                         console.log(amazonCredentials[y].email)
 
                                                         var Region = 'eu';
@@ -316,73 +316,103 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                             var accEmailExist = [];
                                                             var accNotExist = [];
 
-                                                            if (buyerEmailInfo.length > 0) {
+                                                            if (UsersDetails[z].aqxolt_order_profile != null) {
                                                                 setTimeout(async function () {
-                                                                    conn.query("SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c,ERP7__Account_Type__c FROM Account WHERE ERP7__Email__c IN ('" + buyerEmailInfo.join("','") + "')", function (err, result) {
-                                                                        if (err) { return console.error('err' + JSON.stringify(err)); }
+                                                                    conn.query(`SELECT Id FROM ERP7__Profiling__c where Id='${UsersDetails[z].aqxolt_order_profile}'`, function (err, result) {
                                                                         if (!err) {
-                                                                            if (result.records.length == 0) {
-                                                                                conn.sobject("Account").create(allBuyerDetails,
-                                                                                    function (err, rets) {
-                                                                                        if (err) { return console.error(err); }
-                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                            if (rets[i].success) {
-                                                                                                console.log(" Created record id Account 1: " + rets[i].id);
-                                                                                            }
-                                                                                        }
-                                                                                        conInsertion();
-                                                                                    });
-                                                                            }
-                                                                            else if (result.records.length > 0) {
-                                                                                for (let i in result.records) {
-                                                                                    for (let j in allBuyerDetails) {
-                                                                                        if (result.records[i].ERP7__Email__c == allBuyerDetails[j].ERP7__Email__c) {
-                                                                                            let acclist = {
-                                                                                                Id: result.records[i].Id,
-                                                                                                ERP7__Email__c: allBuyerDetails[j].ERP7__Email__c,
-                                                                                                Name: allBuyerDetails[j].Name,
-                                                                                                ERP7__Order_Profile__c: allBuyerDetails[j].ERP7__Order_Profile__c,
-                                                                                                ERP7__Account_Profile__c: allBuyerDetails[j].ERP7__Account_Profile__c,
-                                                                                                ERP7__Account_Type__c: allBuyerDetails[j].ERP7__Account_Type__c
-                                                                                            }
-                                                                                            accExist.push(acclist);
-                                                                                            accEmailExist.push(allBuyerDetails[j].ERP7__Email__c)
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                                // console.log('Exist ' + accEmailExist)
-                                                                                for (let i in allBuyerDetails) {
-                                                                                    if (!accEmailExist.includes(allBuyerDetails[i].ERP7__Email__c)) accNotExist.push(allBuyerDetails[i])
-                                                                                }
-                                                                                // console.log('accExist' + JSON.stringify(accExist))
+                                                                            if (result.records.length > 0) {
+                                                                                if (UsersDetails[z].aqxolt_customer != null) {
+                                                                                    setTimeout(async function () {
+                                                                                        conn.query(`SELECT Id FROM ERP7__Profiling__c where Id='${UsersDetails[z].aqxolt_customer}'`, function (err, result) {
+                                                                                            if (!err) {
+                                                                                                if (result.records.length > 0) {
+                                                                                                    if (UsersDetails[z].aqxolt_channel != null) {
+                                                                                                        setTimeout(async function () {
+                                                                                                            conn.query(`SELECT Id FROM ERP7__Channel__c where Id='${UsersDetails[z].aqxolt_channel}'`, function (err, result) {
+                                                                                                                if (!err) {
+                                                                                                                    if (result.records.length > 0) {
+                                                                                                                        if (buyerEmailInfo.length > 0) {
+                                                                                                                            setTimeout(async function () {
+                                                                                                                                conn.query("SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c,ERP7__Account_Type__c FROM Account WHERE ERP7__Email__c IN ('" + buyerEmailInfo.join("','") + "')", function (err, result) {
+                                                                                                                                    if (err) { return console.error('Account err ' + JSON.stringify(err)); }
+                                                                                                                                    if (!err) {
+                                                                                                                                        if (result.records.length == 0) {
+                                                                                                                                            conn.sobject("Account").create(allBuyerDetails,
+                                                                                                                                                function (err, rets) {
+                                                                                                                                                    if (err) { return console.error(err); }
+                                                                                                                                                    for (var i = 0; i < rets.length; i++) {
+                                                                                                                                                        if (rets[i].success) {
+                                                                                                                                                            console.log(" Created record id Account 1: " + rets[i].id);
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                    conInsertion();
+                                                                                                                                                });
+                                                                                                                                        }
+                                                                                                                                        else if (result.records.length > 0) {
+                                                                                                                                            for (let i in result.records) {
+                                                                                                                                                for (let j in allBuyerDetails) {
+                                                                                                                                                    if (result.records[i].ERP7__Email__c == allBuyerDetails[j].ERP7__Email__c) {
+                                                                                                                                                        let acclist = {
+                                                                                                                                                            Id: result.records[i].Id,
+                                                                                                                                                            ERP7__Email__c: allBuyerDetails[j].ERP7__Email__c,
+                                                                                                                                                            Name: allBuyerDetails[j].Name,
+                                                                                                                                                            ERP7__Order_Profile__c: allBuyerDetails[j].ERP7__Order_Profile__c,
+                                                                                                                                                            ERP7__Account_Profile__c: allBuyerDetails[j].ERP7__Account_Profile__c,
+                                                                                                                                                            ERP7__Account_Type__c: allBuyerDetails[j].ERP7__Account_Type__c
+                                                                                                                                                        }
+                                                                                                                                                        accExist.push(acclist);
+                                                                                                                                                        accEmailExist.push(allBuyerDetails[j].ERP7__Email__c)
+                                                                                                                                                    }
+                                                                                                                                                }
+                                                                                                                                            }
+                                                                                                                                            // console.log('Exist ' + accEmailExist)
+                                                                                                                                            for (let i in allBuyerDetails) {
+                                                                                                                                                if (!accEmailExist.includes(allBuyerDetails[i].ERP7__Email__c)) accNotExist.push(allBuyerDetails[i])
+                                                                                                                                            }
+                                                                                                                                            // console.log('accExist' + JSON.stringify(accExist))
 
-                                                                                if (accNotExist != []) {
-                                                                                    conn.sobject("Account").create(accNotExist,
-                                                                                        function (err, rets) {
-                                                                                            if (err) { return console.error(err); }
-                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                if (rets[i].success) {
-                                                                                                    console.log(" Created record id Account 2: " + rets[i].id);
+                                                                                                                                            if (accNotExist != []) {
+                                                                                                                                                conn.sobject("Account").create(accNotExist,
+                                                                                                                                                    function (err, rets) {
+                                                                                                                                                        if (err) { return console.error(err); }
+                                                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                                                            if (rets[i].success) {
+                                                                                                                                                                console.log(" Created record id Account 2: " + rets[i].id);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                    });
+                                                                                                                                            }
+
+                                                                                                                                            if (accExist != []) {
+                                                                                                                                                conn.sobject("Account").update(accExist,
+                                                                                                                                                    function (err, rets) {
+                                                                                                                                                        if (err) { return console.error(err); }
+                                                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                                                            if (rets[i].success) {
+                                                                                                                                                                console.log(" Updated Successfully Account : " + rets[i].id);
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                        conInsertion();
+                                                                                                                                                    });
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                });
+                                                                                                                            }, 3000 * z);
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            })
+                                                                                                        }, 3000 * z);
+                                                                                                    }
                                                                                                 }
                                                                                             }
-                                                                                        });
-                                                                                }
-
-                                                                                if (accExist != []) {
-                                                                                    conn.sobject("Account").update(accExist,
-                                                                                        function (err, rets) {
-                                                                                            if (err) { return console.error(err); }
-                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                if (rets[i].success) {
-                                                                                                    console.log(" Updated Successfully Account : " + rets[i].id);
-                                                                                                }
-                                                                                            }
-                                                                                            conInsertion();
-                                                                                        });
+                                                                                        })
+                                                                                    }, 3000 * z);
                                                                                 }
                                                                             }
                                                                         }
-                                                                    });
+                                                                    })
                                                                 }, 3000 * z);
                                                             }
 
@@ -392,7 +422,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                 var conNotExist = [];
                                                                 setTimeout(async function () {
                                                                     conn.query("SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c, ERP7__Account_Type__c FROM Account WHERE ERP7__Email__c IN ('" + buyerEmailInfo.join("','") + "')", function (err, result) {
-                                                                        if (err) { return console.error(err); }
+                                                                        if (err) { return console.error('Account err ' + JSON.stringify(err)); }
 
                                                                         if (!err) {
                                                                             if (result.records.length > 0) {
@@ -414,7 +444,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                 // console.log('accUpExist' + JSON.stringify(accUpExist))
 
                                                                                 conn.query("SELECT Id, AccountId, LastName, Email FROM Contact WHERE AccountId IN ('" + accIdExist.join("','") + "')", function (err, result) {
-                                                                                    if (err) { return console.error(err); }
+                                                                                    if (err) { return console.error('Contact err ' + JSON.stringify(err)); }
 
                                                                                     if (!err) {
                                                                                         if (result.records.length == 0) {
@@ -505,7 +535,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
 
                                                                 setTimeout(async function () {
                                                                     conn.query("SELECT Id, Name, Email, AccountId FROM Contact WHERE AccountId IN ('" + accIdExist.join("','") + "')", function (err, result) {
-                                                                        if (err) { return console.error(err); }
+                                                                        if (err) { return console.error('Contact err ' + JSON.stringify(err)); }
 
                                                                         if (!err) {
                                                                             if (result.records.length > 0) {
@@ -551,7 +581,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                 // console.log('addInsert ' + JSON.stringify(addInsert))
                                                                                 setTimeout(async function () {
                                                                                     conn.query("SELECT Id, Name, ERP7__Customer__c, ERP7__Contact__c, ERP7__City__c, ERP7__Country__c, ERP7__Postal_Code__c, ERP7__State__c FROM ERP7__Address__c WHERE ERP7__Customer__c IN ('" + accIdExist.join("','") + "')", function (err, result) {
-                                                                                        if (err) { return console.error(err); }
+                                                                                        if (err) { return console.error('Address err ' + JSON.stringify(err)); }
 
                                                                                         if (!err) {
                                                                                             if (result.records.length == 0) {
@@ -633,7 +663,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                             function orderInsertion() {
                                                                 setTimeout(async function () {
                                                                     conn.query("SELECT Id, Name, ERP7__Customer__c, ERP7__Contact__c, ERP7__City__c, ERP7__Country__c, ERP7__Postal_Code__c, ERP7__State__c FROM ERP7__Address__c WHERE ERP7__Customer__c IN ('" + accIdExist.join("','") + "')", function (err, result) {
-                                                                        if (err) { return console.error(err); }
+                                                                        if (err) { return console.error('Address err ' + JSON.stringify(err)); }
                                                                         // console.log('address ' + result.records.length)
                                                                         if (!err) {
                                                                             if (result.records.length > 0) {
@@ -647,148 +677,146 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                 }
 
                                                                                 setTimeout(async function () {
-                                                                                conn.query(`SELECT ERP7__Price_Book__c FROM ERP7__Profiling__c where Id='${UsersDetails[z].aqxolt_order_profile}'`, (err, result) => {
-                                                                                    if (err) { return console.error(err); }
-                                                                                    // console.log('pricebook' + result.records.length)
+                                                                                    conn.query(`SELECT ERP7__Price_Book__c FROM ERP7__Profiling__c where Id='${UsersDetails[z].aqxolt_order_profile}'`, (err, result) => {
+                                                                                        if (err) { return console.error('PriceBook err ' + JSON.stringify(err)); }
+                                                                                        // console.log('pricebook' + result.records.length)
+                                                                                        if (!err) {
+                                                                                            if (result.records.length > 0) {
+                                                                                                pricebook_id = result.records[0].ERP7__Price_Book__c;
 
-                                                                                    if (!err) {
-                                                                                        if (result.records.length > 0) {
-                                                                                            pricebook_id = result.records[0].ERP7__Price_Book__c;
-
-                                                                                            var OrderAvailable = [];
-                                                                                            if (curContactExist != [] && AddressIdCur != [] && resS.Orders != []) {
-                                                                                                for (let i in resS.Orders) {
-                                                                                                    if (resS.Orders[i].BuyerInfo.BuyerEmail != undefined && resS.Orders[i].BuyerInfo.BuyerEmail != '') {
-                                                                                                        for (let l in curContactExist) {
-                                                                                                            if (resS.Orders[i].BuyerInfo.BuyerEmail === curContactExist[l].Email) {
-                                                                                                                for (let m in AddressIdCur) {
-                                                                                                                    if (curContactExist[l].AccountId === AddressIdCur[m].AccountId) {
-                                                                                                                        var List = {
-                                                                                                                            ERP7__E_Order_Id__c: resS.Orders[i].AmazonOrderId,
-                                                                                                                            Name: resS.Orders[i].AmazonOrderId,
-                                                                                                                            ERP7__Amount__c: resS.Orders[i].OrderTotal.Amount,
-                                                                                                                            ERP7__Customer_Email__c: resS.Orders[i].BuyerInfo.BuyerEmail,
-                                                                                                                            ERP7__Customer_Purchase_Order_Date__c: resS.Orders[i].PurchaseDate,
-                                                                                                                            Status: resS.Orders[i].OrderStatus,
-                                                                                                                            ERP7__Active__c: true,
-                                                                                                                            Type: 'Amazon',
-                                                                                                                            ERP7__Order_Profile__c: UsersDetails[z].aqxolt_order_profile,
-                                                                                                                            ERP7__Channel__c: UsersDetails[z].aqxolt_channel,
-                                                                                                                            ERP7__Contact__c: curContactExist[l].ContactId,
-                                                                                                                            AccountId: curContactExist[l].AccountId,
-                                                                                                                            ERP7__Ship_To_Address__c: AddressIdCur[m].AddressId,
-                                                                                                                            ERP7__Bill_To_Address__c: AddressIdCur[m].AddressId,
-                                                                                                                            EffectiveDate: resS.Orders[i].PurchaseDate,
-                                                                                                                            Pricebook2Id: pricebook_id
+                                                                                                var OrderAvailable = [];
+                                                                                                if (curContactExist != [] && AddressIdCur != [] && resS.Orders != []) {
+                                                                                                    for (let i in resS.Orders) {
+                                                                                                        if (resS.Orders[i].BuyerInfo.BuyerEmail != undefined && resS.Orders[i].BuyerInfo.BuyerEmail != '') {
+                                                                                                            for (let l in curContactExist) {
+                                                                                                                if (resS.Orders[i].BuyerInfo.BuyerEmail === curContactExist[l].Email) {
+                                                                                                                    for (let m in AddressIdCur) {
+                                                                                                                        if (curContactExist[l].AccountId === AddressIdCur[m].AccountId) {
+                                                                                                                            var List = {
+                                                                                                                                ERP7__E_Order_Id__c: resS.Orders[i].AmazonOrderId,
+                                                                                                                                Name: resS.Orders[i].AmazonOrderId,
+                                                                                                                                ERP7__Amount__c: resS.Orders[i].OrderTotal.Amount,
+                                                                                                                                ERP7__Customer_Email__c: resS.Orders[i].BuyerInfo.BuyerEmail,
+                                                                                                                                ERP7__Customer_Purchase_Order_Date__c: resS.Orders[i].PurchaseDate,
+                                                                                                                                Status: resS.Orders[i].OrderStatus,
+                                                                                                                                ERP7__Active__c: true,
+                                                                                                                                Type: 'Amazon',
+                                                                                                                                ERP7__Order_Profile__c: UsersDetails[z].aqxolt_order_profile,
+                                                                                                                                ERP7__Channel__c: UsersDetails[z].aqxolt_channel,
+                                                                                                                                ERP7__Contact__c: curContactExist[l].ContactId,
+                                                                                                                                AccountId: curContactExist[l].AccountId,
+                                                                                                                                ERP7__Ship_To_Address__c: AddressIdCur[m].AddressId,
+                                                                                                                                ERP7__Bill_To_Address__c: AddressIdCur[m].AddressId,
+                                                                                                                                EffectiveDate: resS.Orders[i].PurchaseDate,
+                                                                                                                                Pricebook2Id: pricebook_id
+                                                                                                                            }
+                                                                                                                            OrderAvailable.push(List)
+                                                                                                                            orderId.push(resS.Orders[i].AmazonOrderId)
                                                                                                                         }
-                                                                                                                        OrderAvailable.push(List)
-                                                                                                                        orderId.push(resS.Orders[i].AmazonOrderId)
                                                                                                                     }
                                                                                                                 }
                                                                                                             }
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
 
-                                                                                            OrderAvailable = OrderAvailable.filter(function ({ name, date, amt }) {
-                                                                                                var key = `${name}${date}${amt}`;
-                                                                                                return !this.has(key) && this.add(key);
-                                                                                            }, new Set);
+                                                                                                OrderAvailable = OrderAvailable.filter(function ({ name, date, amt }) {
+                                                                                                    var key = `${name}${date}${amt}`;
+                                                                                                    return !this.has(key) && this.add(key);
+                                                                                                }, new Set);
 
-                                                                                            // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
+                                                                                                // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
 
-                                                                                            var orderNotExist = [];
-                                                                                            var orderExist = [];
-                                                                                            var orderIdExist = [];
-                                                                                            setTimeout(async function () {
-                                                                                                conn.query("SELECT Id, Name, ERP7__E_Order_Id__c, ERP7__Amount__c, ERP7__Customer_Email__c, ERP7__Customer_Purchase_Order_Date__c, ERP7__Estimated_Shipping_Amount__c, Status, Type, ERP7__Order_Profile__c, ERP7__Channel__c, ERP7__Contact__c, AccountId, ERP7__Ship_To_Address__c, ERP7__Bill_To_Address__c, Pricebook2Id FROM Order WHERE Type='Amazon' AND ERP7__E_Order_Id__c !=null AND ERP7__E_Order_Id__c IN ('" + orderId.join("','") + "')", (err, result) => {
-                                                                                                    if (err) { return console.error(err); }
-                                                                                                    console.log(result.records.length)
+                                                                                                var orderNotExist = [];
+                                                                                                var orderExist = [];
+                                                                                                var orderIdExist = [];
+                                                                                                setTimeout(async function () {
+                                                                                                    conn.query("SELECT Id, Name, ERP7__E_Order_Id__c, ERP7__Amount__c, ERP7__Customer_Email__c, ERP7__Customer_Purchase_Order_Date__c, ERP7__Estimated_Shipping_Amount__c, Status, Type, ERP7__Order_Profile__c, ERP7__Channel__c, ERP7__Contact__c, AccountId, ERP7__Ship_To_Address__c, ERP7__Bill_To_Address__c, Pricebook2Id FROM Order WHERE Type='Amazon' AND ERP7__E_Order_Id__c !=null AND ERP7__E_Order_Id__c IN ('" + orderId.join("','") + "')", (err, result) => {
+                                                                                                        if (err) { return console.error('Order err ' + JSON.stringify(err)); }
 
-                                                                                                    if (!err) {
-                                                                                                        if (result.records.length === 0) {
-                                                                                                            // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
-                                                                                                            if (OrderAvailable != []) {
-                                                                                                                conn.sobject("Order").create(OrderAvailable,
-                                                                                                                    function (err, rets) {
-                                                                                                                        // console.log(JSON.stringify(rets))
-                                                                                                                        if (err) { return console.error(err); }
-                                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                                            if (rets[i].success) {
-                                                                                                                                console.log(" Created record id Order: " + rets[i].id);
+                                                                                                        if (!err) {
+                                                                                                            if (result.records.length === 0) {
+                                                                                                                // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
+                                                                                                                if (OrderAvailable != []) {
+                                                                                                                    conn.sobject("Order").create(OrderAvailable,
+                                                                                                                        function (err, rets) {
+                                                                                                                            if (err) { return console.error(err); }
+                                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                                if (rets[i].success) {
+                                                                                                                                    console.log(" Created record id Order: " + rets[i].id);
+                                                                                                                                }
                                                                                                                             }
-                                                                                                                        }
-                                                                                                                        productInsert();
-                                                                                                                    });
-                                                                                                            }
-                                                                                                        }
-                                                                                                        else if (result.records.length > 0) {
-                                                                                                            for (let i in result.records) {
-                                                                                                                for (let j in OrderAvailable) {
-                                                                                                                    if (result.records[i].ERP7__E_Order_Id__c == OrderAvailable[j].ERP7__E_Order_Id__c) {
-                                                                                                                        let list = {
-                                                                                                                            Id: result.records[i].Id,
-                                                                                                                            ERP7__E_Order_Id__c: result.records[i].ERP7__E_Order_Id__c,
-                                                                                                                            Name: result.records[i].Name,
-                                                                                                                            ERP7__Amount__c: OrderAvailable[j].ERP7__Amount__c,
-                                                                                                                            ERP7__Customer_Email__c: OrderAvailable[j].ERP7__Customer_Email__c,
-                                                                                                                            ERP7__Customer_Purchase_Order_Date__c: OrderAvailable[j].ERP7__Customer_Purchase_Order_Date__c,
-                                                                                                                            Status: OrderAvailable[j].Status,
-                                                                                                                            ERP7__Active__c: OrderAvailable[j].ERP7__Active__c,
-                                                                                                                            Type: OrderAvailable[j].Type,
-                                                                                                                            ERP7__Order_Profile__c: result.records[i].ERP7__Order_Profile__c,
-                                                                                                                            ERP7__Channel__c: result.records[i].ERP7__Channel__c,
-                                                                                                                            ERP7__Contact__c: result.records[i].ERP7__Contact__c,
-                                                                                                                            AccountId: result.records[i].AccountId,
-                                                                                                                            ERP7__Ship_To_Address__c: OrderAvailable[j].ERP7__Ship_To_Address__c,
-                                                                                                                            ERP7__Bill_To_Address__c: OrderAvailable[j].ERP7__Bill_To_Address__c,
-                                                                                                                            EffectiveDate: OrderAvailable[j].EffectiveDate,
-                                                                                                                            Pricebook2Id: result.records[i].Pricebook2Id
-                                                                                                                        }
-                                                                                                                        orderExist.push(list);
-                                                                                                                        orderIdExist.push(result.records[i].ERP7__E_Order_Id__c)
-                                                                                                                    }
+                                                                                                                            productInsert();
+                                                                                                                        });
                                                                                                                 }
                                                                                                             }
-
-                                                                                                            for (let i in OrderAvailable) {
-                                                                                                                if (!orderIdExist.includes(OrderAvailable[i].ERP7__E_Order_Id__c)) orderNotExist.push(OrderAvailable[i])
-                                                                                                            }
-                                                                                                            // console.log('orderNotExist ' + JSON.stringify(orderNotExist))
-
-                                                                                                            if (orderNotExist != []) {
-                                                                                                                conn.sobject("Order").create(orderNotExist,
-                                                                                                                    function (err, rets) {
-                                                                                                                        if (err) { return console.error(err); }
-                                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                                            if (rets[i].success) {
-                                                                                                                                console.log(" Created record id Order 1: " + rets[i].id);
+                                                                                                            else if (result.records.length > 0) {
+                                                                                                                for (let i in result.records) {
+                                                                                                                    for (let j in OrderAvailable) {
+                                                                                                                        if (result.records[i].ERP7__E_Order_Id__c == OrderAvailable[j].ERP7__E_Order_Id__c) {
+                                                                                                                            let list = {
+                                                                                                                                Id: result.records[i].Id,
+                                                                                                                                ERP7__E_Order_Id__c: result.records[i].ERP7__E_Order_Id__c,
+                                                                                                                                Name: result.records[i].Name,
+                                                                                                                                ERP7__Amount__c: OrderAvailable[j].ERP7__Amount__c,
+                                                                                                                                ERP7__Customer_Email__c: OrderAvailable[j].ERP7__Customer_Email__c,
+                                                                                                                                ERP7__Customer_Purchase_Order_Date__c: OrderAvailable[j].ERP7__Customer_Purchase_Order_Date__c,
+                                                                                                                                Status: OrderAvailable[j].Status,
+                                                                                                                                ERP7__Active__c: OrderAvailable[j].ERP7__Active__c,
+                                                                                                                                Type: OrderAvailable[j].Type,
+                                                                                                                                ERP7__Order_Profile__c: result.records[i].ERP7__Order_Profile__c,
+                                                                                                                                ERP7__Channel__c: result.records[i].ERP7__Channel__c,
+                                                                                                                                ERP7__Contact__c: result.records[i].ERP7__Contact__c,
+                                                                                                                                AccountId: result.records[i].AccountId,
+                                                                                                                                ERP7__Ship_To_Address__c: OrderAvailable[j].ERP7__Ship_To_Address__c,
+                                                                                                                                ERP7__Bill_To_Address__c: OrderAvailable[j].ERP7__Bill_To_Address__c,
+                                                                                                                                EffectiveDate: OrderAvailable[j].EffectiveDate,
+                                                                                                                                Pricebook2Id: result.records[i].Pricebook2Id
                                                                                                                             }
+                                                                                                                            orderExist.push(list);
+                                                                                                                            orderIdExist.push(result.records[i].ERP7__E_Order_Id__c)
                                                                                                                         }
-                                                                                                                    });
-                                                                                                            }
+                                                                                                                    }
+                                                                                                                }
 
-                                                                                                            if (orderExist != []) {
-                                                                                                                conn.sobject("Order").update(orderExist,
-                                                                                                                    function (err, rets) {
-                                                                                                                        if (err) { return console.error(err); }
-                                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                                            if (rets[i].success) {
-                                                                                                                                console.log(" Updated record id Order: " + rets[i].id);
+                                                                                                                for (let i in OrderAvailable) {
+                                                                                                                    if (!orderIdExist.includes(OrderAvailable[i].ERP7__E_Order_Id__c)) orderNotExist.push(OrderAvailable[i])
+                                                                                                                }
+                                                                                                                // console.log('orderNotExist ' + JSON.stringify(orderNotExist))
+
+                                                                                                                if (orderNotExist != []) {
+                                                                                                                    conn.sobject("Order").create(orderNotExist,
+                                                                                                                        function (err, rets) {
+                                                                                                                            if (err) { return console.error(err); }
+                                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                                if (rets[i].success) {
+                                                                                                                                    console.log(" Created record id Order 1: " + rets[i].id);
+                                                                                                                                }
                                                                                                                             }
-                                                                                                                        }
-                                                                                                                        productInsert();
-                                                                                                                    });
+                                                                                                                        });
+                                                                                                                }
+
+                                                                                                                if (orderExist != []) {
+                                                                                                                    conn.sobject("Order").update(orderExist,
+                                                                                                                        function (err, rets) {
+                                                                                                                            if (err) { return console.error(err); }
+                                                                                                                            console.log('order ' + JSON.stringify(rets))
+                                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                                if (rets[i].success) {
+                                                                                                                                    console.log(" Updated record id Order: " + rets[i].id);
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            productInsert();
+                                                                                                                        });
+                                                                                                                }
                                                                                                             }
                                                                                                         }
-                                                                                                    }
-                                                                                                })
-                                                                                            }, 2000 * z);
+                                                                                                    })
+                                                                                                }, 2000 * z);
+                                                                                            }
                                                                                         }
-                                                                                    }
-                                                                                })
-                                                                            }, 1000 * z);
+                                                                                    })
+                                                                                }, 1000 * z);
                                                                             }
                                                                         }
                                                                     })
@@ -847,7 +875,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                     var productNotExist = [];
                                                                     setTimeout(async function () {
                                                                         conn.query("SELECT Id, Name, StockKeepingUnit, ERP7__SKU__c, ERP7__ASIN_Code__c, ERP7__Submitted_to_Amazon__c, ERP7__Price_Entry_Amount__c, ERP7__Brand__c, ERP7__Manufacturer__c, Family, IsActive, ERP7__Track_Inventory__c FROM Product2 WHERE StockKeepingUnit IN ('" + SellerSKUId.join("','") + "')", function (err, result) {
-                                                                            if (err) { return console.error(err); }
+                                                                            if (err) { return console.error('Product err ' + JSON.stringify(err)); }
                                                                             // console.log('product ' + result.records.length)
 
                                                                             if (!err) {
@@ -930,7 +958,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                             function priceBookEntryInsert() {
                                                                 setTimeout(async function () {
                                                                     conn.query("SELECT Id, ERP7__ASIN_Code__c, StockKeepingUnit FROM Product2 WHERE StockKeepingUnit IN ('" + SellerSKUId.join("','") + "')", function (err, result) {
-                                                                        if (err) { return console.error(err); }
+                                                                        if (err) { return console.error('Product err ' + JSON.stringify(err)); }
                                                                         // console.log('product ' + result.records.length)
                                                                         if (!err) {
                                                                             if (result.records.length > 0) {
@@ -967,77 +995,77 @@ const SellingPartnerAPI = require('amazon-sp-api');
 
                                                                                 // console.log('priceBookEntryInsert ' + JSON.stringify(priceBookEntryAvail))
                                                                                 setTimeout(async function () {
-                                                                                conn.query("SELECT Id, Product2Id, Pricebook2Id FROM pricebookentry WHERE isactive = true AND Product2Id IN ('" + prodMainId.join("','") + "') ORDER BY lastmodifieddate", function (err, result) {
-                                                                                    if (err) { return console.error(err); }
+                                                                                    conn.query("SELECT Id, Product2Id, Pricebook2Id FROM pricebookentry WHERE isactive = true AND Product2Id IN ('" + prodMainId.join("','") + "') ORDER BY lastmodifieddate", function (err, result) {
+                                                                                        if (err) { return console.error('pricebookentry err ' + JSON.stringify(err)); }
 
-                                                                                    // console.log('price ' + result.records.length)
-                                                                                    if (!err) {
-                                                                                        if (result.records.length == 0) {
-                                                                                            if (priceBookEntryAvail != []) {
-                                                                                                conn.sobject("pricebookentry").create(priceBookEntryAvail,
-                                                                                                    function (err, rets) {
-                                                                                                        if (err) { return console.error(err); }
-                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                            if (rets[i].success) {
-                                                                                                                console.log(" Created record id Price book Entry: " + rets[i].id);
+                                                                                        // console.log('price ' + result.records.length)
+                                                                                        if (!err) {
+                                                                                            if (result.records.length == 0) {
+                                                                                                if (priceBookEntryAvail != []) {
+                                                                                                    conn.sobject("pricebookentry").create(priceBookEntryAvail,
+                                                                                                        function (err, rets) {
+                                                                                                            if (err) { return console.error(err); }
+                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                if (rets[i].success) {
+                                                                                                                    console.log(" Created record id Price book Entry: " + rets[i].id);
+                                                                                                                }
                                                                                                             }
-                                                                                                        }
-                                                                                                        orderItemsInsert();
-                                                                                                    });
-                                                                                            }
-                                                                                        }
-                                                                                        else if (result.records.length > 0) {
-                                                                                            var priceBookExist = [];
-                                                                                            var priceBookIdExist = [];
-                                                                                            var priceNotExist = [];
-                                                                                            for (let i in result.records) {
-                                                                                                for (let j in priceBookEntryAvail) {
-                                                                                                    if (result.records[i].Product2Id == priceBookEntryAvail[j].Product2Id && result.records[i].Pricebook2Id == priceBookEntryAvail[j].Pricebook2Id) {
-                                                                                                        var list = {
-                                                                                                            Id: result.records[i].Id,
-                                                                                                            UnitPrice: priceBookEntryAvail[j].UnitPrice
-                                                                                                        }
-                                                                                                        priceBookExist.push(list)
-                                                                                                        priceBookIdExist.push(result.records[i].Id)
-                                                                                                    }
+                                                                                                            orderItemsInsert();
+                                                                                                        });
                                                                                                 }
                                                                                             }
-                                                                                            // console.log('priceBookExist ' + JSON.stringify(priceBookExist))
-
-                                                                                            for (let i in priceBookEntryAvail) {
-                                                                                                if (!priceBookIdExist.includes(priceBookEntryAvail[i].StockKeepingUnit)) priceNotExist.push(priceBookEntryAvail[i])
-                                                                                            }
-
-                                                                                            if (priceNotExist != []) {
-                                                                                                conn.sobject("pricebookentry").create(priceNotExist,
-                                                                                                    function (err, rets) {
-                                                                                                        if (err) { return console.error(err); }
-                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                            if (rets[i].success) {
-                                                                                                                console.log(" Created record id Price book Entry 1: " + rets[i].id);
+                                                                                            else if (result.records.length > 0) {
+                                                                                                var priceBookExist = [];
+                                                                                                var priceBookIdExist = [];
+                                                                                                var priceNotExist = [];
+                                                                                                for (let i in result.records) {
+                                                                                                    for (let j in priceBookEntryAvail) {
+                                                                                                        if (result.records[i].Product2Id == priceBookEntryAvail[j].Product2Id && result.records[i].Pricebook2Id == priceBookEntryAvail[j].Pricebook2Id) {
+                                                                                                            var list = {
+                                                                                                                Id: result.records[i].Id,
+                                                                                                                UnitPrice: priceBookEntryAvail[j].UnitPrice
                                                                                                             }
+                                                                                                            priceBookExist.push(list)
+                                                                                                            priceBookIdExist.push(result.records[i].Id)
                                                                                                         }
-                                                                                                    });
-                                                                                            }
+                                                                                                    }
+                                                                                                }
+                                                                                                // console.log('priceBookExist ' + JSON.stringify(priceBookExist))
 
-                                                                                            priceBookExist = Array.from(new Set(priceBookExist.map(JSON.stringify))).map(JSON.parse);
+                                                                                                for (let i in priceBookEntryAvail) {
+                                                                                                    if (!priceBookIdExist.includes(priceBookEntryAvail[i].StockKeepingUnit)) priceNotExist.push(priceBookEntryAvail[i])
+                                                                                                }
 
-                                                                                            if (priceBookExist != []) {
-                                                                                                conn.sobject("pricebookentry").update(priceBookExist,
-                                                                                                    function (err, rets) {
-                                                                                                        if (err) { return console.error(err); }
-                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                            if (rets[i].success) {
-                                                                                                                console.log(" Updated record id Price book Entry 1: " + rets[i].id);
+                                                                                                if (priceNotExist != []) {
+                                                                                                    conn.sobject("pricebookentry").create(priceNotExist,
+                                                                                                        function (err, rets) {
+                                                                                                            if (err) { return console.error(err); }
+                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                if (rets[i].success) {
+                                                                                                                    console.log(" Created record id Price book Entry 1: " + rets[i].id);
+                                                                                                                }
                                                                                                             }
-                                                                                                        }
-                                                                                                        orderItemsInsert();
-                                                                                                    });
+                                                                                                        });
+                                                                                                }
+
+                                                                                                priceBookExist = Array.from(new Set(priceBookExist.map(JSON.stringify))).map(JSON.parse);
+
+                                                                                                if (priceBookExist != []) {
+                                                                                                    conn.sobject("pricebookentry").update(priceBookExist,
+                                                                                                        function (err, rets) {
+                                                                                                            if (err) { return console.error(err); }
+                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                if (rets[i].success) {
+                                                                                                                    console.log(" Updated record id Price book Entry 1: " + rets[i].id);
+                                                                                                                }
+                                                                                                            }
+                                                                                                            orderItemsInsert();
+                                                                                                        });
+                                                                                                }
                                                                                             }
                                                                                         }
-                                                                                    }
-                                                                                })
-                                                                            }, 2000 * z);
+                                                                                    })
+                                                                                }, 2000 * z);
                                                                             }
                                                                         }
                                                                     })
@@ -1050,7 +1078,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                 var pricebookIdExist = [];
                                                                 setTimeout(async function () {
                                                                     conn.query("SELECT Id, Product2Id, Pricebook2Id FROM pricebookentry WHERE isactive = true AND Product2Id IN ('" + prodMainId.join("','") + "') ORDER BY lastmodifieddate", function (err, result) {
-                                                                        if (err) { return console.error(err); }
+                                                                        if (err) { return console.error('pricebookentry err ' + JSON.stringify(err)); }
 
                                                                         if (!err) {
                                                                             if (result.records.length > 0) {
@@ -1063,48 +1091,51 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                 }
 
                                                                                 setTimeout(async function () {
-                                                                                conn.query("SELECT Id, ERP7__E_Order_Id__c, Pricebook2Id FROM Order WHERE ERP7__E_Order_Id__c IN ('" + orderId.join("','") + "')", (err, result) => {
-                                                                                    if (err) { return console.error(err); }
-                                                                                    // console.log('order ' + result.records.length)
+                                                                                    conn.query("SELECT Id, ERP7__E_Order_Id__c, AccountId, Pricebook2Id FROM Order WHERE ERP7__E_Order_Id__c IN ('" + orderId.join("','") + "')", (err, result) => {
+                                                                                        if (err) { return console.error('Order err ' + JSON.stringify(err)); }
+                                                                                        // console.log('order ' + result.records.length)
 
-                                                                                    if (!err) {
-                                                                                        if (result.records.length > 0) {
-                                                                                            for (let i in result.records) {
-                                                                                                var list = {
-                                                                                                    OrderId: result.records[i].Id,
-                                                                                                    AmazonOrderId: result.records[i].ERP7__E_Order_Id__c
+                                                                                        if (!err) {
+                                                                                            if (result.records.length > 0) {
+                                                                                                for (let i in result.records) {
+                                                                                                    var list = {
+                                                                                                        OrderId: result.records[i].Id,
+                                                                                                        AmazonOrderId: result.records[i].ERP7__E_Order_Id__c,
+                                                                                                        AccountId: result.records[i].AccountId
+                                                                                                    }
+                                                                                                    OrderAmazId.push(list)
+                                                                                                    OrderIdAvailable.push(result.records[i].Id)
                                                                                                 }
-                                                                                                OrderAmazId.push(list)
-                                                                                                OrderIdAvailable.push(result.records[i].Id)
-                                                                                            }
 
-                                                                                            var orderItemAvailable = [];
-                                                                                            if (resS.Orders != [] && OrderAmazId != [] && OrderItems != [] && productList != []) {
-                                                                                                for (let i in resS.Orders) {
-                                                                                                    for (let j in OrderAmazId) {
-                                                                                                        if (resS.Orders[i].AmazonOrderId === OrderAmazId[j].AmazonOrderId) {
-                                                                                                            for (let k in OrderItems) {
-                                                                                                                if (resS.Orders[i].AmazonOrderId === OrderItems[k].AmazonOrderId) {
-                                                                                                                    for (let l in pricebookIdExist) {
-                                                                                                                        for (let m in productList) {
-                                                                                                                            if (pricebookIdExist[l].Product2Id === productList[m].Id) {
-                                                                                                                                for (let n in OrderItems[k].OrderItems) {
-                                                                                                                                    if (OrderItems[k].OrderItems[n].SellerSKU === productList[m].StockKeepingUnit) {
-                                                                                                                                        var list = {
-                                                                                                                                            ERP7__Inventory_Tracked__c: true,
-                                                                                                                                            ERP7__Active__c: true,
-                                                                                                                                            OrderId: OrderAmazId[j].OrderId,
-                                                                                                                                            ERP7__Order_Line_Status__c: (resS.Orders[i].OrderStatus == "Shipped" ? 'Fulfilled' : 'In Progress'),
-                                                                                                                                            Quantity: OrderItems[k].OrderItems[n].ProductInfo.NumberOfItems,
-                                                                                                                                            UnitPrice: OrderItems[k].OrderItems[n].ItemPrice.Amount,
-                                                                                                                                            Product2Id: productList[m].Id,
-                                                                                                                                            ERP7__Is_Back_Order__c: false,
-                                                                                                                                            ERP7__Allocate_Stock__c: true,
-                                                                                                                                            PricebookEntryId: pricebookIdExist[l].PricebookEntryId,
-                                                                                                                                            ERP7__VAT_Amount__c: (OrderItems[k].OrderItems[n].ItemTax.Amount),
-                                                                                                                                            ERP7__Total_Price__c: parseFloat(OrderItems[k].OrderItems[n].ItemPrice.Amount * OrderItems[k].OrderItems[n].ProductInfo.NumberOfItems) + parseFloat(OrderItems[k].OrderItems[n].ItemTax.Amount)
+                                                                                                var orderItemAvailable = [];
+                                                                                                if (resS.Orders != [] && OrderAmazId != [] && OrderItems != [] && productList != []) {
+                                                                                                    for (let i in resS.Orders) {
+                                                                                                        for (let j in OrderAmazId) {
+                                                                                                            if (resS.Orders[i].AmazonOrderId === OrderAmazId[j].AmazonOrderId) {
+                                                                                                                for (let k in OrderItems) {
+                                                                                                                    if (resS.Orders[i].AmazonOrderId === OrderItems[k].AmazonOrderId) {
+                                                                                                                        for (let l in pricebookIdExist) {
+                                                                                                                            for (let m in productList) {
+                                                                                                                                if (pricebookIdExist[l].Product2Id === productList[m].Id) {
+                                                                                                                                    for (let n in OrderItems[k].OrderItems) {
+                                                                                                                                        if (OrderItems[k].OrderItems[n].SellerSKU === productList[m].StockKeepingUnit) {
+                                                                                                                                            var list = {
+                                                                                                                                                ERP7__Inventory_Tracked__c: true,
+                                                                                                                                                ERP7__Active__c: true,
+                                                                                                                                                OrderId: OrderAmazId[j].OrderId,
+                                                                                                                                                Account__c: OrderAmazId[j].AccountId,
+                                                                                                                                                ERP7__Order_Line_Status__c: (resS.Orders[i].OrderStatus == "Shipped" ? 'Fulfilled' : 'In Progress'),
+                                                                                                                                                Quantity: OrderItems[k].OrderItems[n].ProductInfo.NumberOfItems,
+                                                                                                                                                UnitPrice: OrderItems[k].OrderItems[n].ItemPrice.Amount,
+                                                                                                                                                Product2Id: productList[m].Id,
+                                                                                                                                                ERP7__Is_Back_Order__c: false,
+                                                                                                                                                ERP7__Allocate_Stock__c: true,
+                                                                                                                                                PricebookEntryId: pricebookIdExist[l].PricebookEntryId,
+                                                                                                                                                ERP7__VAT_Amount__c: (OrderItems[k].OrderItems[n].ItemTax.Amount),
+                                                                                                                                                ERP7__Total_Price__c: parseFloat(OrderItems[k].OrderItems[n].ItemPrice.Amount * OrderItems[k].OrderItems[n].ProductInfo.NumberOfItems) + parseFloat(OrderItems[k].OrderItems[n].ItemTax.Amount)
+                                                                                                                                            }
+                                                                                                                                            orderItemAvailable.push(list)
                                                                                                                                         }
-                                                                                                                                        orderItemAvailable.push(list)
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             }
@@ -1115,99 +1146,99 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                         }
                                                                                                     }
                                                                                                 }
-                                                                                            }
-                                                                                            orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
+                                                                                                orderItemAvailable = Array.from(new Set(orderItemAvailable.map(JSON.stringify))).map(JSON.parse);
 
-                                                                                            setTimeout(async function () {
-                                                                                            conn.query("SELECT Id, ERP7__Inventory_Tracked__c, ERP7__Active__c, OrderId, ERP7__Order_Line_Status__c, Quantity, UnitPrice, Product2Id, ERP7__Is_Back_Order__c, ERP7__Allocate_Stock__c, PricebookEntryId, ERP7__VAT_Amount__c, ERP7__Total_Price__c FROM OrderItem WHERE OrderId IN ('" + OrderIdAvailable.join("','") + "') AND Product2Id IN ('" + prodMainId.join("','") + "') ", function (err, result) {
-                                                                                                if (err) { return console.error(err); }
-                                                                                                // console.log(result.records.length)
+                                                                                                setTimeout(async function () {
+                                                                                                    conn.query("SELECT Id, ERP7__Inventory_Tracked__c, ERP7__Active__c, OrderId, ERP7__Order_Line_Status__c, Quantity, UnitPrice, Product2Id, ERP7__Is_Back_Order__c, ERP7__Allocate_Stock__c, PricebookEntryId, ERP7__VAT_Amount__c, ERP7__Total_Price__c FROM OrderItem WHERE OrderId IN ('" + OrderIdAvailable.join("','") + "') AND Product2Id IN ('" + prodMainId.join("','") + "') ", function (err, result) {
+                                                                                                        if (err) { return console.error('OrderItem err ' + JSON.stringify(err)); }
+                                                                                                        // console.log(result.records.length)
 
-                                                                                                if (!err) {
-                                                                                                    if (result.records.length == 0) {
-                                                                                                        if (orderItemAvailable != []) {
-                                                                                                            conn.sobject("OrderItem").create(orderItemAvailable,
-                                                                                                                async function (err, rets) {
-                                                                                                                    if (err) { return console.error(err); }
-                                                                                                                    for (var i = 0; i < rets.length; i++) {
-                                                                                                                        if (rets[i].success) {
-                                                                                                                            console.log(" Created record id Order Item 1:" + rets[i].id);
+                                                                                                        if (!err) {
+                                                                                                            if (result.records.length == 0) {
+                                                                                                                if (orderItemAvailable != []) {
+                                                                                                                    conn.sobject("OrderItem").create(orderItemAvailable,
+                                                                                                                        async function (err, rets) {
+                                                                                                                            if (err) { return console.error(err); }
+                                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                                if (rets[i].success) {
+                                                                                                                                    console.log(" Created record id Order Item 1:" + rets[i].id);
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            var date = new Date();
+                                                                                                                            var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+                                                                                                                            pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
+                                                                                                                        });
+                                                                                                                }
+                                                                                                            }
+                                                                                                            else if (result.records.length > 0) {
+                                                                                                                var orderItemExist = [];
+                                                                                                                var orderItemIdExist = [];
+                                                                                                                for (let i in result.records) {
+                                                                                                                    for (let j in orderItemAvailable) {
+                                                                                                                        if (result.records[i].OrderId == orderItemAvailable[j].OrderId && result.records[i].Product2Id == orderItemAvailable[j].Product2Id && result.records[i].PricebookEntryId == orderItemAvailable[j].PricebookEntryId) {
+                                                                                                                            var list = {
+                                                                                                                                Id: result.records[i].Id,
+                                                                                                                                Account__c: orderItemAvailable[j].Account__c,
+                                                                                                                                ERP7__Inventory_Tracked__c: orderItemAvailable[j].ERP7__Inventory_Tracked__c,
+                                                                                                                                ERP7__Active__c: orderItemAvailable[j].ERP7__Active__c,
+                                                                                                                                ERP7__Order_Line_Status__c: orderItemAvailable[j].ERP7__Order_Line_Status__c,
+                                                                                                                                Quantity: orderItemAvailable[j].Quantity,
+                                                                                                                                UnitPrice: orderItemAvailable[j].UnitPrice,
+                                                                                                                                ERP7__Is_Back_Order__c: orderItemAvailable[j].ERP7__Is_Back_Order__c,
+                                                                                                                                ERP7__Allocate_Stock__c: orderItemAvailable[j].ERP7__Allocate_Stock__c,
+                                                                                                                                ERP7__VAT_Amount__c: orderItemAvailable[j].ERP7__VAT_Amount__c,
+                                                                                                                                ERP7__Total_Price__c: orderItemAvailable[j].ERP7__Total_Price__c
+                                                                                                                            }
+                                                                                                                            var list2 = {
+                                                                                                                                OrderId: result.records[i].OrderId,
+                                                                                                                                Product2Id: result.records[i].Product2Id,
+                                                                                                                                PricebookEntryId: result.records[i].PricebookEntryId
+                                                                                                                            }
+                                                                                                                            orderItemExist.push(list)
+                                                                                                                            orderItemIdExist.push(list2)
                                                                                                                         }
                                                                                                                     }
-                                                                                                                    var date = new Date();
-                                                                                                                    var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                                                                                                                    pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
-                                                                                                                });
-                                                                                                        }
-                                                                                                    }
-                                                                                                    else if (result.records.length > 0) {
-                                                                                                        var orderItemExist = [];
-                                                                                                        var orderItemIdExist = [];
-                                                                                                        for (let i in result.records) {
-                                                                                                            for (let j in orderItemAvailable) {
-                                                                                                                if (result.records[i].OrderId == orderItemAvailable[j].OrderId && result.records[i].Product2Id == orderItemAvailable[j].Product2Id && result.records[i].PricebookEntryId == orderItemAvailable[j].PricebookEntryId) {
-                                                                                                                    var list = {
-                                                                                                                        Id: result.records[i].Id,
-                                                                                                                        ERP7__Inventory_Tracked__c: orderItemAvailable[j].ERP7__Inventory_Tracked__c,
-                                                                                                                        ERP7__Active__c: orderItemAvailable[j].ERP7__Active__c,
-                                                                                                                        ERP7__Order_Line_Status__c: orderItemAvailable[j].ERP7__Order_Line_Status__c,
-                                                                                                                        Quantity: orderItemAvailable[j].Quantity,
-                                                                                                                        UnitPrice: orderItemAvailable[j].UnitPrice,
-                                                                                                                        ERP7__Is_Back_Order__c: orderItemAvailable[j].ERP7__Is_Back_Order__c,
-                                                                                                                        ERP7__Allocate_Stock__c: orderItemAvailable[j].ERP7__Allocate_Stock__c,
-                                                                                                                        ERP7__VAT_Amount__c: orderItemAvailable[j].ERP7__VAT_Amount__c,
-                                                                                                                        ERP7__Total_Price__c: orderItemAvailable[j].ERP7__Total_Price__c
-                                                                                                                    }
-                                                                                                                    var list2 = {
-                                                                                                                        OrderId: result.records[i].OrderId,
-                                                                                                                        Product2Id: result.records[i].Product2Id,
-                                                                                                                        PricebookEntryId: result.records[i].PricebookEntryId
-                                                                                                                    }
-                                                                                                                    orderItemExist.push(list)
-                                                                                                                    orderItemIdExist.push(list2)
+                                                                                                                }
+
+                                                                                                                var orderItemNotExist = [];
+                                                                                                                if (orderItemIdExist != []) {
+                                                                                                                    orderItemNotExist = orderItemAvailable.filter((o1) => !orderItemIdExist.some((o2) => o1.OrderId === o2.OrderId && o1.Product2Id === o2.Product2Id && o1.PricebookEntryId === o2.PricebookEntryId));
+                                                                                                                }
+
+                                                                                                                if (orderItemNotExist != []) {
+                                                                                                                    conn.sobject("OrderItem").create(orderItemNotExist,
+                                                                                                                        function (err, rets) {
+                                                                                                                            if (err) { return console.error(err); }
+                                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                                if (rets[i].success) {
+                                                                                                                                    console.log(" Created record id Order Item: " + rets[i].id);
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        });
+                                                                                                                }
+
+                                                                                                                if (orderItemExist != []) {
+                                                                                                                    conn.sobject("OrderItem").update(orderItemExist,
+                                                                                                                        async function (err, rets) {
+                                                                                                                            if (err) { return console.error(err); }
+                                                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                                                if (rets[i].success) {
+                                                                                                                                    console.log(" Updated record id Order Item: " + rets[i].id);
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                            var date = new Date();
+                                                                                                                            var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+                                                                                                                            pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
+                                                                                                                        });
                                                                                                                 }
                                                                                                             }
                                                                                                         }
-
-                                                                                                        var orderItemNotExist = [];
-                                                                                                        if (orderItemIdExist != []) {
-                                                                                                            orderItemNotExist = orderItemAvailable.filter((o1) => !orderItemIdExist.some((o2) => o1.OrderId === o2.OrderId && o1.Product2Id === o2.Product2Id && o1.PricebookEntryId === o2.PricebookEntryId));
-                                                                                                        }
-
-                                                                                                        if (orderItemNotExist != []) {
-                                                                                                            conn.sobject("OrderItem").create(orderItemNotExist,
-                                                                                                                function (err, rets) {
-                                                                                                                    if (err) { return console.error(err); }
-                                                                                                                    for (var i = 0; i < rets.length; i++) {
-                                                                                                                        if (rets[i].success) {
-                                                                                                                            console.log(" Created record id Order Item: " + rets[i].id);
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                });
-                                                                                                        }
-
-                                                                                                        if (orderItemExist != []) {
-                                                                                                            conn.sobject("OrderItem").update(orderItemExist,
-                                                                                                                async function (err, rets) {
-                                                                                                                    if (err) { return console.error(err); }
-                                                                                                                    for (var i = 0; i < rets.length; i++) {
-                                                                                                                        if (rets[i].success) {
-                                                                                                                            console.log(" Updated record id Order Item: " + rets[i].id);
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                    var date = new Date();
-                                                                                                                    var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                                                                                                                    pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
-                                                                                                                });
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            })
-                                                                                        }, 2000 * z);
+                                                                                                    })
+                                                                                                }, 2000 * z);
+                                                                                            }
                                                                                         }
-                                                                                    }
-                                                                                })
-                                                                            }, 1000 * z);
+                                                                                    })
+                                                                                }, 1000 * z);
                                                                             }
                                                                         }
                                                                     })

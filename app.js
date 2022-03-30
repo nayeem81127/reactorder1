@@ -3,25 +3,17 @@ require('dotenv').config();
 const PORT = process.env.PORT || 4000
 
 var flash = require('connect-flash');
-
 var passport = require("passport");
-
 var session = require("express-session");
 
 var app = express();
-
-app.use(require('cookie-parser')());
-app.use(require('body-parser').json());
-app.use(require('body-parser').urlencoded({ extended: false }));
-
-
-
-
 var bodyParser = require('body-parser')
 
+// app.use(require('cookie-parser')());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 var path = require('path');
-
-
 
 // cookie: {maxAge: 60000},
 app.use(flash());
@@ -34,22 +26,15 @@ app.use(session({
     saveUninitialized: true
 }))
 
-app.use(function (req, res, next) {
-    if (!req.session) {
-        return next(new Error('Oh no')) //handle error
-    }
-    next() //otherwise continue
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/public', express.static(__dirname + '/public'));
 
-app.use(bodyParser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    if(!req.session){ req.flash('session_exp', '• Your session has expired. Please log in again.') }
     next();
 });
 app.set('view engine', 'ejs');

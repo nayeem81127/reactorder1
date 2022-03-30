@@ -40,6 +40,11 @@
   </head>
   <body class="login-page">
     <!-- onload="getcookiedata()"> -->
+    <div class="loader">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
 
     <div class="container">
       <div class="row justify-content-md-center">
@@ -55,7 +60,20 @@
               </div>
 
               <ul style="list-style-type: none">
-                <% if (success_msg.length > 0) { %>
+                <% if (session_exp.length > 0) { %>
+                <div
+                  class="alert alert-warning alert-dismissible fade show"
+                  role="alert"
+                >
+                  <li><%= locals.session_exp %></li>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <% } %> <% if (success_msg.length > 0) { %>
                 <div
                   class="alert alert-success alert-dismissible fade show"
                   role="alert"
