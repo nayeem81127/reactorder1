@@ -107,10 +107,10 @@
 <body>
 
   <div class='loader'>
-        <div class='spinner-grow text-primary' role='status'>
-          <span class='sr-only'>Loading...</span>
-        </div>
-      </div>
+    <div class='spinner-grow text-primary' role='status'>
+      <span class='sr-only'>Loading...</span>
+    </div>
+  </div>
   <div class="page-container">
     <div class="page-header">
       <nav class="navbar navbar-expand-lg d-flex justify-content-between">
@@ -332,7 +332,7 @@
                                   <% if (locals.userList.rows[i].email==locals.userId ) { %>
                                     -
                                     <% } %>
-                                      <% if (locals.userList.rows[i].email != locals.userId ) { %>
+                                      <% if (locals.userList.rows[i].email !=locals.userId ) { %>
                                         <button type="button" name="<%= locals.userList.rows[i].email %>"
                                           data-id="<%= locals.userList.rows[i].email %>"
                                           class="link-btn link-danger InActive">Make InActive</button>
@@ -405,64 +405,60 @@
     </div>
   </div>
   </div>
-<div>
-  <form method="post" action="/edit">
-  <div class="modal fade" id="editSalesDetails" tabindex="-1" aria-labelledby="editSalesDetailsLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-height: 86%;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalScrollableTitle">Edit User</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <input type="hidden" id="edit-form-id" name="emailId" />
-              <label for="edit-form-aqxoltClient" class="form-label">Aqxolt Client</label>
-              <input type="text" class="form-control" id="edit-form-aqxoltClient" name="aqxoltClient"
-                aria-describedby="emailHelp">
+  <div>
+    <form method="post" action="/edit">
+      <div class="modal fade" id="editSalesDetails" tabindex="-1" aria-labelledby="editSalesDetailsLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" style="max-height: 86%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalScrollableTitle">Edit User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <input type="hidden" id="edit-form-id" name="emailId" />
+                <label for="edit-form-aqxoltClient" class="form-label">Aqxolt Client</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltClient" name="aqxoltClient"
+                  aria-describedby="emailHelp">
 
-            </div>
-            <div class="mb-3">
-              <label for="edit-form-clientSecret" class="form-label">Client Secret</label>
-              <input type="text" class="form-control" id="edit-form-clientSecret" name="clientSecret"
-                aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-              <label for="edit-form-instanceUrl" class="form-label">Instance Url</label>
-              <input type="text" class="form-control" id="edit-form-instanceUrl" name="instanceUrl"
-                aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-              <label for="edit-form-aqxoltChannel" class="form-label">Aqxolt Channel</label>
-              <input type="text" class="form-control" id="edit-form-aqxoltChannel" name="aqxoltChannel"
-                aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="edit-form-clientSecret" class="form-label">Client Secret</label>
+                <input type="text" class="form-control" id="edit-form-clientSecret" name="clientSecret"
+                  aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="edit-form-instanceUrl" class="form-label">Instance Url</label>
+                <input type="text" class="form-control" id="edit-form-instanceUrl" name="instanceUrl"
+                  aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="edit-form-aqxoltChannel" class="form-label">Aqxolt Channel</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltChannel" name="aqxoltChannel"
+                  aria-describedby="emailHelp">
+              </div>
 
+              <div class="mb-3">
+                <label for="edit-form-aqxoltOrderProfile" class="form-label">Aqxolt Order Profile</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltOrderProfile" name="aqxoltOrderProfile"
+                  aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="edit-form-aqxoltCustomer" class="form-label">Customer Profile ID</label>
+                <input type="text" class="form-control" id="edit-form-aqxoltCustomer" name="aqxoltCustomer"
+                  aria-describedby="emailHelp">
+              </div>              
             </div>
-
-            <div class="mb-3">
-              <label for="edit-form-aqxoltOrderProfile" class="form-label">Aqxolt Order Profile</label>
-              <input type="text" class="form-control" id="edit-form-aqxoltOrderProfile" name="aqxoltOrderProfile"
-                aria-describedby="emailHelp">
-
-            </div>
-            <div class="mb-3">
-              <label for="edit-form-aqxoltCustomer" class="form-label">Customer Profile ID</label>
-              <input type="text" class="form-control" id="edit-form-aqxoltCustomer" name="aqxoltCustomer"
-                aria-describedby="emailHelp">
-
-            </div>
-            <div class="modal-footer" style="padding: 5px; padding-right: 20px">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <input type="submit" class="btn btn-primary" value="Save changes">
-            </div>
+          </div>          
+          <div class="modal-footer" style="padding: 5px; padding-right: 20px">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Save changes">
           </div>
-        </div>        
-        
+        </div>
       </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
   <script>
 
     $(document).ready(function () {
