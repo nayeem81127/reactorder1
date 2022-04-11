@@ -11,7 +11,7 @@
   <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
   <!-- Title -->
-  <title>Shopify Shops</title>
+  <title>Add Shops</title>
 
   <!-- Styles -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700,800&display=swap" rel="stylesheet">
@@ -22,6 +22,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+
   <!-- Theme Styles -->
   <link href="public/css/main.min.css" rel="stylesheet">
   <link href="public/css/custom.css" rel="stylesheet">
@@ -31,16 +32,25 @@
       padding: 10px;
     }
 
-    .mt-15 {
-      margin-top: 15rem;
+    .color-green {
+      color: #6bcac2;
     }
 
-    .btn-xl {
-      width: 200px;
-      height: 50px;
-      border: 1px solid;
+    .color-red {
+      color: #dc3545;
+    }
+
+    .active-page1 {
+      border-radius: 10px;
+      background-color: #f3f6f9;
+      color: #7888fc;
+      font-weight: 500;
     }
   </style>
+  <script>
+    document.getElementById('output').innerHTML = location.search;
+    $(".chosen-select").chosen();
+  </script>
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -52,10 +62,10 @@
 <body>
 
   <div class='loader'>
-    <div class='spinner-grow text-primary' role='status'>
-      <span class='sr-only'>Loading...</span>
-    </div>
-  </div>
+        <div class='spinner-grow text-primary' role='status'>
+          <span class='sr-only'>Loading...</span>
+        </div>
+      </div>
   <div class="page-container">
     <div class="page-header">
       <nav class="navbar navbar-expand-lg d-flex justify-content-between">
@@ -71,13 +81,13 @@
           </ul>
         </div>
         <div class="logo1">
-          <h3 class="card-title mb-0"> <img src="public/images/shopify.png" width="50"></img>
-            <%= locals.username %>, Shopify
+          <h3 class="card-title mb-0"> <img src="public/images/amazon.png" width="50"></img>
+            <%= locals.username %>, Manage Shopify Links
           </h3>
         </div>
         <div class="" id="headerNav">
-          <div class="row">
-
+          <div class="col-md-3">
+            <a href="/installExtension" class="btn btn-primary m-b-xs">Add Link</a>
           </div>
         </div>
       </nav>
@@ -94,8 +104,8 @@
           Apps
         </li>
         <% if (locals.shopify==true) { %>
-          <li class="active-page">
-            <a href="#"><i data-feather="chevron-right"></i>Shopify</a>
+          <li>
+            <a href="/shopify"><i data-feather="chevron-right"></i>Shopify</a>
           </li>
           <% } %>
             <% if (locals.ebay==true) { %>
@@ -110,7 +120,7 @@
                   <% } %>
                     <% if (locals.majento==true) { %>
                       <li>
-                        <a href="#"><i data-feather="chevron-right"></i>Majento</a>
+                        <a href="/majento"><i data-feather="chevron-right"></i>Majento</a>
                       </li>
                       <% } %>
                         <% if (locals.wooCommerce==true) { %>
@@ -143,7 +153,9 @@
                                             <li><a href="/updateAqxolt"><i class="far fa-circle"></i>Update Aqxolt
                                                 Info</a></li>
                                             <% if (locals.manage==true) { %>
-                                              <li><a href="/manage"><i class="far fa-circle"></i>Manage Users</a></li>
+                                              <li class="active-page"><a href="/manage"><i
+                                                    class="far fa-circle"></i>Manage
+                                                  Users</a></li>
                                               <li><a href="typography.html"><i class="far fa-circle"></i>Background
                                                   Jobs</a></li>
                                               <% } %>
@@ -157,7 +169,9 @@
                                           <a href="#"><i data-feather="user"></i>Profile<i
                                               class="fas fa-chevron-right dropdown-icon"></i></a>
                                           <ul class="">
-                                            <li><a href="/manage-edit"><i class="far fa-circle"></i>Manage</a></li>
+                                            <li class="active-page"><a href="/manage-edit"><i
+                                                  class="far fa-circle"></i>Manage</a>
+                                            </li>
                                             <li><a href="/logout"><i class="far fa-circle"></i>logout</a></li>
 
                                           </ul>
@@ -167,50 +181,110 @@
     </div>
     <div class="page-content">
       <div class="main-wrapper">
-        <div class="col-md-12 text-center mt-15">
-          <button type="button" class="btn btn-success btn-xl" data-bs-toggle="modal"
-            data-bs-target="#editSalesDetails">Add Shop</button>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="editSalesDetails" tabindex="-1" aria-labelledby="editSalesDetailsLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" style="max-height: 86%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Aqxolt — Installation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form action="/auth" method="GET">
-          <div class="modal-body">
-            <div class="mb-3">
-              Please enter the "myshopify" domain of your store
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <input type="text" class="form-control" id="shop" name="shop" placeholder="example.myshopify.com">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <!-- <h5 class="card-title"></h5> -->
+
+                <% if (success_msg.length> 0) { %>
+                  <div class="alert alert-success alert-dismissible fade show"
+                    style="position: absolute; width: 70%; top: 20px; left: 12%;" role="alert">
+                    <%= locals.success_msg %>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                  <% } %>
+
+                    <% if (error_msg.length> 0) { %>
+                      <div class="alert alert-warning alert-dismissible fade show"
+                        style="position: absolute; width: 70%; top: 20px; left: 12%;" role="alert">
+                        <%= locals.error_msg %>
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+
+                      <% } %>
+
+                        <form method="post" action="/amazon-credentials">
+                          <div class="mb-3">
+                           <h6> Please ignore following fields, if you don't want to override default values. <br/>
+                            Enter Aqxolt related info. These IDs will override default IDs saved at <a href="/shopify">Aqxolt Info Page</a></h6>
+                          </div>
+                          <div class="mb-3">
+                            
+                          </div>
+                          <div class="mb-3">
+                            
+                          </div>
+
+                          <div class="mb-3">
+                            
+                          </div>
+                          <div class="mb-3">
+                            
+                          </div>
+                          <div class="mb-3">
+                            
+                          </div>
+                          <div class="mb-3">
+                            
+                          </div>
+                          
+                        </form>
               </div>
-              <div class="col-md-4">
-                <button type="submit" class="btn btn-success">Install</button>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Saved Shops</h5>
+                
               </div>
             </div>
           </div>
-        </form>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
         </div>
+
+
       </div>
+
     </div>
   </div>
-  
-<script type="text/javascript">
-    $(window).load(function(){
-        $('#editSalesDetails').modal('show');
-    });
-</script>
 
   <!-- Javascripts -->
+  <script>
+    /*
+    $('.editModule').click(function () {
+      $('#edit-form-id').val($(this).attr('data-id'));
+      $('#edit-form-marketplaceId').val($(this).attr('data-marketplaceId'));
+      $('#edit-form-refreshToken').val($(this).attr('data-refreshToken'));
+      $('#edit-form-amazonAppClientId').val($(this).attr('data-amazonAppClientId'));
+      $('#edit-form-amazonAppClientSecret').val($(this).attr('data-amazonAppClientSecret'));
+      $('#edit-form-awsSecretAccessKey').val($(this).attr('data-awsSecretAccessKey'));
+      $('#edit-form-awsAccessKey').val($(this).attr('data-awsAccessKey'));
+      $('#edit-form-awsSellingPartnerRole').val($(this).attr('data-awsSellingPartnerRole'));
+    });  
+    
+    
+    $('.delete-seller').on('click', function () {
+      var id = $(this).data('id');
+      var url = '/deleteSeller/' + id;
+      var text = 'Are You Sure. You Want to Delete';
+      if (confirm(text)) {
+        $.ajax({
+          url: url,
+          type: 'DELETE',
+          success: function (result) {
+            console.log('Deleting seller...');
+            window.location.href = '/amazon-credentials';
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+    */
+
+  </script>
   <script src="public/plugins/jquery/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="public/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -219,6 +293,8 @@
   <script src="public/plugins/apexcharts/apexcharts.min.js"></script>
   <script src="public/js/main.min.js"></script>
   <script src="public/js/pages/dashboard.js"></script>
+  <script src="public/plugins/DataTables/datatables.min.js"></script>
+  <script src="public/js/pages/datatables.js"></script>
 </body>
 
 </html>

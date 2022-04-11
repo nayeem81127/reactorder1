@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var { pool } = require("../dbConfig");
-const uuid = require('uuid').v4;
 const jsforce = require('jsforce');
 const SellingPartnerAPI = require('amazon-sp-api');
 
@@ -1166,7 +1165,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                             }
                                                                                                                             var date = new Date();
                                                                                                                             var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                                                                                                                            pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
+                                                                                                                            pool.query('INSERT INTO jobs_log (email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
                                                                                                                         });
                                                                                                                 }
                                                                                                             }
@@ -1228,7 +1227,7 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                             }
                                                                                                                             var date = new Date();
                                                                                                                             var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                                                                                                                            pool.query('INSERT INTO jobs_log (id, email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [uuid(), UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
+                                                                                                                            pool.query('INSERT INTO jobs_log (email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
                                                                                                                         });
                                                                                                                 }
                                                                                                             }
