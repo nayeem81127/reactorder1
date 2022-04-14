@@ -19,6 +19,7 @@
         <link href="public/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
         <link href="public/plugins/apexcharts/apexcharts.css" rel="stylesheet">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       
         <!-- Theme Styles -->
         <link href="public/css/main.min.css" rel="stylesheet">
@@ -192,7 +193,10 @@
 							<div class="col-md-9">
                             <h5 class="card-title mb-3">Customers</h5>
                            
-                            <a href="#" id="blockui-2" class="btn btn-primary">Pending Sync &nbsp;<i class="fas fa-sync"></i></a>
+                            <form id="shopifyCustomerSync" method="post" action="/shopifyCustomerSync">
+                              <button type="button" class="btn btn-primary" id="CustomerSync">Pending Sync &nbsp;<i
+                                  class="fas fa-sync"></i></button>
+                            </form>
 							</div>
 							</div>
                         </div>
@@ -238,6 +242,15 @@
               
             </div>
         </div>
+
+        <script>
+          $('#CustomerSync').on('click', function () {
+            var text = 'Do you want Customer sync now?';
+            if (confirm(text)) {
+              document.getElementById("shopifyCustomerSync").submit();
+            }
+          });
+        </script>
         
         <!-- Javascripts -->
         <script src="public/plugins/jquery/jquery-3.4.1.min.js"></script>

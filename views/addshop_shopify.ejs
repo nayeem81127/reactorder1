@@ -81,7 +81,7 @@
           </ul>
         </div>
         <div class="logo1">
-          <h3 class="card-title mb-0"> <img src="public/images/amazon.png" width="50"></img>
+          <h3 class="card-title mb-0"> <img src="public/images/shopify.png" width="50"></img>
             <%= locals.username %>, Manage Shopify Links
           </h3>
         </div>
@@ -204,31 +204,35 @@
 
                       <% } %>
 
-                        <form method="post" action="/amazon-credentials">
+                        <form method="post" action="/addShop">
                           <div class="mb-3">
                            <h6> Please ignore following fields, if you don't want to override default values. <br/>
-                            Enter Aqxolt related info. These IDs will override default IDs saved at <a href="/shopify">Aqxolt Info Page</a></h6>
+                            Enter Aqxolt related info. These IDs will override default IDs saved at <a href="/updateAqxolt">Aqxolt Info Page</a></h6>
+                          </div>
+                          <br/>
+                          <div class="mb-3">
+                            <input type="hidden" id="edit-form-shopifyDomain" name="shopifyDomain" />
+                            <label for="edit-form-shopify" class="form-label">Shop</label>
+                            <input type="text" class="form-control" id="edit-form-shopify" name="shopify" disabled
+                              aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
-                            
-                          </div>
-                          <div class="mb-3">
-                            
+                            <label for="edit-form-aqxoltOrderProfile" class="form-label">Aqxolt Order Profile</label>
+                            <input type="text" class="form-control" id="edit-form-aqxoltOrderProfile" name="aqxoltOrderProfile"
+                              aria-describedby="emailHelp">
                           </div>
 
                           <div class="mb-3">
-                            
+                            <label for="edit-form-aqxoltCustomer" class="form-label">Aqxolt Customer</label>
+                            <input type="text" class="form-control" id="edit-form-aqxoltCustomer" name="aqxoltCustomer"
+                              aria-describedby="emailHelp">
                           </div>
                           <div class="mb-3">
-                            
+                            <label for="edit-form-aqxoltChannel" class="form-label">Aqxolt Channel</label>
+                            <input type="text" class="form-control" id="edit-form-aqxoltChannel" name="aqxoltChannel"
+                              aria-describedby="emailHelp">
                           </div>
-                          <div class="mb-3">
-                            
-                          </div>
-                          <div class="mb-3">
-                            
-                          </div>
-                          
+                          <button type="submit" class="btn btn-primary">Save / Update</button>
                         </form>
               </div>
             </div>
@@ -237,7 +241,30 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Saved Shops</h5>
-                
+                <table class="table table-condensed display tableId" style="width:100%">
+                  <tbody>
+                    <% for(var i=0; i < locals.shopDetails.rows.length; i++) { %>
+                      <tr class="row-row">
+                        <td>
+                          <i class="fas fa-pen color-green editModule" name="<% locals.shopDetails.rows[i].id %>"
+                            data-shopifyDomain="<%= locals.shopDetails.rows[i].shopify_domain %>"
+                            data-shopify="<%= locals.shopDetails.rows[i].shopify_domain.split('.', 1) %>"
+                            data-aqxoltOrderProfile="<%= locals.shopDetails.rows[i].aqxolt_order_profile %>"
+                            data-aqxoltCustomer="<%= locals.shopDetails.rows[i].aqxolt_customer %>"
+                            data-aqxoltChannel="<%= locals.shopDetails.rows[i].aqxolt_channel %>"
+                          </i>
+                        </td>
+                        <td>
+                          <i class="fas fa-trash color-red delete-seller"
+                                        data-id="<%= locals.shopDetails.rows[i].shopify_domain %>"></i>
+                        </td>
+                        <td>
+                          <%= locals.shopDetails.rows[i].shopify_domain.split('.', 1) %>
+                        </td>
+                      </tr>
+                      <% } %>
+                  </tbody>
+                </table>            
               </div>
             </div>
           </div>
@@ -251,30 +278,27 @@
 
   <!-- Javascripts -->
   <script>
-    /*
-    $('.editModule').click(function () {
-      $('#edit-form-id').val($(this).attr('data-id'));
-      $('#edit-form-marketplaceId').val($(this).attr('data-marketplaceId'));
-      $('#edit-form-refreshToken').val($(this).attr('data-refreshToken'));
-      $('#edit-form-amazonAppClientId').val($(this).attr('data-amazonAppClientId'));
-      $('#edit-form-amazonAppClientSecret').val($(this).attr('data-amazonAppClientSecret'));
-      $('#edit-form-awsSecretAccessKey').val($(this).attr('data-awsSecretAccessKey'));
-      $('#edit-form-awsAccessKey').val($(this).attr('data-awsAccessKey'));
-      $('#edit-form-awsSellingPartnerRole').val($(this).attr('data-awsSellingPartnerRole'));
-    });  
     
+    $('.editModule').click(function () {
+      $('#edit-form-shopifyDomain').val($(this).attr('data-shopifyDomain'));
+      $('#edit-form-shopify').val($(this).attr('data-shopify'));
+      $('#edit-form-aqxoltOrderProfile').val($(this).attr('data-aqxoltOrderProfile'));
+      $('#edit-form-aqxoltCustomer').val($(this).attr('data-aqxoltCustomer'));
+      $('#edit-form-aqxoltChannel').val($(this).attr('data-aqxoltChannel'));
+    });
+
     
     $('.delete-seller').on('click', function () {
       var id = $(this).data('id');
-      var url = '/deleteSeller/' + id;
+      var url = '/deleteShop/' + id;
       var text = 'Are You Sure. You Want to Delete';
       if (confirm(text)) {
         $.ajax({
           url: url,
           type: 'DELETE',
           success: function (result) {
-            console.log('Deleting seller...');
-            window.location.href = '/amazon-credentials';
+            console.log('Deleting Shops...');
+            window.location.href = '/addShop';
           },
           error: function (err) {
             console.log(err);
@@ -282,7 +306,7 @@
         });
       }
     });
-    */
+    
 
   </script>
   <script src="public/plugins/jquery/jquery-3.4.1.min.js"></script>
