@@ -1,0 +1,509 @@
+{
+    "id": 4707531555028,
+    "admin_graphql_api_id": "gid://shopify/Order/4707531555028",
+    "app_id": 580111,
+    "browser_ip": "72.138.162.2",
+    "buyer_accepts_marketing": false,
+    "cancel_reason": null,
+    "cancelled_at": null,
+    "cart_token": "66075f525a230b0fd6a6f9dbba062d4c",
+    "checkout_id": 32689997873364,
+    "checkout_token": "ce0fc0cbb844e2a92c3d887c07d6946d",
+    "client_details": {
+        "accept_language": "en-CA",
+        "browser_height": null,
+        "browser_ip": "72.138.162.2",
+        "browser_width": null,
+        "session_hash": null,
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36 Edg/99.0.1150.36"
+    },
+    "closed_at": null,
+    "confirmed": true,
+    "contact_email": "annie@pearlehospitality.ca",
+    "created_at": "2022-03-12T13:09:58-06:00",
+    "currency": "CAD",
+    "current_subtotal_price": "132.00",
+    "current_subtotal_price_set": {
+        "shop_money": {
+            "amount": "132.00",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "132.00",
+            "currency_code": "CAD"
+        }
+    },
+    "current_total_discounts": "0.00",
+    "current_total_discounts_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "CAD"
+        }
+    },
+    "current_total_duties_set": null,
+    "current_total_price": "168.06",
+    "current_total_price_set": {
+        "shop_money": {
+            "amount": "168.06",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "168.06",
+            "currency_code": "CAD"
+        }
+    },
+    "current_total_tax": "19.33",
+    "current_total_tax_set": {
+        "shop_money": {
+            "amount": "19.33",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "19.33",
+            "currency_code": "CAD"
+        }
+    },
+    "customer_locale": "en-CA",
+    "device_id": null,
+    "discount_codes": [],
+    "email": "annie@pearlehospitality.ca",
+    "estimated_taxes": false,
+    "financial_status": "paid",
+    "fulfillment_status": "fulfilled",
+    "gateway": "shopify_payments",
+    "landing_site": "/",
+    "landing_site_ref": null,
+    "location_id": null,
+    "name": "#3642",
+    "note": null,
+    "note_attributes": [],
+    "number": 2642,
+    "order_number": 3642,
+    "order_status_url": "https://northernwideplank.ca/11423300/orders/f46d3fd30b8e2fb684e32ee5d983df03/authenticate?key=9ce62c63f162f7633e3e4068cc0ce237",
+    "original_total_duties_set": null,
+    "payment_gateway_names": [
+        "shopify_payments"
+    ],
+    "phone": null,
+    "presentment_currency": "CAD",
+    "processed_at": "2022-03-12T13:09:54-06:00",
+    "processing_method": "direct",
+    "reference": "b443ffad12ce5753d74e2ae8c8498acd",
+    "referring_site": "https://www.google.ca/",
+    "source_identifier": "b443ffad12ce5753d74e2ae8c8498acd",
+    "source_name": "web",
+    "source_url": null,
+    "subtotal_price": "132.00",
+    "subtotal_price_set": {
+        "shop_money": {
+            "amount": "132.00",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "132.00",
+            "currency_code": "CAD"
+        }
+    },
+    "tags": "",
+    "tax_lines": [
+        {
+            "price": "19.33",
+            "rate": 0.13,
+            "title": "HST",
+            "price_set": {
+                "shop_money": {
+                    "amount": "19.33",
+                    "currency_code": "CAD"
+                },
+                "presentment_money": {
+                    "amount": "19.33",
+                    "currency_code": "CAD"
+                }
+            },
+            "channel_liable": false
+        }
+    ],
+    "taxes_included": false,
+    "test": false,
+    "token": "f46d3fd30b8e2fb684e32ee5d983df03",
+    "total_discounts": "0.00",
+    "total_discounts_set": {
+        "shop_money": {
+            "amount": "0.00",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "CAD"
+        }
+    },
+    "total_line_items_price": "132.00",
+    "total_line_items_price_set": {
+        "shop_money": {
+            "amount": "132.00",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "132.00",
+            "currency_code": "CAD"
+        }
+    },
+    "total_outstanding": "0.00",
+    "total_price": "168.06",
+    "total_price_set": {
+        "shop_money": {
+            "amount": "168.06",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "168.06",
+            "currency_code": "CAD"
+        }
+    },
+    "total_price_usd": "131.72",
+    "total_shipping_price_set": {
+        "shop_money": {
+            "amount": "16.73",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "16.73",
+            "currency_code": "CAD"
+        }
+    },
+    "total_tax": "19.33",
+    "total_tax_set": {
+        "shop_money": {
+            "amount": "19.33",
+            "currency_code": "CAD"
+        },
+        "presentment_money": {
+            "amount": "19.33",
+            "currency_code": "CAD"
+        }
+    },
+    "total_tip_received": "0.00",
+    "total_weight": 3000,
+    "updated_at": "2022-03-14T10:26:07-05:00",
+    "user_id": null,
+    "billing_address": {
+        "first_name": "Annie",
+        "address1": "250 Concession 4 West",
+        "phone": "+19057307907",
+        "city": "Hamilton",
+        "zip": "L8B 1J3",
+        "province": "Ontario",
+        "country": "Canada",
+        "last_name": "Ciancone",
+        "address2": null,
+        "company": "Earth to Table: The Farm",
+        "latitude": null,
+        "longitude": null,
+        "name": "Annie Ciancone",
+        "country_code": "CA",
+        "province_code": "ON"
+    },
+    "customer": {
+        "id": 5183817646253,
+        "email": "annie@pearlehospitality.ca",
+        "accepts_marketing": false,
+        "created_at": "2021-04-20T13:16:36-05:00",
+        "updated_at": "2022-03-12T13:09:58-06:00",
+        "first_name": "Annie",
+        "last_name": "Ciancone",
+        "orders_count": 3,
+        "state": "enabled",
+        "total_spent": "1322.70",
+        "last_order_id": 4707531555028,
+        "note": null,
+        "verified_email": true,
+        "multipass_identifier": null,
+        "tax_exempt": false,
+        "phone": "+19057307907",
+        "tags": "",
+        "last_order_name": "#3642",
+        "currency": "CAD",
+        "accepts_marketing_updated_at": "2021-04-20T13:16:36-05:00",
+        "marketing_opt_in_level": null,
+        "tax_exemptions": [],
+        "admin_graphql_api_id": "gid://shopify/Customer/5183817646253",
+        "default_address": {
+            "id": 7632982638804,
+            "customer_id": 5183817646253,
+            "first_name": "Annie",
+            "last_name": "Ciancone",
+            "company": "Earth to Table: The Farm",
+            "address1": "250 Concession 4 West",
+            "address2": null,
+            "city": "Hamilton",
+            "province": "Ontario",
+            "country": "Canada",
+            "zip": "L8B 1J3",
+            "phone": "+19057307907",
+            "name": "Annie Ciancone",
+            "province_code": "ON",
+            "country_code": "CA",
+            "country_name": "Canada",
+            "default": true
+        }
+    },
+    "discount_applications": [],
+    "fulfillments": [
+        {
+            "id": 4204544164052,
+            "admin_graphql_api_id": "gid://shopify/Fulfillment/4204544164052",
+            "created_at": "2022-03-14T10:26:07-05:00",
+            "location_id": 754090008,
+            "name": "#3642.1",
+            "order_id": 4707531555028,
+            "receipt": {},
+            "service": "manual",
+            "shipment_status": null,
+            "status": "success",
+            "tracking_company": "Purolator",
+            "tracking_number": "333426591751",
+            "tracking_numbers": [
+                "333426591751"
+            ],
+            "tracking_url": "https://www.purolator.com/purolator/ship-track/tracking-details.page?pin=333426591751",
+            "tracking_urls": [
+                "https://www.purolator.com/purolator/ship-track/tracking-details.page?pin=333426591751"
+            ],
+            "updated_at": "2022-03-14T10:26:07-05:00",
+            "line_items": [
+                {
+                    "id": 12051904495828,
+                    "admin_graphql_api_id": "gid://shopify/LineItem/12051904495828",
+                    "fulfillable_quantity": 0,
+                    "fulfillment_service": "manual",
+                    "fulfillment_status": "fulfilled",
+                    "gift_card": false,
+                    "grams": 1000,
+                    "name": "NWP Floor Soap - 1l",
+                    "origin_location": {
+                        "id": 1836419022934,
+                        "country_code": "CA",
+                        "province_code": "ON",
+                        "name": "5930 Lloydtown-Aurora Rd.",
+                        "address1": "5930 Lloydtown-Aurora Rd.",
+                        "address2": "",
+                        "city": "Schomberg",
+                        "zip": "L0G 1T0"
+                    },
+                    "price": "44.00",
+                    "price_set": {
+                        "shop_money": {
+                            "amount": "44.00",
+                            "currency_code": "CAD"
+                        },
+                        "presentment_money": {
+                            "amount": "44.00",
+                            "currency_code": "CAD"
+                        }
+                    },
+                    "product_exists": true,
+                    "product_id": 167560347672,
+                    "properties": [],
+                    "quantity": 3,
+                    "requires_shipping": true,
+                    "sku": "3489",
+                    "taxable": true,
+                    "title": "NWP Floor Soap",
+                    "total_discount": "0.00",
+                    "total_discount_set": {
+                        "shop_money": {
+                            "amount": "0.00",
+                            "currency_code": "CAD"
+                        },
+                        "presentment_money": {
+                            "amount": "0.00",
+                            "currency_code": "CAD"
+                        }
+                    },
+                    "variant_id": 1795323985944,
+                    "variant_inventory_management": null,
+                    "variant_title": "1l",
+                    "vendor": "Osmo",
+                    "tax_lines": [
+                        {
+                            "channel_liable": false,
+                            "price": "17.16",
+                            "price_set": {
+                                "shop_money": {
+                                    "amount": "17.16",
+                                    "currency_code": "CAD"
+                                },
+                                "presentment_money": {
+                                    "amount": "17.16",
+                                    "currency_code": "CAD"
+                                }
+                            },
+                            "rate": 0.13,
+                            "title": "HST"
+                        }
+                    ],
+                    "duties": [],
+                    "discount_allocations": []
+                }
+            ]
+        }
+    ],
+    "line_items": [
+        {
+            "id": 12051904495828,
+            "admin_graphql_api_id": "gid://shopify/LineItem/12051904495828",
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 1000,
+            "name": "NWP Floor Soap - 1l",
+            "origin_location": {
+                "id": 1836419022934,
+                "country_code": "CA",
+                "province_code": "ON",
+                "name": "5930 Lloydtown-Aurora Rd.",
+                "address1": "5930 Lloydtown-Aurora Rd.",
+                "address2": "",
+                "city": "Schomberg",
+                "zip": "L0G 1T0"
+            },
+            "price": "44.00",
+            "price_set": {
+                "shop_money": {
+                    "amount": "44.00",
+                    "currency_code": "CAD"
+                },
+                "presentment_money": {
+                    "amount": "44.00",
+                    "currency_code": "CAD"
+                }
+            },
+            "product_exists": true,
+            "product_id": 167560347672,
+            "properties": [],
+            "quantity": 3,
+            "requires_shipping": true,
+            "sku": "3489",
+            "taxable": true,
+            "title": "NWP Floor Soap",
+            "total_discount": "0.00",
+            "total_discount_set": {
+                "shop_money": {
+                    "amount": "0.00",
+                    "currency_code": "CAD"
+                },
+                "presentment_money": {
+                    "amount": "0.00",
+                    "currency_code": "CAD"
+                }
+            },
+            "variant_id": 1795323985944,
+            "variant_inventory_management": null,
+            "variant_title": "1l",
+            "vendor": "Osmo",
+            "tax_lines": [
+                {
+                    "channel_liable": false,
+                    "price": "17.16",
+                    "price_set": {
+                        "shop_money": {
+                            "amount": "17.16",
+                            "currency_code": "CAD"
+                        },
+                        "presentment_money": {
+                            "amount": "17.16",
+                            "currency_code": "CAD"
+                        }
+                    },
+                    "rate": 0.13,
+                    "title": "HST"
+                }
+            ],
+            "duties": [],
+            "discount_allocations": []
+        }
+    ],
+    "payment_details": {
+        "credit_card_bin": "451401",
+        "avs_result_code": "Y",
+        "cvv_result_code": "M",
+        "credit_card_number": "•••• •••• •••• 1005",
+        "credit_card_company": "Visa"
+    },
+    "refunds": [],
+    "shipping_address": {
+        "first_name": "Annie",
+        "address1": "250 Concession 4 West",
+        "phone": "+19057307907",
+        "city": "Hamilton",
+        "zip": "L8B 1J3",
+        "province": "Ontario",
+        "country": "Canada",
+        "last_name": "Ciancone",
+        "address2": null,
+        "company": "Earth to Table: The Farm",
+        "latitude": null,
+        "longitude": null,
+        "name": "Annie Ciancone",
+        "country_code": "CA",
+        "province_code": "ON"
+    },
+    "shipping_lines": [
+        {
+            "id": 3916625215700,
+            "carrier_identifier": "650f1a14fa979ec5c74d063e968411d4",
+            "code": "DOM.XP",
+            "delivery_category": null,
+            "discounted_price": "16.73",
+            "discounted_price_set": {
+                "shop_money": {
+                    "amount": "16.73",
+                    "currency_code": "CAD"
+                },
+                "presentment_money": {
+                    "amount": "16.73",
+                    "currency_code": "CAD"
+                }
+            },
+            "phone": null,
+            "price": "16.73",
+            "price_set": {
+                "shop_money": {
+                    "amount": "16.73",
+                    "currency_code": "CAD"
+                },
+                "presentment_money": {
+                    "amount": "16.73",
+                    "currency_code": "CAD"
+                }
+            },
+            "requested_fulfillment_service_id": null,
+            "source": "canada_post",
+            "title": "Xpresspost",
+            "tax_lines": [
+                {
+                    "channel_liable": false,
+                    "price": "2.17",
+                    "price_set": {
+                        "shop_money": {
+                            "amount": "2.17",
+                            "currency_code": "CAD"
+                        },
+                        "presentment_money": {
+                            "amount": "2.17",
+                            "currency_code": "CAD"
+                        }
+                    },
+                    "rate": 0.13,
+                    "title": "HST"
+                }
+            ],
+            "discount_allocations": []
+        }
+    ]
+}

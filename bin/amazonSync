@@ -336,16 +336,20 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                                     if (err) { return console.error('Account err ' + JSON.stringify(err)); }
                                                                                                                                     if (!err) {
                                                                                                                                         if (result.records.length == 0) {
-                                                                                                                                            conn.sobject("Account").create(allBuyerDetails,
-                                                                                                                                                function (err, rets) {
-                                                                                                                                                    if (err) { return console.error(err); }
+                                                                                                                                            if (allBuyerDetails != []) {
+                                                                                                                                                conn.bulk.pollTimeout = 25000;
+                                                                                                                                                conn.bulk.load("Account", "insert", allBuyerDetails, function (err, rets) {
+                                                                                                                                                    if (err) { return console.error('err 2' + err); }
                                                                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                                                                         if (rets[i].success) {
-                                                                                                                                                            console.log(" Created record id Account 1: " + rets[i].id);
+                                                                                                                                                            console.log("#" + (i + 1) + " insert Account successfully, id = " + rets[i].id);
+                                                                                                                                                        } else {
+                                                                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                                                         }
                                                                                                                                                     }
                                                                                                                                                     conInsertion();
                                                                                                                                                 });
+                                                                                                                                            }
                                                                                                                                         }
                                                                                                                                         else if (result.records.length > 0) {
                                                                                                                                             for (let i in result.records) {
@@ -371,28 +375,32 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                                             // console.log('accExist' + JSON.stringify(accExist))
 
                                                                                                                                             if (accNotExist != []) {
-                                                                                                                                                conn.sobject("Account").create(accNotExist,
-                                                                                                                                                    function (err, rets) {
-                                                                                                                                                        if (err) { return console.error(err); }
-                                                                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                                                                            if (rets[i].success) {
-                                                                                                                                                                console.log(" Created record id Account 2: " + rets[i].id);
-                                                                                                                                                            }
+                                                                                                                                                conn.bulk.pollTimeout = 25000;
+                                                                                                                                                conn.bulk.load("Account", "insert", accNotExist, function (err, rets) {
+                                                                                                                                                    if (err) { return console.error('err 2' + err); }
+                                                                                                                                                    for (var i = 0; i < rets.length; i++) {
+                                                                                                                                                        if (rets[i].success) {
+                                                                                                                                                            console.log("#" + (i + 1) + " insert Account successfully, id = " + rets[i].id);
+                                                                                                                                                        } else {
+                                                                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                                                         }
-                                                                                                                                                    });
+                                                                                                                                                    }
+                                                                                                                                                });
                                                                                                                                             }
 
                                                                                                                                             if (accExist != []) {
-                                                                                                                                                conn.sobject("Account").update(accExist,
-                                                                                                                                                    function (err, rets) {
-                                                                                                                                                        if (err) { return console.error(err); }
-                                                                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                                                                            if (rets[i].success) {
-                                                                                                                                                                console.log(" Updated Successfully Account : " + rets[i].id);
-                                                                                                                                                            }
+                                                                                                                                                conn.bulk.pollTimeout = 25000;
+                                                                                                                                                conn.bulk.load("Account", "update", accExist, function (err, rets) {
+                                                                                                                                                    if (err) { return console.error('err 2' + err); }
+                                                                                                                                                    for (var i = 0; i < rets.length; i++) {
+                                                                                                                                                        if (rets[i].success) {
+                                                                                                                                                            console.log("#" + (i + 1) + " update Account successfully, id = " + rets[i].id);
+                                                                                                                                                        } else {
+                                                                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                                                         }
-                                                                                                                                                        conInsertion();
-                                                                                                                                                    });
+                                                                                                                                                    }
+                                                                                                                                                    conInsertion();
+                                                                                                                                                });
                                                                                                                                             }
                                                                                                                                         }
                                                                                                                                     }
@@ -447,16 +455,20 @@ const SellingPartnerAPI = require('amazon-sp-api');
 
                                                                                     if (!err) {
                                                                                         if (result.records.length == 0) {
-                                                                                            conn.sobject("Contact").create(accUpExist,
-                                                                                                function (err, rets) {
-                                                                                                    if (err) { return console.error(err); }
+                                                                                            if (accUpExist != []) {
+                                                                                                conn.bulk.pollTimeout = 25000;
+                                                                                                conn.bulk.load("Contact", "insert", accUpExist, function (err, rets) {
+                                                                                                    if (err) { return console.error('err 2' + err); }
                                                                                                     for (var i = 0; i < rets.length; i++) {
                                                                                                         if (rets[i].success) {
-                                                                                                            console.log(" Created record id contact 1: " + rets[i].id);
+                                                                                                            console.log("#" + (i + 1) + " insert Contact successfully, id = " + rets[i].id);
+                                                                                                        } else {
+                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                         }
                                                                                                     }
                                                                                                     addressInsertion()
                                                                                                 });
+                                                                                            }
                                                                                         }
                                                                                         else if (result.records.length > 0) {
                                                                                             for (let i in result.records) {
@@ -480,28 +492,32 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                             // console.log('conNotExist' + JSON.stringify(conNotExist))
 
                                                                                             if (conNotExist != []) {
-                                                                                                conn.sobject("Contact").create(conNotExist,
-                                                                                                    function (err, rets) {
-                                                                                                        if (err) { return console.error(err); }
-                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                            if (rets[i].success) {
-                                                                                                                console.log(" Created record id contact 2: " + rets[i].id);
-                                                                                                            }
+                                                                                                conn.bulk.pollTimeout = 25000;
+                                                                                                conn.bulk.load("Contact", "insert", conNotExist, function (err, rets) {
+                                                                                                    if (err) { return console.error('err 2' + err); }
+                                                                                                    for (var i = 0; i < rets.length; i++) {
+                                                                                                        if (rets[i].success) {
+                                                                                                            console.log("#" + (i + 1) + " insert Contact successfully, id = " + rets[i].id);
+                                                                                                        } else {
+                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                         }
-                                                                                                    })
+                                                                                                    }
+                                                                                                });
                                                                                             }
 
                                                                                             if (conExist != []) {
-                                                                                                conn.sobject("Contact").update(conExist,
-                                                                                                    function (err, rets) {
-                                                                                                        if (err) { return console.error(err); }
-                                                                                                        for (var i = 0; i < rets.length; i++) {
-                                                                                                            if (rets[i].success) {
-                                                                                                                console.log(" Updated Successfully Contact : " + rets[i].id);
-                                                                                                            }
+                                                                                                conn.bulk.pollTimeout = 25000;
+                                                                                                conn.bulk.load("Contact", "update", conExist, function (err, rets) {
+                                                                                                    if (err) { return console.error('err 2' + err); }
+                                                                                                    for (var i = 0; i < rets.length; i++) {
+                                                                                                        if (rets[i].success) {
+                                                                                                            console.log("#" + (i + 1) + " update Contact successfully, id = " + rets[i].id);
+                                                                                                        } else {
+                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                         }
-                                                                                                        addressInsertion()
-                                                                                                    });
+                                                                                                    }
+                                                                                                    addressInsertion()
+                                                                                                });
                                                                                             }
                                                                                         }
                                                                                     }
@@ -586,17 +602,18 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                             if (result.records.length == 0) {
                                                                                                 // console.log(addInsert)
                                                                                                 if (addInsert != []) {
-                                                                                                    // console.log('addInsert ' + JSON.stringify(addInsert))
-                                                                                                    conn.sobject("ERP7__Address__c").create(addInsert,
-                                                                                                        function (err, rets) {
-                                                                                                            if (err) { return console.error(err); }
-                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                if (rets[i].success) {
-                                                                                                                    console.log(" Created record id Address 1: " + rets[i].id);
-                                                                                                                }
+                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                    conn.bulk.load("ERP7__Address__c", "insert", addInsert, function (err, rets) {
+                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                            if (rets[i].success) {
+                                                                                                                console.log("#" + (i + 1) + " insert Address successfully, id = " + rets[i].id);
+                                                                                                            } else {
+                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                             }
-                                                                                                            orderInsertion();
-                                                                                                        });
+                                                                                                        }
+                                                                                                        orderInsertion();
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                             else if (result.records.length > 0) {
@@ -623,29 +640,32 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                 }
 
                                                                                                 if (addNotExist != []) {
-                                                                                                    conn.sobject("ERP7__Address__c").create(addNotExist,
-                                                                                                        function (err, rets) {
-                                                                                                            if (err) { return console.error(err); }
-                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                if (rets[i].success) {
-                                                                                                                    console.log(" Created record id Address 1: " + rets[i].id);
-                                                                                                                }
+                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                    conn.bulk.load("ERP7__Address__c", "insert", addNotExist, function (err, rets) {
+                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                            if (rets[i].success) {
+                                                                                                                console.log("#" + (i + 1) + " insert Address successfully, id = " + rets[i].id);
+                                                                                                            } else {
+                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                             }
-                                                                                                        });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
 
                                                                                                 if (addExist != []) {
-                                                                                                    // console.log('addExist ' + JSON.stringify(addExist))
-                                                                                                    conn.sobject("ERP7__Address__c").update(addExist,
-                                                                                                        function (err, rets) {
-                                                                                                            if (err) { return console.error(err); }
-                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                if (rets[i].success) {
-                                                                                                                    console.log(" Updated Successfully Address : " + rets[i].id);
-                                                                                                                }
+                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                    conn.bulk.load("ERP7__Address__c", "update", addExist, function (err, rets) {
+                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                            if (rets[i].success) {
+                                                                                                                console.log("#" + (i + 1) + " update Address successfully, id = " + rets[i].id);
+                                                                                                            } else {
+                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                             }
-                                                                                                            orderInsertion();
-                                                                                                        });
+                                                                                                        }
+                                                                                                        orderInsertion();
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -737,16 +757,18 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                             if (result.records.length === 0) {
                                                                                                                 // console.log('OrderAvailable ' + JSON.stringify(OrderAvailable))
                                                                                                                 if (OrderAvailable != []) {
-                                                                                                                    conn.sobject("Order").create(OrderAvailable,
-                                                                                                                        function (err, rets) {
-                                                                                                                            if (err) { return console.error(err); }
-                                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                                if (rets[i].success) {
-                                                                                                                                    console.log(" Created record id Order: " + rets[i].id);
-                                                                                                                                }
+                                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                                    conn.bulk.load("Order", "insert", OrderAvailable, function (err, rets) {
+                                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                            if (rets[i].success) {
+                                                                                                                                console.log("#" + (i + 1) + " insert Order successfully, id = " + rets[i].id);
+                                                                                                                            } else {
+                                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                             }
-                                                                                                                            productInsert();
-                                                                                                                        });
+                                                                                                                        }
+                                                                                                                        productInsert();
+                                                                                                                    });
                                                                                                                 }
                                                                                                             }
                                                                                                             else if (result.records.length > 0) {
@@ -784,29 +806,32 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 // console.log('orderNotExist ' + JSON.stringify(orderNotExist))
 
                                                                                                                 if (orderNotExist != []) {
-                                                                                                                    conn.sobject("Order").create(orderNotExist,
-                                                                                                                        function (err, rets) {
-                                                                                                                            if (err) { return console.error(err); }
-                                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                                if (rets[i].success) {
-                                                                                                                                    console.log(" Created record id Order 1: " + rets[i].id);
-                                                                                                                                }
+                                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                                    conn.bulk.load("Order", "insert", orderNotExist, function (err, rets) {
+                                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                            if (rets[i].success) {
+                                                                                                                                console.log("#" + (i + 1) + " insert Order successfully, id = " + rets[i].id);
+                                                                                                                            } else {
+                                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                             }
-                                                                                                                        });
+                                                                                                                        }
+                                                                                                                    });
                                                                                                                 }
 
                                                                                                                 if (orderExist != []) {
-                                                                                                                    conn.sobject("Order").update(orderExist,
-                                                                                                                        function (err, rets) {
-                                                                                                                            if (err) { return console.error(err); }
-                                                                                                                            console.log('order ' + JSON.stringify(rets))
-                                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                                if (rets[i].success) {
-                                                                                                                                    console.log(" Updated record id Order: " + rets[i].id);
-                                                                                                                                }
+                                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                                    conn.bulk.load("Order", "update", orderExist, function (err, rets) {
+                                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                            if (rets[i].success) {
+                                                                                                                                console.log("#" + (i + 1) + " update Order successfully, id = " + rets[i].id);
+                                                                                                                            } else {
+                                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                             }
-                                                                                                                            productInsert();
-                                                                                                                        });
+                                                                                                                        }
+                                                                                                                        productInsert();
+                                                                                                                    });
                                                                                                                 }
                                                                                                             }
                                                                                                         }
@@ -880,16 +905,18 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                             if (!err) {
                                                                                 if (result.records.length == 0) {
                                                                                     if (prodAvailable != []) {
-                                                                                        conn.sobject("Product2").create(prodAvailable,
-                                                                                            function (err, rets) {
-                                                                                                if (err) { return console.error(err); }
-                                                                                                for (var i = 0; i < rets.length; i++) {
-                                                                                                    if (rets[i].success) {
-                                                                                                        console.log(" Created record id Product: " + rets[i].id);
-                                                                                                    }
+                                                                                        conn.bulk.pollTimeout = 25000;
+                                                                                        conn.bulk.load("Product2", "insert", prodAvailable, function (err, rets) {
+                                                                                            if (err) { return console.error('err 2' + err); }
+                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                if (rets[i].success) {
+                                                                                                    console.log("#" + (i + 1) + " insert Product2 successfully, id = " + rets[i].id);
+                                                                                                } else {
+                                                                                                    console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                 }
-                                                                                                priceBookEntryInsert();
-                                                                                            });
+                                                                                            }
+                                                                                            priceBookEntryInsert();
+                                                                                        });
                                                                                     }
                                                                                 }
                                                                                 else if (result.records.length > 0) {
@@ -922,28 +949,32 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                     }
 
                                                                                     if (productNotExist != []) {
-                                                                                        conn.sobject("Product2").create(productNotExist,
-                                                                                            function (err, rets) {
-                                                                                                if (err) { return console.error(err); }
-                                                                                                for (var i = 0; i < rets.length; i++) {
-                                                                                                    if (rets[i].success) {
-                                                                                                        console.log(" Created record id Product: " + rets[i].id);
-                                                                                                    }
+                                                                                        conn.bulk.pollTimeout = 25000;
+                                                                                        conn.bulk.load("Product2", "insert", productNotExist, function (err, rets) {
+                                                                                            if (err) { return console.error('err 2' + err); }
+                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                if (rets[i].success) {
+                                                                                                    console.log("#" + (i + 1) + " insert Product2 successfully, id = " + rets[i].id);
+                                                                                                } else {
+                                                                                                    console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                 }
-                                                                                            });
+                                                                                            }
+                                                                                        });
                                                                                     }
 
                                                                                     if (productExist != []) {
-                                                                                        conn.sobject("Product2").update(productExist,
-                                                                                            function (err, rets) {
-                                                                                                if (err) { return console.error(err); }
-                                                                                                for (var i = 0; i < rets.length; i++) {
-                                                                                                    if (rets[i].success) {
-                                                                                                        console.log(" Updated record id Product: " + rets[i].id);
-                                                                                                    }
+                                                                                        conn.bulk.pollTimeout = 25000;
+                                                                                        conn.bulk.load("Product2", "update", productExist, function (err, rets) {
+                                                                                            if (err) { return console.error('err 2' + err); }
+                                                                                            for (var i = 0; i < rets.length; i++) {
+                                                                                                if (rets[i].success) {
+                                                                                                    console.log("#" + (i + 1) + " update Product2 successfully, id = " + rets[i].id);
+                                                                                                } else {
+                                                                                                    console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                 }
-                                                                                                priceBookEntryInsert();
-                                                                                            });
+                                                                                            }
+                                                                                            priceBookEntryInsert();
+                                                                                        });
                                                                                     }
                                                                                 }
                                                                             }
@@ -1001,16 +1032,18 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                         if (!err) {
                                                                                             if (result.records.length == 0) {
                                                                                                 if (priceBookEntryAvail != []) {
-                                                                                                    conn.sobject("pricebookentry").create(priceBookEntryAvail,
-                                                                                                        function (err, rets) {
-                                                                                                            if (err) { return console.error(err); }
-                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                if (rets[i].success) {
-                                                                                                                    console.log(" Created record id Price book Entry: " + rets[i].id);
-                                                                                                                }
+                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                    conn.bulk.load("pricebookentry", "insert", priceBookEntryAvail, function (err, rets) {
+                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                            if (rets[i].success) {
+                                                                                                                console.log("#" + (i + 1) + " insert pricebookentry successfully, id = " + rets[i].id);
+                                                                                                            } else {
+                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                             }
-                                                                                                            orderItemsInsert();
-                                                                                                        });
+                                                                                                        }
+                                                                                                        orderItemsInsert();
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                             else if (result.records.length > 0) {
@@ -1025,41 +1058,49 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 UnitPrice: priceBookEntryAvail[j].UnitPrice
                                                                                                             }
                                                                                                             priceBookExist.push(list)
-                                                                                                            priceBookIdExist.push(result.records[i].Id)
+                                                                                                            var list2 = {
+                                                                                                                Product2Id: result.records[i].Product2Id,
+                                                                                                                Pricebook2Id: result.records[i].Pricebook2Id
+                                                                                                            }
+                                                                                                            priceBookIdExist.push(list2)
                                                                                                         }
                                                                                                     }
                                                                                                 }
                                                                                                 // console.log('priceBookExist ' + JSON.stringify(priceBookExist))
 
-                                                                                                for (let i in priceBookEntryAvail) {
-                                                                                                    if (!priceBookIdExist.includes(priceBookEntryAvail[i].StockKeepingUnit)) priceNotExist.push(priceBookEntryAvail[i])
+                                                                                                if (priceBookIdExist != []) {
+                                                                                                    priceNotExist = priceBookEntryAvail.filter((Exist) => !priceBookIdExist.some((NotExist) => Exist.Product2Id == NotExist.Product2Id && Exist.Pricebook2Id == NotExist.Pricebook2Id))
                                                                                                 }
 
                                                                                                 if (priceNotExist != []) {
-                                                                                                    conn.sobject("pricebookentry").create(priceNotExist,
-                                                                                                        function (err, rets) {
-                                                                                                            if (err) { return console.error(err); }
-                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                if (rets[i].success) {
-                                                                                                                    console.log(" Created record id Price book Entry 1: " + rets[i].id);
-                                                                                                                }
+                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                    conn.bulk.load("pricebookentry", "insert", priceNotExist, function (err, rets) {
+                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                            if (rets[i].success) {
+                                                                                                                console.log("#" + (i + 1) + " insert pricebookentry successfully, id = " + rets[i].id);
+                                                                                                            } else {
+                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                             }
-                                                                                                        });
+                                                                                                        }
+                                                                                                    });
                                                                                                 }
 
                                                                                                 priceBookExist = Array.from(new Set(priceBookExist.map(JSON.stringify))).map(JSON.parse);
 
                                                                                                 if (priceBookExist != []) {
-                                                                                                    conn.sobject("pricebookentry").update(priceBookExist,
-                                                                                                        function (err, rets) {
-                                                                                                            if (err) { return console.error(err); }
-                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                if (rets[i].success) {
-                                                                                                                    console.log(" Updated record id Price book Entry 1: " + rets[i].id);
-                                                                                                                }
+                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                    conn.bulk.load("pricebookentry", "update", priceBookExist, function (err, rets) {
+                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                            if (rets[i].success) {
+                                                                                                                console.log("#" + (i + 1) + " update pricebookentry successfully, id = " + rets[i].id);
+                                                                                                            } else {
+                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                             }
-                                                                                                            orderItemsInsert();
-                                                                                                        });
+                                                                                                        }
+                                                                                                        orderItemsInsert();
+                                                                                                    });
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -1155,18 +1196,20 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                         if (!err) {
                                                                                                             if (result.records.length == 0) {
                                                                                                                 if (orderItemAvailable != []) {
-                                                                                                                    conn.sobject("OrderItem").create(orderItemAvailable,
-                                                                                                                        async function (err, rets) {
-                                                                                                                            if (err) { return console.error(err); }
-                                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                                if (rets[i].success) {
-                                                                                                                                    console.log(" Created record id Order Item 1:" + rets[i].id);
-                                                                                                                                }
+                                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                                    conn.bulk.load("OrderItem", "insert", orderItemAvailable, function (err, rets) {
+                                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                            if (rets[i].success) {
+                                                                                                                                console.log("#" + (i + 1) + " insert OrderItem successfully, id = " + rets[i].id);
+                                                                                                                            } else {
+                                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                             }
-                                                                                                                            var date = new Date();
-                                                                                                                            var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                                                                                                                            pool.query('INSERT INTO jobs_log (email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
-                                                                                                                        });
+                                                                                                                        }
+                                                                                                                        var date = new Date();
+                                                                                                                        var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+                                                                                                                        pool.query('INSERT INTO jobs_log (email, updated_at, category, message, seller_id) VALUES ($1, $2, $3, $4, $5)', [UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
+                                                                                                                    });
                                                                                                                 }
                                                                                                             }
                                                                                                             else if (result.records.length > 0) {
@@ -1205,30 +1248,34 @@ const SellingPartnerAPI = require('amazon-sp-api');
                                                                                                                 }
 
                                                                                                                 if (orderItemNotExist != []) {
-                                                                                                                    conn.sobject("OrderItem").create(orderItemNotExist,
-                                                                                                                        function (err, rets) {
-                                                                                                                            if (err) { return console.error(err); }
-                                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                                if (rets[i].success) {
-                                                                                                                                    console.log(" Created record id Order Item: " + rets[i].id);
-                                                                                                                                }
+                                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                                    conn.bulk.load("OrderItem", "insert", orderItemNotExist, function (err, rets) {
+                                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                            if (rets[i].success) {
+                                                                                                                                console.log("#" + (i + 1) + " insert OrderItem successfully, id = " + rets[i].id);
+                                                                                                                            } else {
+                                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                             }
-                                                                                                                        });
+                                                                                                                        }
+                                                                                                                    });
                                                                                                                 }
 
                                                                                                                 if (orderItemExist != []) {
-                                                                                                                    conn.sobject("OrderItem").update(orderItemExist,
-                                                                                                                        async function (err, rets) {
-                                                                                                                            if (err) { return console.error(err); }
-                                                                                                                            for (var i = 0; i < rets.length; i++) {
-                                                                                                                                if (rets[i].success) {
-                                                                                                                                    console.log(" Updated record id Order Item: " + rets[i].id);
-                                                                                                                                }
+                                                                                                                    conn.bulk.pollTimeout = 25000;
+                                                                                                                    conn.bulk.load("OrderItem", "update", orderItemExist, function (err, rets) {
+                                                                                                                        if (err) { return console.error('err 2' + err); }
+                                                                                                                        for (var i = 0; i < rets.length; i++) {
+                                                                                                                            if (rets[i].success) {
+                                                                                                                                console.log("#" + (i + 1) + " update OrderItem successfully, id = " + rets[i].id);
+                                                                                                                            } else {
+                                                                                                                                console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
                                                                                                                             }
-                                                                                                                            var date = new Date();
-                                                                                                                            var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                                                                                                                            pool.query('INSERT INTO jobs_log (email, updated_at, category, message, amazon_app_client_id) VALUES ($1, $2, $3, $4, $5, $6)', [UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
-                                                                                                                        });
+                                                                                                                        }
+                                                                                                                        var date = new Date();
+                                                                                                                        var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+                                                                                                                        pool.query('INSERT INTO jobs_log (email, updated_at, category, message, seller_id) VALUES ($1, $2, $3, $4, $5)', [UsersDetails[z].email, updatedDate, 'amazon', 'Order Sync', amazonCredentials[y].amazon_app_client_id]);
+                                                                                                                    });
                                                                                                                 }
                                                                                                             }
                                                                                                         }
