@@ -5,11 +5,11 @@ const PORT = process.env.PORT || 4000
 var flash = require('connect-flash');
 var passport = require("passport");
 var session = require("express-session");
-
+const cookieParser = require('cookie-parser');
 var app = express();
 var bodyParser = require('body-parser')
 
-// app.use(require('cookie-parser')());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -19,10 +19,10 @@ var path = require('path');
 app.use(flash());
 app.use(session({
     cookie: {
-        maxAge: 518400000
+        maxAge: 2592000000
     },
     secret: 'keyboard cat',
-    resave: false,
+    resave: true,
     saveUninitialized: true
 }))
 
