@@ -18,9 +18,6 @@ var path = require('path');
 // cookie: {maxAge: 60000},
 app.use(flash());
 app.use(session({
-    cookie: {
-        maxAge: 2592000000
-    },
     secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true
@@ -34,7 +31,11 @@ app.use('/public', express.static(__dirname + '/public'));
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    if(!req.session){ req.flash('session_exp', '• Your session has expired. Please log in again.') }
+    let numWeeks = 1;
+    let now = new Date();
+    now.setDate(now.getDate() + numWeeks * 7);
+    req.session.cookie.expires = now;
+    req.session.cookie.maxAge = 604799999;
     next();
 });
 app.set('view engine', 'ejs');

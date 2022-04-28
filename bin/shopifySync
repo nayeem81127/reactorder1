@@ -30,7 +30,7 @@ const Shopify = require('shopify-api-node');
 
                             var date = new Date();
                             var updatedDate = date.toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' })
-                            pool.query('delete FROM jobs_log WHERE updated_at::date < $1 and category=$2', [updatedDate, 'amazon']);
+                            pool.query('delete FROM jobs_log WHERE updated_at::date < $1 and category=$2', [updatedDate, 'shopify']);
 
                             if (UsersDetails != [] && shopsDetails != []) {
                                 for (let z in UsersDetails) {
@@ -845,6 +845,7 @@ const Shopify = require('shopify-api-node');
                                                                                 var list = {
                                                                                     Id: orderRecords[i].Id,
                                                                                     ERP7__Contact__c: OrderDetails[j].ERP7__Contact__c,
+                                                                                    Status: OrderDetails[j].ERP7__Sync_Status__c,
                                                                                     ERP7__Stage__c: OrderDetails[j].ERP7__Stage__c,
                                                                                     ERP7__Order_Profile__c: Aqxolt_Order_Profile,
                                                                                     ERP7__Channel__c: Aqxolt_Channel,
