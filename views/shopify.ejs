@@ -21,7 +21,7 @@
   <link href="/public/plugins/apexcharts/apexcharts.css" rel="stylesheet">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+  <script src="/public/js/apexcharts.js"></script>
   <!-- Theme Styles -->
   <link href="/public/css/main.min.css" rel="stylesheet">
   <link href="/public/css/custom.css" rel="stylesheet">
@@ -251,7 +251,7 @@
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Sync</h5>
-                        <div id="apex1"></div>
+                        <div id="chart"></div>
                       </div>
                     </div>
                   </div>
@@ -327,13 +327,54 @@
   });
   </script>
 
+  <script>
+    var _seed = 42;
+    Math.random = function() {
+      _seed = _seed * 16807 % 2147483647;
+      return (_seed - 1) / 2147483646;
+    };
+  </script>
+
+  <script>
+    var json = '<%- JSON.stringify(generateLog.rows) %>';
+    console.log(json)
+    var options = {
+      series: [],
+      chart: {
+      height: 350,
+      type: 'area'
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    xaxis: {
+      type: 'datetime',
+      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+    },
+    tooltip: {
+      x: {
+        format: 'dd/MM/yy HH:mm'
+      },
+    },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+  
+  
+</script>
+
   <!-- Javascripts -->
+  
   <script src="/public/plugins/jquery/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="/public/plugins/bootstrap/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="/public/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
-  <script src="/public/plugins/apexcharts/apexcharts.min.js"></script>
+  <!-- <script src="/public/plugins/apexcharts/apexcharts.min.js"></script> -->
   <script src="/public/js/main.min.js"></script>
   <script src="/public/js/pages/dashboard.js"></script>
 </body>
