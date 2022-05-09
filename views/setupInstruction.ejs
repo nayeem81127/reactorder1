@@ -167,76 +167,60 @@
     </div>
     <div class="page-content">
       <div class="main-wrapper">
-        <div class="col-md-12 text-center mt-15">
-          <button type="button" class="btn btn-success btn-xl" data-bs-toggle="modal"
-            data-bs-target="#editSalesDetails">Add Shop</button>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="editSalesDetails" tabindex="-1" aria-labelledby="editSalesDetailsLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" style="max-height: 86%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Aqxolt — Installation</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <form action="/auth" method="GET">
-            <div class="modal-body">
-              <div class="mb-3">
-                Please enter the "myshopify" domain of your store
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <input type="text" class="form-control" id="shop" name="shop" placeholder="example.myshopify.com">
+      <div class="container my-5">
+        <section id="steps">
+            <div class="text-center mb-5">
+                <h2 class="font-weight-bold display-4 ">How It <span style=" color: #7888fc;">Works?</span></h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="bg-light position-relative px-3 my-3">
+                        <div class="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white" style="width: 60px;height: 60px;top: -30px;border-width: 4px !important; background-color: #7888fc;">
+                            1
+                        </div>
+                        <div class="px-3 text-center pb-3">
+                            <h4>Domain Name</h4>
+                            <p class="font-weight-light my-3">Enter Shop domain Name</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4">
-                  <button type="submit" class="btn btn-success">Install</button>
+                    <div class="bg-light position-relative px-3 my-3">
+                        <div class="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white" style="width: 60px;height: 60px;top: -30px;border-width: 4px !important; background-color: #7888fc;">
+                            2
+                        </div>
+                        <div class="px-3 text-center pb-3">
+                            <h4>Installation</h4>
+                            <p class="font-weight-light my-3">Click Install and Then it will redirect to Shopify Page</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="col-md-4">
+                    <div class="bg-light position-relative px-3 my-3">
+                        <div class="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white" style="width: 60px;height: 60px;top: -30px;border-width: 4px !important; background-color: #7888fc;">
+                            3
+                        </div>
+                        <div class="px-3 text-center pb-3">
+                            <h4>Shop Redirect Install</h4>
+                            <p class="font-weight-light my-3">Then Click Install app and it will redirect to this Shopify page where
+                              you can Sync Customer, Product and Order</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </form>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
+    
+            <div class="text-center">
+              <a href="/installExtension" class="btn btn-outline-primary btn-lg m-b-xs"><i class="fa fa-arrow-right"></i>&nbsp;Lets Get Started&nbsp; </a>
     </div>
-
-    <!-- <div class="modal fade" id="setupInst" tabindex="-1" aria-labelledby="editSalesDetailsLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-scrollable" style="max-height: 100%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalScrollableTitle">Setup Instruction</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              Let's get started by following this step
-            </div>
-            <div class="mb-3">
-              Step 1:&ensp;&nbsp; Click 'Add Shop'
-            </div>
-            <div class="mb-3">
-              Step 2: &ensp;Enter Shop domain Name
-            </div>
-            <div class="mb-3">
-              Step 3: &ensp;Click Install and Then it will redirect to Shopify Page
-            </div>
-            <div class="mb-3">
-              Step 4: &ensp;Then Click Install app and it will redirect to this Shopify &emsp; &emsp; &emsp; page where
-              you can Sync Customer, Product and &emsp; &emsp; &emsp; &emsp; &emsp; Order
-            </div>
-            <br />
-          </div>
-        </div>
-      </div>
-    </div> -->
+        </section>
+    </div>
+    </div> 
+  </div>   
   </div>
 
   <script type="text/javascript">
     $(window).load(function () {
-      $('#editSalesDetails').modal('show');
+      $('#setupInst').modal('show');
     });
   </script>
 

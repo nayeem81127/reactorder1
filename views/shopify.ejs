@@ -68,7 +68,7 @@
         <div class="" id="headerNav">
           <div class="row">
             <div class="col-md-7">
-              <select id="drop_joblogs" class="form-select" aria-label="Default select example">  
+              <select id="drop_joblogs" class="form-select" aria-label="Default select example">
                 <option value="All">All</option>
                 <% for(var i=0; i < locals.shopDetails.rows.length; i++) { %>
                   <option value="<%= locals.shopDetails.rows[i].shopify_domain %>">
@@ -80,7 +80,7 @@
             <div class="col-md-5">
               <a href="/addShop" class="btn btn-warning m-b-xs">Manage</a>
             </div>
-          </div>          
+          </div>
         </div>
       </nav>
     </div>
@@ -288,87 +288,132 @@
     $(document).ready(function () {
       $(`#drop_joblogs option[value='<%= locals.idValue %>']`).prop('selected', true);
 
-    $('#CustomerSync').on('click', function () {
-      var text = 'Do you want Customer sync now?';
-      if (confirm(text)) {
-        document.getElementById("shopifyCustomerSync").submit();
-      }
-    });
-
-    $('#ProductSync').on('click', function () {
-      var text = 'Do you want Product sync now?';
-      if (confirm(text)) {
-        document.getElementById("shopifyProductSync").submit();
-      }
-    });
-
-    $('#OrderSync').on('click', function () {
-      var text = 'Do you want Order sync now?';
-      if (confirm(text)) {
-        document.getElementById("shopifyOrderSync").submit();
-      }
-    });
-
-    $('#drop_joblogs').on('change', function () {
-      var state_id = this.value;
-      var url = '/shopify/' + state_id;
-      $.ajax({
-        url: url,
-        type: 'GET',
-        success: function (result) {
-          console.log('changing...');
-          window.location.href = '/shopify/' + state_id;
-        },
-        error: function (err) {
-          console.log(err);
+      $('#CustomerSync').on('click', function () {
+        var text = 'Do you want Customer sync now?';
+        if (confirm(text)) {
+          document.getElementById("shopifyCustomerSync").submit();
         }
       });
+
+      $('#ProductSync').on('click', function () {
+        var text = 'Do you want Product sync now?';
+        if (confirm(text)) {
+          document.getElementById("shopifyProductSync").submit();
+        }
+      });
+
+      $('#OrderSync').on('click', function () {
+        var text = 'Do you want Order sync now?';
+        if (confirm(text)) {
+          document.getElementById("shopifyOrderSync").submit();
+        }
+      });
+
+      $('#drop_joblogs').on('change', function () {
+        var state_id = this.value;
+        var url = '/shopify/' + state_id;
+        $.ajax({
+          url: url,
+          type: 'GET',
+          success: function (result) {
+            console.log('changing...');
+            window.location.href = '/shopify/' + state_id;
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      });
     });
-  });
   </script>
 
   <script>
     var _seed = 42;
-    Math.random = function() {
+    Math.random = function () {
       _seed = _seed * 16807 % 2147483647;
       return (_seed - 1) / 2147483646;
     };
   </script>
 
   <script>
-    var json = '<%- JSON.stringify(generateLog.rows) %>';
-    console.log(json)
+    var dateString = []
+    var datefullString = []
+    const timeStamp = new Date().getTime();
+    for (let i = 9; i >= 0; --i) {
+      const yesterdayTimeStamp = timeStamp - (24 * 60 * 60 * 1000) * i;
+      var data = new Date(yesterdayTimeStamp).toLocaleString('en-US', { weekday: 'short', day: 'numeric', year: 'numeric', month: 'long' })
+      datefullString.push(data)
+      var data = new Date(yesterdayTimeStamp).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+      dateString.push(data)
+    }
+
+    console.log(datefullString)
+    var dataVal = '<%- JSON.stringify(shopcharts.rows) %>';
+    dataVal = JSON.parse(dataVal)
+
+    var data1 = [];
+    for (let j in dataVal) {
+      data1.push(dataVal[j].seller_id)
+    }
+
+    var series = []
+    for (let j in dataVal) {
+      data1.forEach((value) => {
+        if (value == dataVal[j].seller_id) {
+          var data = [];
+          for (let i in dataVal) {
+            if (value == dataVal[i].seller_id) {
+              if(!dataVal[i].updated_at.includes(datefullString)){
+              data.push(dataVal[i].sync_count)
+              }
+              else{
+                data.push('0')
+              }
+            }
+          }
+          var list = {
+            name: value,
+            data: data
+          }
+          series.push(list)
+        }
+      })
+    }
+
+    var uniq1 = new Set(series.map(e => JSON.stringify(e)));
+    series = Array.from(uniq1).map(e => JSON.parse(e));
+    console.log(series)
     var options = {
-      series: [],
+      series: series,
       chart: {
-      height: 350,
-      type: 'area'
-    },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      curve: 'smooth'
-    },
-    xaxis: {
-      type: 'datetime',
-      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-    },
-    tooltip: {
-      x: {
-        format: 'dd/MM/yy HH:mm'
+        height: 350,
+        type: 'area'
       },
-    },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        type: 'date',
+        categories: dateString
+      },
+      tooltip: {
+        x: {
+          format: 'dd/MM/yy'
+        },
+      },
     };
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
-  
-  
-</script>
+
+
+  </script>
 
   <!-- Javascripts -->
-  
+
   <script src="/public/plugins/jquery/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="/public/plugins/bootstrap/js/bootstrap.min.js"></script>
