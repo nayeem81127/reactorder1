@@ -352,26 +352,33 @@
     dataVal = JSON.parse(dataVal)
 
     var data1 = [];
-    
+
     for (let j in dataVal) {
-      data1.push(dataVal[j].seller_id)      
+      data1.push(dataVal[j].seller_id)
     }
+    var uniq1 = new Set(data1.map(e => JSON.stringify(e)));
+    data1 = Array.from(uniq1).map(e => JSON.parse(e));
+    console.log(data1.length)
 
     var series = []
     for (let j in dataVal) {
       data1.forEach((value) => {
-        if (value == dataVal[j].seller_id) {          
-          var data = [];     
-          var dateExist = [];     
-          for (let i in dataVal) {            
+        if (value == dataVal[j].seller_id) {
+          var data = [];
+          var dateExist = [];
+          for (let i in dataVal) {
             if (value == dataVal[i].seller_id) {
               dateExist.push(dataVal[i].updated_at)
-                data.push(dataVal[i].sync_count)            
+              data.push(dataVal[i].sync_count)
             }
+          }          
+          if (data1.length > 1) {
+            dateString.forEach(element => {
+              if (!dateExist.includes(element)) data.unshift('')
+            });
+          }else{
+            dateString = dateExist;
           }
-          datefullString.forEach(element => {
-            if(dateExist.includes(element)) data.unshift('0')
-        });
           var list = {
             name: value.split('.', 1),
             data: data

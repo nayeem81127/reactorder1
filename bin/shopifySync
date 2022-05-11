@@ -109,203 +109,243 @@ const Shopify = require('shopify-api-node');
                                                     params = Orders.nextPageParameters;
                                                 } while (params !== undefined);
 
-                                                // console.log('OrdersArray ' + JSON.stringify(OrdersArray))
-
-                                                let buyerEmailInfo = []
-                                                let customerId = []
-                                                let CustomerDetails = []
-                                                let SkuId = [];
-                                                let ProductDetails = [];
-
-                                                for (let i in OrdersArray) {
-                                                    for (let j in OrdersArray[i].line_items) {
-                                                        if ((OrdersArray[i].customer.id != "" || OrdersArray[i].customer.id != null) && (OrdersArray[i].line_items[j].product_exists == true)) {
-                                                            customerId.push(OrdersArray[i].customer.id)
-                                                        }
-                                                    }
-                                                }
-            
-                                                for (let i in OrdersArray) {
-                                                    for (let j in OrdersArray[i].line_items) {
-                                                        if ((OrdersArray[i].customer.id != "" || OrdersArray[i].customer.id != null) && (OrdersArray[i].line_items[j].product_exists == true)) {
-                                                            var list = {
-                                                                ERP7__Customer_External_Id__c: OrdersArray[i].customer.id,
-                                                                Name: (OrdersArray[i].customer.first_name == "" || OrdersArray[i].customer.first_name == null) && (OrdersArray[i].customer.last_name == "" || OrdersArray[i].customer.last_name == null) ? OrdersArray[i].customer.id : (OrdersArray[i].customer.first_name == "" || OrdersArray[i].customer.first_name == null) ? OrdersArray[i].customer.last_name : (OrdersArray[i].customer.last_name == "" || OrdersArray[i].customer.last_name == null) ? OrdersArray[i].customer.first_name : OrdersArray[i].customer.first_name + ' ' + OrdersArray[i].customer.last_name,
-                                                                ERP7__Email__c: OrdersArray[i].customer.email,
-                                                                ERP7__Account_Type__c: "Customer",
-                                                                ERP7__Account_Profile__c: Aqxolt_Customer,
-                                                                ERP7__Order_Profile__c: Aqxolt_Order_Profile,
-                                                                ERP7__Active__c: true
+                                                var todaycount = OrdersArray.length;
+                                                const timeStamp = new Date().getTime();
+                                                const yesterdayTimeStamp = timeStamp - (24 * 60 * 60 * 1000) * 1;
+                                                var todayDate = new Date(timeStamp).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+                                                var yesterdayDate = new Date(yesterdayTimeStamp).toLocaleString('en-US', { day: 'numeric', month: 'long' })
+                                                const client = await pool.connect();
+                                                await client.query('BEGIN');
+                                                await JSON.stringify(client.query(`SELECT * FROM "flow_charts" WHERE "seller_id"=$1 AND "email"=$2 AND "category"=$3 AND "updated_at"=$4`, [shopsDetails[y].shopify_domain, UsersDetails[z].email, 'shopify', yesterdayDate], async function (err, result1) {
+                                                    if (err) { console.log(err); }
+                                                    console.log(result1.rows.length)
+                                                    if (result1.rows.length == 0) {
+                                                        client.query(`SELECT * FROM flow_charts WHERE "seller_id"=$1 AND "email"=$2 AND "category"=$3 AND "updated_at"=$4`, [shopsDetails[y].shopify_domain, UsersDetails[z].email, 'shopify', todayDate], async function (err, result) {
+                                                            if (err) { console.log(err); }
+                                                            console.log('second ' + result.rows.length)
+                                                            if (result.rows.length == 0) {
+                                                                client.query('Insert into "flow_charts"("seller_id", "email", "category", "updated_at", "sync_count") values($1, $2, $3, $4, $5)', [shopsDetails[y].shopify_domain, UsersDetails[z].email, 'shopify', todayDate, todaycount], async function (err, result) {
+                                                                    if (err) { console.log(err); }
+                                                                })
+                                                                client.query('COMMIT');
                                                             }
-                                                            CustomerDetails.push(list)
-                                                        }
+                                                        })
                                                     }
-                                                }
-                                                const uniq = new Set(CustomerDetails.map(e => JSON.stringify(e)));
-                                                CustomerDetails = Array.from(uniq).map(e => JSON.parse(e));
-
-                                                const uniq1 = new Set(buyerEmailInfo.map(e => JSON.stringify(e)));
-                                                buyerEmailInfo = Array.from(uniq1).map(e => JSON.parse(e));
-
-                                                for (let i in OrdersArray) {
-                                                    for (let j in OrdersArray[i].line_items) {
-                                                        if (OrdersArray[i].id != '' && OrdersArray[i].id != undefined && OrdersArray[i].line_items[j].sku != '' && OrdersArray[i].line_items[j].sku != undefined) {
-                                                            var list = {
-                                                                Name: OrdersArray[i].line_items[j].title,
-                                                                ERP7__Manufacturer__c: OrdersArray[i].line_items[j].vendor,
-                                                                StockKeepingUnit: OrdersArray[i].line_items[j].sku,
-                                                                ERP7__SKU__c: OrdersArray[i].line_items[j].sku,
-                                                                ERP7__Price_Entry_Amount__c: OrdersArray[i].line_items[j].price,
-                                                                IsActive: true
+                                                    else if (result1.rows.length > 0) {
+                                                        var count = parseInt(todaycount - result1.rows[0].sync_count)
+                                                        console.log(shopsDetails[y].shopify_domain, count)
+                                                        client.query(`SELECT * FROM flow_charts WHERE "seller_id"=$1 AND "email"=$2 AND "category"=$3 AND "updated_at"=$4`, [shopsDetails[y].shopify_domain, UsersDetails[z].email, 'shopify', todayDate], async function (err, result) {
+                                                            if (err) { console.log(err); }
+                                                            console.log('second 1 ' + result.rows.length)
+                                                            if (result.rows.length == 0) {
+                                                                client.query('Insert into "flow_charts"("seller_id", "email", "category", "updated_at", "sync_count") values($1, $2, $3, $4, $5)', [shopsDetails[y].shopify_domain, UsersDetails[z].email, 'shopify', todayDate, count], async function (err, result) {
+                                                                    if (err) { console.log(err); }
+                                                                })
+                                                                client.query('COMMIT');
                                                             }
-                                                            ProductDetails.push(list)
-                                                            SkuId.push(OrdersArray[i].line_items[j].sku)
-                                                        }
+                                                            else if (result.rows.length > 0) {
+                                                                client.query('update flow_charts set sync_count=$5 WHERE seller_id=$1 AND email=$2 AND category=$3 AND updated_at=$4', [shopsDetails[y].shopify_domain, UsersDetails[z].email, 'shopify', todayDate, count])
+                                                                client.query('COMMIT');
+                                                            }
+                                                        })
                                                     }
-                                                }
+                                                }))
+                                                /*
+                                                                                                let buyerEmailInfo = []
+                                                                                                let customerId = []
+                                                                                                let CustomerDetails = []
+                                                                                                let SkuId = [];
+                                                                                                let ProductDetails = [];
+                                                
+                                                                                                for (let i in OrdersArray) {
+                                                                                                    for (let j in OrdersArray[i].line_items) {
+                                                                                                        if ((OrdersArray[i].customer.id != "" || OrdersArray[i].customer.id != null) && (OrdersArray[i].line_items[j].product_exists == true)) {
+                                                                                                            customerId.push(OrdersArray[i].customer.id)
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                
+                                                                                                for (let i in OrdersArray) {
+                                                                                                    for (let j in OrdersArray[i].line_items) {
+                                                                                                        if ((OrdersArray[i].customer.id != "" || OrdersArray[i].customer.id != null) && (OrdersArray[i].line_items[j].product_exists == true)) {
+                                                                                                            var list = {
+                                                                                                                ERP7__Customer_External_Id__c: OrdersArray[i].customer.id,
+                                                                                                                Name: (OrdersArray[i].customer.first_name == "" || OrdersArray[i].customer.first_name == null) && (OrdersArray[i].customer.last_name == "" || OrdersArray[i].customer.last_name == null) ? OrdersArray[i].customer.id : (OrdersArray[i].customer.first_name == "" || OrdersArray[i].customer.first_name == null) ? OrdersArray[i].customer.last_name : (OrdersArray[i].customer.last_name == "" || OrdersArray[i].customer.last_name == null) ? OrdersArray[i].customer.first_name : OrdersArray[i].customer.first_name + ' ' + OrdersArray[i].customer.last_name,
+                                                                                                                ERP7__Email__c: OrdersArray[i].customer.email,
+                                                                                                                ERP7__Account_Type__c: "Customer",
+                                                                                                                ERP7__Account_Profile__c: Aqxolt_Customer,
+                                                                                                                ERP7__Order_Profile__c: Aqxolt_Order_Profile,
+                                                                                                                ERP7__Active__c: true
+                                                                                                            }
+                                                                                                            CustomerDetails.push(list)
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                                const uniq = new Set(CustomerDetails.map(e => JSON.stringify(e)));
+                                                                                                CustomerDetails = Array.from(uniq).map(e => JSON.parse(e));
+                                                
+                                                                                                const uniq1 = new Set(buyerEmailInfo.map(e => JSON.stringify(e)));
+                                                                                                buyerEmailInfo = Array.from(uniq1).map(e => JSON.parse(e));
+                                                
+                                                                                                for (let i in OrdersArray) {
+                                                                                                    for (let j in OrdersArray[i].line_items) {
+                                                                                                        if (OrdersArray[i].id != '' && OrdersArray[i].id != undefined && OrdersArray[i].line_items[j].sku != '' && OrdersArray[i].line_items[j].sku != undefined) {
+                                                                                                            var list = {
+                                                                                                                Name: OrdersArray[i].line_items[j].title,
+                                                                                                                ERP7__Manufacturer__c: OrdersArray[i].line_items[j].vendor,
+                                                                                                                StockKeepingUnit: OrdersArray[i].line_items[j].sku,
+                                                                                                                ERP7__SKU__c: OrdersArray[i].line_items[j].sku,
+                                                                                                                ERP7__Price_Entry_Amount__c: OrdersArray[i].line_items[j].price,
+                                                                                                                IsActive: true
+                                                                                                            }
+                                                                                                            ProductDetails.push(list)
+                                                                                                            SkuId.push(OrdersArray[i].line_items[j].sku)
+                                                                                                        }
+                                                                                                    }
+                                                                                                }*/
                                                 // console.log('ProductDetails ' + JSON.stringify(ProductDetails), ProductDetails.length)
 
                                                 var pricebook_id;
-                                                if (Aqxolt_Order_Profile != null) {
+                                                // if (Aqxolt_Order_Profile != null) {
 
-                                                    conn.query(`SELECT Id, ERP7__Price_Book__c FROM ERP7__Profiling__c where Id='${Aqxolt_Order_Profile}'`, function (err, result) {
-                                                        if (!err) {
-                                                            if (result.records.length > 0) {
-                                                                pricebook_id = result.records[0].ERP7__Price_Book__c;
-                                                                if (Aqxolt_Customer != null) {
+                                                //     conn.query(`SELECT Id, ERP7__Price_Book__c FROM ERP7__Profiling__c where Id='${Aqxolt_Order_Profile}'`, function (err, result) {
+                                                //         if (!err) {
+                                                //             if (result.records.length > 0) {
+                                                //                 pricebook_id = result.records[0].ERP7__Price_Book__c;
+                                                //                 if (Aqxolt_Customer != null) {
 
-                                                                    conn.query(`SELECT Id FROM ERP7__Profiling__c where Id='${Aqxolt_Customer}'`, function (err, result) {
-                                                                        if (!err) {
-                                                                            if (result.records.length > 0) {
-                                                                                if (Aqxolt_Channel != null) {
+                                                //                     conn.query(`SELECT Id FROM ERP7__Profiling__c where Id='${Aqxolt_Customer}'`, function (err, result) {
+                                                //                         if (!err) {
+                                                //                             if (result.records.length > 0) {
+                                                //                                 if (Aqxolt_Channel != null) {
 
-                                                                                    conn.query(`SELECT Id FROM ERP7__Channel__c where Id='${Aqxolt_Channel}'`, function (err, result) {
-                                                                                        if (!err) {
-                                                                                            if (result.records.length > 0) {
-                                                                                                if (customerId.length > 0) {
+                                                //                                     conn.query(`SELECT Id FROM ERP7__Channel__c where Id='${Aqxolt_Channel}'`, function (err, result) {
+                                                //                                         if (!err) {
+                                                //                                             if (result.records.length > 0) {
+                                                //                                                 if (customerId.length > 0) {
 
-                                                                                                    conn.bulk.pollInterval = 1000;
-                                                                                                    conn.bulk.pollTimeout = Number.MAX_VALUE;
-                                                                                                    let records = [];
+                                                //                                                     conn.bulk.pollInterval = 1000;
+                                                //                                                     conn.bulk.pollTimeout = Number.MAX_VALUE;
+                                                //                                                     let records = [];
 
-                                                                                                    const recordStream = conn.bulk.query(`SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c,ERP7__Account_Type__c, ERP7__Customer_External_Id__c FROM Account where ERP7__Customer_External_Id__c IN ('${customerId.join("','")}')`);
-                                                                                                    const readStream = recordStream.stream();
-                                                                                                    const csvToJsonParser = csv({ flatKeys: false, checkType: true });
-                                                                                                    readStream.pipe(csvToJsonParser);
+                                                //                                                     const recordStream = conn.bulk.query(`SELECT Id, Name, ERP7__Email__c, ERP7__Order_Profile__c, ERP7__Account_Profile__c,ERP7__Account_Type__c, ERP7__Customer_External_Id__c FROM Account where ERP7__Customer_External_Id__c IN ('${customerId.join("','")}')`);
+                                                //                                                     const readStream = recordStream.stream();
+                                                //                                                     const csvToJsonParser = csv({ flatKeys: false, checkType: true });
+                                                //                                                     readStream.pipe(csvToJsonParser);
 
-                                                                                                    csvToJsonParser.on("data", (data) => {
-                                                                                                        records.push(JSON.parse(data.toString('utf8')));
-                                                                                                    });
+                                                //                                                     csvToJsonParser.on("data", (data) => {
+                                                //                                                         records.push(JSON.parse(data.toString('utf8')));
+                                                //                                                     });
 
-                                                                                                    new Promise((resolve, reject) => {
-                                                                                                        recordStream.on("error", (error) => {
-                                                                                                            console.log(error)
-                                                                                                        });
+                                                //                                                     new Promise((resolve, reject) => {
+                                                //                                                         recordStream.on("error", (error) => {
+                                                //                                                             console.log(error)
+                                                //                                                         });
 
-                                                                                                        csvToJsonParser.on("error", (error) => {
-                                                                                                            console.error(error);
-                                                                                                        });
+                                                //                                                         csvToJsonParser.on("error", (error) => {
+                                                //                                                             console.error(error);
+                                                //                                                         });
 
-                                                                                                        csvToJsonParser.on("done", async () => {
-                                                                                                            resolve(records);
-                                                                                                        });
-                                                                                                    }).then((accRecords) => {
-                                                                                                        if (accRecords.length == 0) {
-                                                                                                            if (CustomerDetails != []) {
-                                                                                                                conn.bulk.pollTimeout = 25000;
-                                                                                                                conn.bulk.load("Account", "insert", CustomerDetails, function (err, rets) {
-                                                                                                                    if (err) { return console.error('err 1' + err); }
-                                                                                                                    for (var i = 0; i < rets.length; i++) {
-                                                                                                                        if (rets[i].success) {
-                                                                                                                            console.log("#" + (i + 1) + " insert account successfully, id = " + rets[i].id);
-                                                                                                                        } else {
-                                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                    conInsertion();
-                                                                                                                });
-                                                                                                            }
-                                                                                                        } else if (accRecords.length > 0) {
-                                                                                                            var accExist = [];
-                                                                                                            var accExternalId = [];
-                                                                                                            var accNotExist = [];
-                                                                                                            for (let i in accRecords) {
-                                                                                                                for (let j in CustomerDetails) {
-                                                                                                                    if (accRecords[i].ERP7__Customer_External_Id__c == CustomerDetails[j].ERP7__Customer_External_Id__c) {
-                                                                                                                        let list = {
-                                                                                                                            Id: accRecords[i].Id,
-                                                                                                                            ERP7__Email__c: CustomerDetails[j].ERP7__Email__c,
-                                                                                                                            Name: CustomerDetails[j].Name,
-                                                                                                                            ERP7__Order_Profile__c: CustomerDetails[j].ERP7__Order_Profile__c,
-                                                                                                                            ERP7__Account_Profile__c: CustomerDetails[j].ERP7__Account_Profile__c,
-                                                                                                                            ERP7__Account_Type__c: CustomerDetails[j].ERP7__Account_Type__c,
-                                                                                                                            ERP7__Active__c: CustomerDetails[j].ERP7__Active__c,
-                                                                                                                            ERP7__Customer_External_Id__c: CustomerDetails[j].ERP7__Customer_External_Id__c
-                                                                                                                        }
-                                                                                                                        accExist.push(list);
-                                                                                                                        accExternalId.push(CustomerDetails[j].ERP7__Customer_External_Id__c)
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }
+                                                //                                                         csvToJsonParser.on("done", async () => {
+                                                //                                                             resolve(records);
+                                                //                                                         });
+                                                //                                                     }).then((accRecords) => {
+                                                //                                                         if (accRecords.length == 0) {
+                                                //                                                             if (CustomerDetails != []) {
+                                                //                                                                 conn.bulk.pollTimeout = 25000;
+                                                //                                                                 conn.bulk.load("Account", "insert", CustomerDetails, function (err, rets) {
+                                                //                                                                     if (err) { return console.error('err 1' + err); }
+                                                //                                                                     for (var i = 0; i < rets.length; i++) {
+                                                //                                                                         if (rets[i].success) {
+                                                //                                                                             console.log("#" + (i + 1) + " insert account successfully, id = " + rets[i].id);
+                                                //                                                                         } else {
+                                                //                                                                             console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
+                                                //                                                                         }
+                                                //                                                                     }
+                                                //                                                                     conInsertion();
+                                                //                                                                 });
+                                                //                                                             }
+                                                //                                                         } else if (accRecords.length > 0) {
+                                                //                                                             var accExist = [];
+                                                //                                                             var accExternalId = [];
+                                                //                                                             var accNotExist = [];
+                                                //                                                             for (let i in accRecords) {
+                                                //                                                                 for (let j in CustomerDetails) {
+                                                //                                                                     if (accRecords[i].ERP7__Customer_External_Id__c == CustomerDetails[j].ERP7__Customer_External_Id__c) {
+                                                //                                                                         let list = {
+                                                //                                                                             Id: accRecords[i].Id,
+                                                //                                                                             ERP7__Email__c: CustomerDetails[j].ERP7__Email__c,
+                                                //                                                                             Name: CustomerDetails[j].Name,
+                                                //                                                                             ERP7__Order_Profile__c: CustomerDetails[j].ERP7__Order_Profile__c,
+                                                //                                                                             ERP7__Account_Profile__c: CustomerDetails[j].ERP7__Account_Profile__c,
+                                                //                                                                             ERP7__Account_Type__c: CustomerDetails[j].ERP7__Account_Type__c,
+                                                //                                                                             ERP7__Active__c: CustomerDetails[j].ERP7__Active__c,
+                                                //                                                                             ERP7__Customer_External_Id__c: CustomerDetails[j].ERP7__Customer_External_Id__c
+                                                //                                                                         }
+                                                //                                                                         accExist.push(list);
+                                                //                                                                         accExternalId.push(CustomerDetails[j].ERP7__Customer_External_Id__c)
+                                                //                                                                     }
+                                                //                                                                 }
+                                                //                                                             }
 
-                                                                                                            const uniq = new Set(accExist.map(e => JSON.stringify(e)));
-                                                                                                            accExist = Array.from(uniq).map(e => JSON.parse(e));
+                                                //                                                             const uniq = new Set(accExist.map(e => JSON.stringify(e)));
+                                                //                                                             accExist = Array.from(uniq).map(e => JSON.parse(e));
 
-                                                                                                            const uniq1 = new Set(accExternalId.map(e => JSON.stringify(e)));
-                                                                                                            accExternalId = Array.from(uniq1).map(e => JSON.parse(e));
+                                                //                                                             const uniq1 = new Set(accExternalId.map(e => JSON.stringify(e)));
+                                                //                                                             accExternalId = Array.from(uniq1).map(e => JSON.parse(e));
 
-                                                                                                            // console.log('Exist ' + accExternalId)
-                                                                                                            for (let i in CustomerDetails) {
-                                                                                                                if (!accExternalId.includes(CustomerDetails[i].ERP7__Customer_External_Id__c)) accNotExist.push(CustomerDetails[i])
-                                                                                                            }
+                                                //                                                             // console.log('Exist ' + accExternalId)
+                                                //                                                             for (let i in CustomerDetails) {
+                                                //                                                                 if (!accExternalId.includes(CustomerDetails[i].ERP7__Customer_External_Id__c)) accNotExist.push(CustomerDetails[i])
+                                                //                                                             }
 
-                                                                                                            if (accNotExist != []) {
-                                                                                                                conn.bulk.pollTimeout = 25000;
-                                                                                                                conn.bulk.load("Account", "insert", accNotExist, function (err, rets) {
-                                                                                                                    if (err) { return console.error('err 1' + err); }
-                                                                                                                    for (var i = 0; i < rets.length; i++) {
-                                                                                                                        if (rets[i].success) {
-                                                                                                                            console.log("#" + (i + 1) + " insert account successfully, id = " + rets[i].id);
-                                                                                                                        } else {
-                                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                });
-                                                                                                            }
+                                                //                                                             if (accNotExist != []) {
+                                                //                                                                 conn.bulk.pollTimeout = 25000;
+                                                //                                                                 conn.bulk.load("Account", "insert", accNotExist, function (err, rets) {
+                                                //                                                                     if (err) { return console.error('err 1' + err); }
+                                                //                                                                     for (var i = 0; i < rets.length; i++) {
+                                                //                                                                         if (rets[i].success) {
+                                                //                                                                             console.log("#" + (i + 1) + " insert account successfully, id = " + rets[i].id);
+                                                //                                                                         } else {
+                                                //                                                                             console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
+                                                //                                                                         }
+                                                //                                                                     }
+                                                //                                                                 });
+                                                //                                                             }
 
-                                                                                                            if (accExist != []) {
-                                                                                                                conn.bulk.pollTimeout = 25000;
-                                                                                                                conn.bulk.load("Account", "update", accExist, function (err, rets) {
-                                                                                                                    if (err) { return console.error('err 2' + err); }
-                                                                                                                    for (var i = 0; i < rets.length; i++) {
-                                                                                                                        if (rets[i].success) {
-                                                                                                                            console.log("#" + (i + 1) + " update account successfully, id = " + rets[i].id);
-                                                                                                                        } else {
-                                                                                                                            console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                    conInsertion();
-                                                                                                                });
-                                                                                                            }
-                                                                                                        }
-                                                                                                    });
+                                                //                                                             if (accExist != []) {
+                                                //                                                                 conn.bulk.pollTimeout = 25000;
+                                                //                                                                 conn.bulk.load("Account", "update", accExist, function (err, rets) {
+                                                //                                                                     if (err) { return console.error('err 2' + err); }
+                                                //                                                                     for (var i = 0; i < rets.length; i++) {
+                                                //                                                                         if (rets[i].success) {
+                                                //                                                                             console.log("#" + (i + 1) + " update account successfully, id = " + rets[i].id);
+                                                //                                                                         } else {
+                                                //                                                                             console.log("#" + (i + 1) + " error occurred, message = " + rets[i].errors.join(', '));
+                                                //                                                                         }
+                                                //                                                                     }
+                                                //                                                                     conInsertion();
+                                                //                                                                 });
+                                                //                                                             }
+                                                //                                                         }
+                                                //                                                     });
 
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    })
+                                                //                                                 }
+                                                //                                             }
+                                                //                                         }
+                                                //                                     })
 
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    })
+                                                //                                 }
+                                                //                             }
+                                                //                         }
+                                                //                     })
 
-                                                                }
-                                                            }
-                                                        }
-                                                    })
+                                                //                 }
+                                                //             }
+                                                //         }
+                                                //     })
 
-                                                }
+                                                // }
 
                                                 var accIdExist = [];
                                                 var contactDetails = [];
